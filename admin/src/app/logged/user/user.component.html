@@ -1,0 +1,9 @@
+<div class="containers">
+  <table class="table">
+    <tr class="list-group-item" *ngFor="let user of users;let i = index">
+      <td>{{user.email}}</td>
+      <td><a class="btn btn-secondary" [routerLink]="['/admin/user-edit/' + user.id]">Modifier</a></td>
+    </tr>
+  </table>
+  <a class="btn btn-primary" [routerLink]="['/admin/user-create']" >Créer</a>
+</div>

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-text">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+          <div class="form-control">
+            <input class="form-control" formControlName="username">
+          </div>
+          <div class="form-control">
+            <input class="form-control" type="password" formControlName="password">
+          </div>
+          <div>
+            <button class="form-control btn">Soumettre</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

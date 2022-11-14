@@ -1,0 +1,25 @@
+<div class="container p-3">
+  <div class="offset-3 col-6">
+    <div class="card">
+      <div class="card-header  font-weight-bold">
+        Sign Up Form
+      </div>
+      <div class="card card-body">
+        <form [formGroup]="userForm" (submit)="submit()">
+          <div class="form-group">
+            <input class="form-control" type="text" formControlName="username" />
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" formControlName="password" />
+          </div>
+          <div class="form-group">
+            <app-roles formControlName="roles" ></app-roles>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-secondary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
