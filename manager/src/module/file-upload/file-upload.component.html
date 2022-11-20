@@ -1,6 +1,6 @@
 <div class="text-center">
-  <input class="form-control" type="file" name="file"
-         (change)="onChange($event)">
+  <input #file class="form-control" type="file" name="file"
+         (change)="onChange($event)" hidden>
 
   <button (click)="onUpload()"
           class="btn btn-success">
@@ -13,7 +13,7 @@
      *ngIf="shortLink">
   <h2> Visit Here</h2>
   <a href="{{shortLink}}">{{shortLink}}</a>
-  <img [src]="img" />
+  <div><img width="100px" height="70px" [src]="image"  alt="impage"/></div>
 </div>
 
 <!--Flag variable is used here-->

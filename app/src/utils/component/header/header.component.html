@@ -1,0 +1,8 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <ul class="nav navbar-nav navbar-right float-end ms-auto">
+    <li *ngIf="!logged" class="m-1"><a class="btn btn-secondary" routerLink="/subscribe">Subscribe</a></li>
+    <li *ngIf="!logged" class="m-1"><a class="btn btn-secondary" routerLink="/login">Login</a></li>
+    <li *ngIf="logged" class="m-1"><a>{{ email }}</a></li>
+  </ul>
+</nav>

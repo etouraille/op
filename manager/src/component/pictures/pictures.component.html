@@ -1,0 +1,7 @@
+<div>
+  <div *ngFor="let picture of pictures; let i = index;" >
+    <app-file-upload [ngModel]="picture" (ngModelChange)="pictureChange($event, i)"></app-file-upload>
+    <button type="button" class="btn btn-danger" (click)="removePicture(i)">-</button>
+  </div>
+  <button type="button" class="btn btn-secondary" (click)="addPicture()">Add</button>
+</div>

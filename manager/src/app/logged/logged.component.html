@@ -2,7 +2,10 @@
   <h1>Add your object</h1>
 </nav>
 <div class="left">
-  <ul><li><a [routerLink]="['/logged/add']" >Ajouter un objet</a></li></ul>
+  <ul>
+    <li><a [routerLink]="['/logged/add']" >Ajouter un objet</a></li>
+    <li><a [routerLink]="['/logged/thing-list']">Liste des objets</a></li>
+  </ul>
 </div>
 <div class="right">
   <router-outlet></router-outlet>
