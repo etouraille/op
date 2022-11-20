@@ -1,0 +1,9 @@
+<div class="container">
+  <div *ngFor="let thing of things; let i = index;" class="card" style="width: 18rem;">
+    <img class="card-img-top" [src]="'http://localhost:3000/' + thing.pictures[0].picture" alt="Card image cap">
+    <div class="card-body">
+      <p class="card-text">{{ thing.name }}</p>
+      <button class="btn-secondary" (click)="openModal(i)" >Reserver</button>
+    </div>
+  </div>
+</div>

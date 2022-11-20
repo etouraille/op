@@ -14,9 +14,20 @@
           <label>Prix</label>
           <input id="price" class="form-control" formControlName="price" />
         </div>
+        <div class="form-group" >
+            <label>Images</label>
+          <div formArrayName="pictures">
+            <app-file-upload *ngFor="let picture of pictures.controls; let i = index;" [formControlName]="i"></app-file-upload>
+          </div>
+          <button class="btn btn-secondary" (click)="addPicture()">+</button>
+        </div>
         <div class="form-group">
-            <label>Image</label>
-          <app-file-upload formControlName="picture"></app-file-upload>
+          <select class="form-control" formControlName="owner">
+            <option *ngFor="let user of users" value="{{user.id}}">{{user.email}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="form-control btn btn-secondary">Ajouter</button>
         </div>
       </form>
     </div>
