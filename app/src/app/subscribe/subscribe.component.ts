@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-import { SubscribeComponent as UnsubscribeComponent } from "../../utils/component/subscribe/subscribe.component";
+import { SubscribeComponent as UnsubscribeComponent } from "../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 

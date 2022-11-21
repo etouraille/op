@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {StorageService} from "../../utils/service/storage.service";
-import {SubscribeComponent} from "../../utils/component/subscribe/subscribe.component";
+import {StorageService} from "../../lib/service/storage.service";
+import {SubscribeComponent} from "../../lib/component/subscribe/subscribe.component";
 import {tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Store} from "@ngrx/store";
-import {login} from "../../utils/actions/login-action";
+import {login} from "../../lib/actions/login-action";
 
 @Component({
   selector: 'app-login',
