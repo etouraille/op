@@ -4,19 +4,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import {HeaderComponent} from "../utils/component/header/header.component";
+import {HeaderComponent} from "../lib/component/header/header.component";
 import { LoginComponent } from './login/login.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
-import { SubscribeComponent as UnsubscribeComponent } from './../utils/component/subscribe/subscribe.component';
+import { SubscribeComponent as UnsubscribeComponent } from './../lib/component/subscribe/subscribe.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthInterceptor} from "../utils/injector/injector";
+import {AuthInterceptor} from "../lib/injector/injector";
 import { StoreModule } from '@ngrx/store';
-import {loginReducer} from "../utils/reducers/app-reducer";
+import {loginReducer} from "../lib/reducers/app-reducer";
 import { ThingsComponent } from './things/things.component';
 import {NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {CommonModule} from "@angular/common";
-import {CalendarComponent} from "../utils/component/calendar/calendar.component";
+import {CalendarComponent} from "../lib/component/calendar/calendar.component";
 
 @NgModule({
   declarations: [

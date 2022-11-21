@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {SubscribeComponent} from "../../utils/component/subscribe/subscribe.component";
+import {SubscribeComponent} from "../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {CalendarComponent} from "../../utils/component/calendar/calendar.component";
+import {CalendarComponent} from "../../lib/component/calendar/calendar.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
