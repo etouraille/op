@@ -12,11 +12,17 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
     const authToken = 'Bearer ' + this.service.get('token');
-
-    // Clone the request and replace the original headers with
+    let headers;
+    if( req.method === 'PATCH') {
+      headers = req.headers.set('Authorization', authToken).set('content-type', 'application/merge-patch+json');
+    } else {
+      headers = req.headers.set('Authorization', authToken);
+    }
+    // Clone the request and repla
+    // ce the original headers with
     // cloned headers, updated with the authorization.
     const authReq = req.clone({
-      headers: req.headers.set('Authorization', authToken),
+      headers: headers,
       url: req.url.match(/\/upload/)? req.url : (environment.api + req.url)
     });
 

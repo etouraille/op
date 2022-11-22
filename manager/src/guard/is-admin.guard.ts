@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import {map, Observable} from 'rxjs';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {catchError, map, Observable, of, tap} from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import jwt_decode from 'jwt-decode';
 import {StorageService} from "../service/storage.service";
@@ -9,7 +9,11 @@ import {StorageService} from "../service/storage.service";
 })
 export class IsAdminGuard implements CanActivate {
 
-  constructor(private http: HttpClient, private service : StorageService) {
+  constructor(
+    private http: HttpClient,
+    private service : StorageService,
+    private router: Router,
+  ) {
 
   }
 
@@ -19,11 +23,18 @@ export class IsAdminGuard implements CanActivate {
     Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean | UrlTree {
-        let token = <any>jwt_decode(<string>this.service.get('token'));
-        if(token) {
-          return token.roles.includes('ROLE_ADMIN');
-        }
-        return false;
+        return this
+          .http
+          .get('api/ping')
+          .pipe(
+            catchError(error=> of(false)),
+            map((data:any ) => {
+              return (data.roles ? data.roles.includes('ROLE_ADMIN'): false)
+            }),
+            tap((ret) => {
+              ret === false ? this.router.navigate(['login']) : null;
+            })
+          )
+      ;
     }
-
 }

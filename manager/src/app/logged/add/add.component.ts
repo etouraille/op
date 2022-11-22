@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {SubscribeComponent} from "../../../component/subscribe/subscribe.component";
+import {SubscribeComponent} from "../../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 
@@ -32,7 +32,7 @@ export class AddComponent extends SubscribeComponent implements OnInit {
     this.addPicture();
     this.add(
       // @ts-ignore
-      this.http.get<any>('api/users').subscribe(data => {
+      this.http.get<any>('api/users?email=&firstname=&lastname=').subscribe(data => {
         this.users = data['hydra:member'];
       })
     )

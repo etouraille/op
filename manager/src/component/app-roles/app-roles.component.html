@@ -1,7 +1,0 @@
-<div>
-  <button class="btn btn-secondary" (click)="toggle($event)"></button>
-  <ngb-toast *ngIf="show" header="roles →" [autohide]="false" (hidden)="toggle($event)">
-    <input type="checkbox" value="ROLE_USER" name="user" [(ngModel)]="user" (change)="changeUser()">User
-    <input type="checkbox" value="ROLE_ADMIN" name="admin" [(ngModel)]="admin" (change)="changeAdmin()"/>Admin
-  </ngb-toast>
-</div>

@@ -19,30 +19,33 @@ import {CommonModule} from "@angular/common";
 import {CalendarComponent} from "../lib/component/calendar/calendar.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    HeaderComponent,
-    LoginComponent,
-    SubscribeComponent,
-    UnsubscribeComponent,
-    ThingsComponent,
-    CalendarComponent,
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        HeaderComponent,
+        LoginComponent,
+        SubscribeComponent,
+        UnsubscribeComponent,
+        ThingsComponent,
+        CalendarComponent,
 
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    StoreModule.forRoot({login: loginReducer }, {}),
-    NgbModule,
-    NgbModalModule,
-    CommonModule,
-  ],
-  providers: [
-    [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },]
-  ],
-  bootstrap: [AppComponent]
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        StoreModule.forRoot({login: loginReducer}, {}),
+        NgbModule,
+        NgbModalModule,
+        CommonModule,
+    ],
+    providers: [
+        [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},]
+    ],
+    exports: [
+        CalendarComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
