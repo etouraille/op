@@ -1,0 +1,4 @@
+<app-who (onChangeId)="selectUserId($event)" ></app-who>
+<div *ngFor="let thing of thingsOut;let i = index;">
+  {{ thing.name }}<button (click)="back(thing, i)" class="btn btn-danger">Back</button>
+</div>

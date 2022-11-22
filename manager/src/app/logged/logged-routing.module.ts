@@ -5,6 +5,10 @@ import {LoggedComponent} from "./logged.component";
 import {IsAdminGuard} from "../../guard/is-admin.guard";
 import {ThingListComponent} from "./thing-list/thing-list.component";
 import {ThingEditComponent} from "./thing-edit/thing-edit.component";
+import {ThingSearchComponent} from "./thing-search/thing-search.component";
+import {ThingComponent} from "./thing/thing.component";
+import {ThingOutComponent} from "./thing-out/thing-out.component";
+import {ThingBackComponent} from "./thing-back/thing-back.component";
 const routes: Routes = [
 
 
@@ -12,6 +16,22 @@ const routes: Routes = [
     path: '',
     component: LoggedComponent,
     children: [
+      {
+        path: 'back',
+        component: ThingBackComponent,
+      },
+      {
+        path: 'out',
+        component: ThingOutComponent,
+      },
+      {
+        path: 'search',
+        component: ThingSearchComponent,
+      },
+      {
+        path: 'thing/:id',
+        component: ThingComponent,
+      },
       {
         path: 'add',
         component: AddComponent,

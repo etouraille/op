@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
-import {SubscribeComponent} from "../../../component/subscribe/subscribe.component";
+import {SubscribeComponent} from "../../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {switchMap, tap} from "rxjs";
@@ -17,6 +17,7 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
     description: ['', Validators.compose([ Validators.required])],
     pictures: new FormControl([]),
     price: ['', Validators.compose([ Validators.required])],
+    dailyPrice: ['', Validators.compose([ Validators.required])],
     owner: ['', Validators.compose([ Validators.required])],
   });
   users: any[] = [];

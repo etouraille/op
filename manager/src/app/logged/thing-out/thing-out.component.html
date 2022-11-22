@@ -1,0 +1,11 @@
+<app-who *ngIf="!user" (onChangeId)="changeUserId($event)"></app-who>
+<div *ngIf="user">{{ user.email }}<button (click)="user=null" class="btn btn-secondary">Change User</button></div>
+<div *ngIf="user">
+  <app-search [user]="user" [things]="things" (onChangeId)="changeThingId($event)"></app-search>
+  <div *ngFor="let thing of things; let i = index">
+    {{thing.name}}
+    <div *ngIf="thing.startDate">reservé du {{ thing.startDate }} au {{ thing.endDate }}<a (click)="thing.startDate=null;thing.endDate=null">-</a></div>
+    <button *ngIf="!thing.startDate"(click)="book(thing, i)">Reserver</button>
+  </div>
+  <button [disabled]="finishDisabled()" (click)="finish()" class="btn btn-primary">Finish</button>
+</div>

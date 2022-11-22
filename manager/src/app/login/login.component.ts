@@ -3,7 +3,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../../service/storage.service";
 import {Router} from "@angular/router";
-import {SubscribeComponent} from "../../component/subscribe/subscribe.component";
+import {SubscribeComponent} from "../../lib/component/subscribe/subscribe.component";
 
 @Component({
   selector: 'app-login',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SubscribeComponent} from "../../../component/subscribe/subscribe.component";
+import {SubscribeComponent} from "../../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 
@@ -21,7 +21,7 @@ export class ThingListComponent extends SubscribeComponent implements OnInit {
   ngOnInit(): void {
     this.add(this
       .http
-      .get('api/things')
+      .get("api/things?name=&description=")
       .subscribe( (data: any) => {
         this.things = data['hydra:member'];
       }

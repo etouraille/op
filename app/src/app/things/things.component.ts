@@ -22,7 +22,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.add(this.http.get('api/things').subscribe((data:any) => {
+    this.add(this.http.get('api/things?name=&description=').subscribe((data:any) => {
       this.things = data['hydra:member'];
     }))
   }
