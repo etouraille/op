@@ -1,0 +1,8 @@
+<app-who (onChangeId)="changeUserId($event)"></app-who>
+<table class="table">
+  <tr *ngFor="let expense of expenses">
+    <td>{{ expense.thing.name }}</td>
+    <td>{{ expense.amount  }}</td>
+  </tr>
+</table>
+<button class="btn btn-danger" (click)="payExpense()">Régler</button>

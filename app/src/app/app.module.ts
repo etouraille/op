@@ -17,6 +17,8 @@ import { ThingsComponent } from './things/things.component';
 import {NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {CommonModule} from "@angular/common";
 import {CalendarComponent} from "../lib/component/calendar/calendar.component";
+import { CardComponent } from './card/card.component';
+import { SetupCompleteComponent } from './setup-complete/setup-complete.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,8 @@ import {CalendarComponent} from "../lib/component/calendar/calendar.component";
         UnsubscribeComponent,
         ThingsComponent,
         CalendarComponent,
+        CardComponent,
+        SetupCompleteComponent,
 
     ],
     imports: [

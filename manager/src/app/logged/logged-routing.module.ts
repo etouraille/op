@@ -9,6 +9,7 @@ import {ThingSearchComponent} from "./thing-search/thing-search.component";
 import {ThingComponent} from "./thing/thing.component";
 import {ThingOutComponent} from "./thing-out/thing-out.component";
 import {ThingBackComponent} from "./thing-back/thing-back.component";
+import {IncomeComponent} from "./income/income.component";
 const routes: Routes = [
 
 
@@ -16,6 +17,10 @@ const routes: Routes = [
     path: '',
     component: LoggedComponent,
     children: [
+      {
+        path: 'income',
+        component: IncomeComponent,
+      },
       {
         path: 'back',
         component: ThingBackComponent,
