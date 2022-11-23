@@ -24,6 +24,7 @@ import {WhoComponent} from "../../lib/component/who/who.component";
 import { ThingOutComponent } from './thing-out/thing-out.component';
 import {WhoModalComponent} from "../../lib/component/who-modal/who-modal.component";
 import { ThingBackComponent } from './thing-back/thing-back.component';
+import { IncomeComponent } from './income/income.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ThingBackComponent } from './thing-back/thing-back.component';
     WhoModalComponent,
     ThingOutComponent,
     ThingBackComponent,
+    IncomeComponent,
   ],
   imports: [
     CommonModule,
