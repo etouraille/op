@@ -1,10 +1,17 @@
-<form id="payment-form">
-  <div id="payment-element">
-    <!-- Elements will create form elements here -->
+<div class="parent col">
+  <div class="center">
+    <div *ngFor="let card of cards;let i = index" class="item large ">
+     <app-payment-card [expirationMonth]="card.card.exp_month" [expirationYear]="card.card.exp_year" [number]="card.card.last4" ></app-payment-card>
+      <button class="btn btn-danger" (click)="detach(i)">Delete</button>
+    </div>
   </div>
-  <button id="submit">Submit</button>
-  <div id="error-message">
-    <!-- Display error message to your customers here -->
-  </div>
-</form>
-
+  <form id="payment-form">
+    <div id="payment-element">
+      <!-- Elements will create form elements here -->
+    </div>
+    <button id="submit" class="btn btn-secondary">Submit</button>
+    <div id="error">
+      <!-- Display error message to your customers here -->
+    </div>
+  </form>
+</div>

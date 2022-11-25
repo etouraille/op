@@ -1,8 +1,200 @@
+@import '~bootstrap/scss/bootstrap';
+
+
+$color-red:#d770a7;
+$color-blue: #7999d7;
+$color-pale: #afbcd6;
+
 /* You can add global styles to this file, and also import other style files */
-.container {
-  display: flex;
-  flex-direction: row;
-}
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+
+html {
+  height: 100%;
+
+}
+body {
+  height: 100%;
+  position: relative;
+
+}
+app-root {
+  height: 100%;
+  display: block;
+}
+app-home {
+  height: 100%;
+  display: block;
+}
+.header {
+  height:50px;
+  width:100%;
+  top:0px;
+  left:0px;
+  background: #CCCCCC;
+  position:fixed;
+}
+.content {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height:100%;
+}
+div#container {
+  /* The power of flexboxes! */
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+div#container > .content > app-card > div {
+  height: 100vh;
+}
+div#container.web {
+  height: 100vh;
+}
+div#container > .content {
+  /* Key part: Eat the remaining space! */
+  flex-grow: 1;
+}
+
+div#container > .footer {
+  flex-basis: 50px;
+}
+
+.footer {
+  height:50px;
+  width:100%;
+  bottom:0px;
+  left:0px;
+  background: #CCCCCC;
+  position:fixed;
+}
+.color-blue {
+  color: #7999d7;
+}
+.color-red {
+  color: #d770a7;
+}
+.bg-light {
+  background-color: $color-blue !important;
+}
+.btn-primary {
+  background-color: $color-red !important;
+  border: 1px solid $color-red !important;
+}
+.parent {
+  display: flex;
+  background-color: $color-pale;
+  height: 100%;
+  margin-top: 50px;
+}
+.col {
+  flex-direction: column;
+}
+form {
+  margin: auto;
+  background-color: $color-blue;
+  padding: 1em;
+  border:2px solid $color-red;
+  border-radius: 10px;
+}
+.center {
+  margin: auto;
+}
+.cards {
+  left: 200px;
+  position: relative;
+}
+.center {
+  .item.large {
+    width: 27em;
+    height: 240px;
+  }
+  .item > button {
+    float: right;
+  }
+}
+@media(screen and max-width: 400px) {
+  .center {
+    .item.large {
+      width: 21em;
+      left: -27px;
+      position: relative;
+      height: 271px;
+    }
+    .item > button {
+      bottom: -200px;
+      position: relative;
+    }
+  }
+
+}
+/* . */
+.item {
+  margin: 10px 10px 10px 10px;
+  border: 2px solid $color-red;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: $color-blue;
+  color: $secondary;
+  height: 170px;
+
+}
+.item.logged {
+  height: 176px;
+
+}
+.icon-card {
+  height: 70px;
+  width: 100px;
+}
+
+.price {
+  color: white;
+}
+.thing.parent {
+  margin-top: 50px;
+}
+.parent-center {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 400px) {
+  .parent {
+    flex-direction: column;
+  }
+  .item {
+    width: 260px;
+    height: 300px;
+
+    margin-left: 60px;
+  }
+  .item.logged {
+    height: 225px;
+
+  }
+  .icon-card {
+    width: 220px;
+    height: 120px;
+  }
+
+}
+@media(screen and max-width: 401px) {
+  .calendar-base {
+    width: 300px;
+    height: 500px;
+    border-radius: 5px;
+    background-color: white;
+    position: relative;
+    z-index: 2;
+    color: black;
+  }
+
+  .modal {
+    overflow-x: visible;
+    overflow-y: visible;
+  }
+
+}
