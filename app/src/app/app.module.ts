@@ -19,6 +19,8 @@ import {CommonModule} from "@angular/common";
 import {CalendarComponent} from "../lib/component/calendar/calendar.component";
 import { CardComponent } from './card/card.component';
 import { SetupCompleteComponent } from './setup-complete/setup-complete.component';
+import { IncomeComponent } from './income/income.component';
+import {PaymentCardComponent} from "../lib/component/payment-card/payment-card.component";
 
 @NgModule({
     declarations: [
@@ -32,6 +34,8 @@ import { SetupCompleteComponent } from './setup-complete/setup-complete.componen
         CalendarComponent,
         CardComponent,
         SetupCompleteComponent,
+        IncomeComponent,
+        PaymentCardComponent,
 
     ],
     imports: [
@@ -45,7 +49,9 @@ import { SetupCompleteComponent } from './setup-complete/setup-complete.componen
         CommonModule,
     ],
     providers: [
-        [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},]
+      {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+      { provide: 'routes', useValue: ['api/things']}
+
     ],
     exports: [
         CalendarComponent

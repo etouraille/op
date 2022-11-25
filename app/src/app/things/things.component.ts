@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {CalendarComponent} from "../../lib/component/calendar/calendar.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-things',
@@ -14,9 +15,11 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
 
   things: any[] = [];
   modalRef: any = null;
+  logged: boolean = false;
   constructor(
     private http: HttpClient,
     private service: NgbModal,
+    private store: Store<{logged: boolean}>
   ) {
     super();
   }
@@ -25,6 +28,10 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     this.add(this.http.get('api/things?name=&description=').subscribe((data:any) => {
       this.things = data['hydra:member'];
     }))
+    this.add(this.store.select((state:any) => state.login.logged).subscribe(data => {
+      this.logged = data;
+    }));
+
   }
 
   openModal(index: number) {

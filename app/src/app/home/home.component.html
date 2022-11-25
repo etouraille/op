@@ -1,2 +1,11 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<div id="container" [ngClass]="{'web' : large}">
+  <div class="header">
+    <app-header></app-header>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">
+    Footer
+  </div>
+</div>
