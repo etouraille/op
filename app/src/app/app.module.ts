@@ -22,6 +22,7 @@ import { SetupCompleteComponent } from './setup-complete/setup-complete.componen
 import { IncomeComponent } from './income/income.component';
 import {PaymentCardComponent} from "../lib/component/payment-card/payment-card.component";
 import { CoinComponent } from './coin/coin.component';
+import {LoggedGuard} from "../lib/guard/logged.guard";
 
 @NgModule({
     declarations: [
@@ -53,7 +54,6 @@ import { CoinComponent } from './coin/coin.component';
     providers: [
       {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
       { provide: 'routes', useValue: ['api/things']}
-
     ],
     exports: [
         CalendarComponent

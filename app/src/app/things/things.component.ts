@@ -5,6 +5,8 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {CalendarComponent} from "../../lib/component/calendar/calendar.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Store} from "@ngrx/store";
+import { user as setUser } from '../../lib/actions/user-action'
+import {logout} from "../../lib/actions/login-action";
 
 @Component({
   selector: 'app-things',
@@ -30,7 +32,17 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     }))
     this.add(this.store.select((state:any) => state.login.logged).subscribe(data => {
       this.logged = data;
+      console.log( data);
     }));
+    this.add(
+      this.http.get('api/ping').subscribe((user: any) => {
+        if(user.roles) {
+          this.store.dispatch(setUser({user}))
+        } else {
+          this.store.dispatch(logout());
+        }
+      })
+    )
 
   }
 
