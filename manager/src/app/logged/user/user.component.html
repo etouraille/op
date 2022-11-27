@@ -1,0 +1,7 @@
+<app-who (onChangeId)="selectUserId($event)"></app-who>
+<form [formGroup]="form" (ngSubmit)="patch()">
+  <div class="form-group">
+    <app-roles formControlName="roles"></app-roles>
+  </div>
+  <button class="btn btn-primary">Modifier</button>
+</form>
