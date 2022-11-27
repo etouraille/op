@@ -1,0 +1,12 @@
+<div class="parent">
+  <table class="table">
+    <tr *ngFor="let coin of coins">
+      <td>{{ coin.amount }}</td>
+      <td>{{ coin.thing?.name }}</td>
+    </tr>
+  </table>
+  <div>
+    <label>Solde</label>
+    <div>{{ solde }}</div>
+  </div>
+</div>
