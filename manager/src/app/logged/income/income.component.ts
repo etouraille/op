@@ -32,6 +32,19 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
   }
 
   payExpense() {
-    this.add(this.http.get('api/expenses/process?userId=' + this.user.id).subscribe());
+    this.add(
+      this
+        .http
+        .get('api/expenses/process?userId=' + this.user.id)
+        .subscribe((data: any) => {
+          //TODO popin message
+          console.log(data);
+        }));
+  }
+
+  generate() {
+    this.add(this.http.get('api/export/income?userId=' + this.user.id).subscribe((data: any) => {
+      console.log(data);
+    }))
   }
 }

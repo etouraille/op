@@ -19,12 +19,15 @@ import {BrowserModule} from "@angular/platform-browser";
 import { ThingComponent } from './thing/thing.component';
 import {EditorComponent} from "../../lib/component/editor/editor.component";
 import {CalendarComponent} from "../../lib/component/calendar/calendar.component";
-import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModalModule, NgbToastModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {WhoComponent} from "../../lib/component/who/who.component";
 import { ThingOutComponent } from './thing-out/thing-out.component';
 import {WhoModalComponent} from "../../lib/component/who-modal/who-modal.component";
 import { ThingBackComponent } from './thing-back/thing-back.component';
 import { IncomeComponent } from './income/income.component';
+import {CentPipe} from "../../lib/pipe/cent.pipe";
+import { UserComponent } from './user/user.component';
+import {AppRolesComponent} from "../../lib/component/app-roles/app-roles.component";
 
 
 @NgModule({
@@ -45,18 +48,23 @@ import { IncomeComponent } from './income/income.component';
     ThingOutComponent,
     ThingBackComponent,
     IncomeComponent,
+    CentPipe,
+    UserComponent,
+    AppRolesComponent,
   ],
-  imports: [
-    CommonModule,
-    LoggedRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FileUploadModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    NgbModalModule,
-  ], exports: [
+    imports: [
+        CommonModule,
+        LoggedRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FileUploadModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        NgbModalModule,
+        NgbTooltipModule,
+        NgbToastModule,
+    ], exports: [
     FormsModule,
   ]
 })

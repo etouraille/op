@@ -7,11 +7,13 @@ import {ThingsComponent} from "./things/things.component";
 import {CardComponent} from "./card/card.component";
 import {SetupCompleteComponent} from "./setup-complete/setup-complete.component";
 import {IncomeComponent} from "./income/income.component";
+import {CoinComponent} from "./coin/coin.component";
 
 const routes: Routes = [{
   path: '',
   component: HomeComponent,
   children: [
+    { path: 'coin', component: CoinComponent},
     { path: 'income', component: IncomeComponent},
     { path: 'setup-complete', component: SetupCompleteComponent},
     { path: 'card', component: CardComponent},

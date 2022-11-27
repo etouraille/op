@@ -2,7 +2,9 @@
 <table class="table">
   <tr *ngFor="let expense of expenses">
     <td>{{ expense.thing.name }}</td>
-    <td>{{ expense.amount  }}</td>
+    <td>{{ expense.reservation.startDate | date}} au {{ expense.reservation.backDate | date}} à {{ expense.thing.dailyPrice }} &euro;</td>
+    <td>{{ expense.amount | cent }}&euro;</td>
   </tr>
 </table>
+<button class="btn btn-primary" (click)="generate()">Générer la facture</button>
 <button class="btn btn-danger" (click)="payExpense()">Régler</button>

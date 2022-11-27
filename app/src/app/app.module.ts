@@ -21,6 +21,7 @@ import { CardComponent } from './card/card.component';
 import { SetupCompleteComponent } from './setup-complete/setup-complete.component';
 import { IncomeComponent } from './income/income.component';
 import {PaymentCardComponent} from "../lib/component/payment-card/payment-card.component";
+import { CoinComponent } from './coin/coin.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import {PaymentCardComponent} from "../lib/component/payment-card/payment-card.c
         SetupCompleteComponent,
         IncomeComponent,
         PaymentCardComponent,
+        CoinComponent,
 
     ],
     imports: [

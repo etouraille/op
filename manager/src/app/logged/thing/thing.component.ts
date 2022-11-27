@@ -41,6 +41,7 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
       this.ref = this.modalService.open(CalendarComponent);
       this.ref.componentInstance.reservations = this.thing.reservations;
       this.ref.componentInstance.userId = dataId.id;
+      this.ref.componentInstance._borrow = true;
       this.ref.result.then((subs: any) => {
         let obj = {...subs, owner: 'api/users/' + dataId.id, state: 1 , thing: 'api/things/' + this.thing.id };
         this.add(this.http.post('api/reservations', obj).subscribe(reservation => {

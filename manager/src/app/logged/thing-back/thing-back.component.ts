@@ -30,15 +30,18 @@ export class ThingBackComponent extends SubscribeComponent implements OnInit {
   }
 
   back(thing: any, i: number) {
+
+    //TODO a revoir, mettre tout dans une même transaction.
     let reservation = thing.reservations.find((elem: any) => elem.state === 1);
     let index = thing.reservations.findIndex((elem: any) => elem.state === 1)
     this.add(this.http.patch('api/reservations/' + reservation.id ,
-      {state: 2, backDate: new Date()}).pipe(switchMap((reservation: any) => {
+      {state: 2, backDate: new Date()})
+      .pipe(switchMap((reservation: any) => {
       this.thingsOut[i].reservations[index] = reservation;
-      this.selectUserId(this.user.id);
       return this.http.put('api/thing-back', thing);
     })).subscribe((data: any) => {
-      console.log(data);
+        this.selectUserId(this.user.id);
+        console.log(data);
     }));
   }
 }

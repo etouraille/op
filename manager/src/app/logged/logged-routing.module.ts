@@ -10,6 +10,7 @@ import {ThingComponent} from "./thing/thing.component";
 import {ThingOutComponent} from "./thing-out/thing-out.component";
 import {ThingBackComponent} from "./thing-back/thing-back.component";
 import {IncomeComponent} from "./income/income.component";
+import {UserComponent} from "./user/user.component";
 const routes: Routes = [
 
 
@@ -18,6 +19,9 @@ const routes: Routes = [
     component: LoggedComponent,
     children: [
       {
+        path: 'user',
+        component: UserComponent,
+      },{
         path: 'income',
         component: IncomeComponent,
       },
