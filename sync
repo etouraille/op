@@ -1,1 +1,1 @@
-rsync -avz api ubuntu@ami:api
+rsync -avz api/ ubuntu@ami:api

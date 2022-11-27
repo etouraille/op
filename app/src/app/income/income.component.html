@@ -1,1 +1,9 @@
-<a class="btn btn-primary" href="{{ url }}">Income</a>
+<div class="parent">
+  <a class="btn btn-primary" href="{{ url }}">Income</a>
+  <table class="table">
+    <tr *ngFor="let income of incomes">
+      <td>{{ income.amount }}</td>
+    </tr>
+  </table>
+  <div>{{ solde }}</div>
+</div>

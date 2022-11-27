@@ -10,6 +10,8 @@ import {HttpClient} from "@angular/common/http";
 export class IncomeComponent extends SubscribeComponent implements OnInit {
 
   url: any = null;
+  incomes: any[] = [];
+  solde: number = 0;
 
   constructor(
     private http: HttpClient
@@ -21,6 +23,15 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
     this.add(this.http.get('api/customer/account/url').subscribe((data: any) => {
       this.url = data.url;
     }))
+    this.add(
+      this
+        .http
+        .get('api/incomes')
+        .subscribe((data: any) => {
+          this.incomes = data['hydra:member'];
+          this.solde = this.incomes.reduce((a, b) => a + b.amount , 0);
+        })
+    )
   }
 
 }
