@@ -1,1 +1,2 @@
 rsync -avz api/ ubuntu@ami:api
+rsync -avz cdn/ --exclude cdn/public ubuntu@ami:cdn

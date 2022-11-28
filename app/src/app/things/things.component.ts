@@ -7,6 +7,9 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Store} from "@ngrx/store";
 import { user as setUser } from '../../lib/actions/user-action'
 import {logout} from "../../lib/actions/login-action";
+import {of, switchMap, tap} from "rxjs";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-things',
@@ -18,10 +21,13 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
   things: any[] = [];
   modalRef: any = null;
   logged: boolean = false;
+  isMember: boolean = false;
   constructor(
     private http: HttpClient,
     private service: NgbModal,
-    private store: Store<{logged: boolean}>
+    private store: Store<{logged: boolean}>,
+    private router: Router,
+    private toastR: ToastrService,
   ) {
     super();
   }
@@ -43,7 +49,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
         }
       })
     )
-
+    this.redirectOnCardIfLoggedAndNoCard();
   }
 
   openModal(index: number) {
@@ -58,6 +64,31 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
         this.things[index].reservations.push(reservation);
       }));
     });
+  }
 
+  redirectOnCardIfLoggedAndNoCard() {
+    this.add(this.store.select((data:any) => data.login)
+      .pipe(
+        switchMap((login:any) => {
+          if(!login.logged) {
+            return of([0,1,2]);
+          }
+          else {
+            this.isMember = login?.user?.roles.includes('ROLE_MEMBER');
+            return this.http.get<any[]>('api/available/card')
+          }
+        }),
+        tap((array: any[]) => {
+          if(array.length === 0) {
+            this.add(this
+              .toastR
+              .error(this.isMember ? 'Rajouter une carte pour pouvoir payer la dégradation des objets': 'Rajouter une carte pour pouvoir payer en boutique')
+              .onTap
+              .subscribe(() => this.router.navigate(['card']))
+            );
+          }
+        })
+      ).subscribe()
+    );
   }
 }

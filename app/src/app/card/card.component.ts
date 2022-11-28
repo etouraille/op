@@ -20,6 +20,7 @@ export class CardComponent extends SubscribeComponent implements OnInit {
   }
 
   detach(index: number) {
+    console.log(index);
     this.http.delete('api/available/card/' + this.cards[index].id)
       .subscribe((data:any) => {
         this.loadCards();
@@ -51,7 +52,7 @@ export class CardComponent extends SubscribeComponent implements OnInit {
             fontSize: '16px',
             '::placeholder': {
               color: '#aab7c4'
-            }
+            },
           },
           invalid: {
             color: '#fa755a',

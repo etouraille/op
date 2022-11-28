@@ -28,7 +28,7 @@ import { IncomeComponent } from './income/income.component';
 import {CentPipe} from "../../lib/pipe/cent.pipe";
 import { UserComponent } from './user/user.component';
 import {AppRolesComponent} from "../../lib/component/app-roles/app-roles.component";
-
+import {IndividualConfig, ToastrModule, ToastrService} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -64,6 +64,7 @@ import {AppRolesComponent} from "../../lib/component/app-roles/app-roles.compone
         NgbModalModule,
         NgbTooltipModule,
         NgbToastModule,
+
     ], exports: [
     FormsModule,
   ]

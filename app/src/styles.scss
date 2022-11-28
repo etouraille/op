@@ -3,6 +3,7 @@
 
 $color-red:#d770a7;
 $color-blue: #7999d7;
+$color-blue: #218BC3;
 $color-pale: #afbcd6;
 
 /* You can add global styles to this file, and also import other style files */
@@ -87,10 +88,19 @@ div#container > .footer {
   border: 1px solid $color-red !important;
 }
 .parent {
-  display: flex;
   background-color: $color-pale;
   height: 100%;
-  margin-top: 100px;
+  margin-top:50px;
+}
+.flex {
+  display: flex;
+
+}
+
+.wrap {
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: flex-start;
 }
 .col {
   flex-direction: column;
@@ -123,7 +133,7 @@ form {
     .item.large {
       width: 21em;
       left: -27px;
-      position: relative;
+      position: inherit;
       height: 271px;
     }
     .item > button {
@@ -135,7 +145,7 @@ form {
 }
 /* . */
 .item {
-  margin: 10px 10px 10px 10px;
+  margin: 30px 10px 10px 10px;
   border: 2px solid $color-red;
   border-radius: 10px;
   padding: 1em;
@@ -152,6 +162,7 @@ form {
   height: 70px;
   width: 100px;
 }
+
 
 .price {
   color: white;
@@ -198,5 +209,31 @@ form {
     overflow-x: visible;
     overflow-y: visible;
   }
+}
+.card {
+  position: inherit;
+}
 
+.income {
+  .blackboard {
+    margin-left: 10em;
+    margin-top: 53px;
+    .row-blackboard {
+      background-color: $color-blue;
+      padding: 1em;
+      border-radius: 5px;
+      .in {
+        margin: -12px;
+        background-color: grey;
+        border: 1px solid white;
+        border-radius: 5px;
+        //border: 1px solid white;
+        .cell {
+          padding: 1em;
+          color: white;
+        }
+
+      }
+    }
+  }
 }

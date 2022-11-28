@@ -23,6 +23,8 @@ import { IncomeComponent } from './income/income.component';
 import {PaymentCardComponent} from "../lib/component/payment-card/payment-card.component";
 import { CoinComponent } from './coin/coin.component';
 import {LoggedGuard} from "../lib/guard/logged.guard";
+import {ToastrModule} from "ngx-toastr";
+import {CentPipe} from "../lib/pipe/cent.pipe";
 
 @NgModule({
     declarations: [
@@ -39,7 +41,7 @@ import {LoggedGuard} from "../lib/guard/logged.guard";
         IncomeComponent,
         PaymentCardComponent,
         CoinComponent,
-
+        CentPipe
     ],
     imports: [
         BrowserModule,
@@ -50,6 +52,7 @@ import {LoggedGuard} from "../lib/guard/logged.guard";
         NgbModule,
         NgbModalModule,
         CommonModule,
+        ToastrModule.forRoot(),
     ],
     providers: [
       {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

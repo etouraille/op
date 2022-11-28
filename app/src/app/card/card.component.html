@@ -1,8 +1,8 @@
-<div class="parent col">
-  <div class="center">
+<div class="card parent col flex">
+  <div class="center" *ngIf="cards.length > 0">
     <div *ngFor="let card of cards;let i = index" class="item large ">
      <app-payment-card [expirationMonth]="card.card.exp_month" [expirationYear]="card.card.exp_year" [number]="card.card.last4" ></app-payment-card>
-      <button class="btn btn-danger" (click)="detach(i)">Delete</button>
+      <button class="btn btn-danger front" type="button" (click)="detach(i)">Delete</button>
     </div>
   </div>
   <form id="payment-form">

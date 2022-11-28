@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {loadStripe} from "@stripe/stripe-js";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-setup-complete',
@@ -13,7 +14,10 @@ export class SetupCompleteComponent implements OnInit {
   stripe: any;
   message: string = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private toastR: ToastrService,
+  ) { }
 
   async ngOnInit() {
     // Initialize Stripe.js using your publishable key
@@ -40,6 +44,8 @@ export class SetupCompleteComponent implements OnInit {
       switch (setupIntent.setupIntent.status) {
         case 'succeeded': {
           this.message = 'Success! Your payment method has been saved.';
+          this.toastR.success(this.message);
+          this.router.navigate(['card']);
           break;
         }
 
