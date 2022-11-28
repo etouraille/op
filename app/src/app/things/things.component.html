@@ -1,4 +1,4 @@
-<div class="thing parent">
+<div class="thing parent wrap flex">
   <div *ngFor="let thing of things; let i = index;" class="item"
        [ngClass]="{'logged' : logged }">
     <img class="icon-card" [src]="'http://localhost:3000/' + thing.pictures[0].picture" alt="Card image cap">

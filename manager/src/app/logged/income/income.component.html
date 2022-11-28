@@ -6,5 +6,15 @@
     <td>{{ expense.amount | cent }}&euro;</td>
   </tr>
 </table>
-<button class="btn btn-primary" (click)="generate()">Générer la facture</button>
-<button class="btn btn-danger" (click)="payExpense()">Régler</button>
+<button *ngIf="expenses.length > 0 && !expenses[0]?.incomeData?.file" class="btn btn-primary" (click)="generate()">Générer la facture</button>
+<button *ngIf="expenses[0]?.incomeData?.file && expenses[0]?.status=='pending' "class="btn btn-danger" (click)="payExpense()">Régler</button>
+{{ bill }}
+<div *ngIf="url">
+  <iframe
+    [src]="url"
+    frameBorder="0"
+    scrolling="auto"
+    height="1200px"
+    width="100%"
+  ></iframe>
+</div>

@@ -1,9 +1,19 @@
-<div class="parent">
-  <a class="btn btn-primary" href="{{ url }}">Income</a>
-  <table class="table">
-    <tr *ngFor="let income of incomes">
-      <td>{{ income.amount }}</td>
-    </tr>
-  </table>
-  <div>{{ solde }}</div>
+<div class="parent flex wrap income">
+  <a class="btn btn-primary" href="{{ url }}">Revenus</a>
+  <div class="blackboard">
+    <div class="in border row-blackboard flex">
+      <span class="center">Montant</span>
+      <span class="center">Intitulé</span>
+    </div>
+    <div *ngFor="let income of incomes" class="border row-blackboard">
+      <div class="in">
+        <span class="cell">{{ income.amount | cent }}&euro;</span>
+        <span class="cell blue">Pour un {{ income.thing.name}}</span>
+      </div>
+    </div>
+    <div class="in border row-blackboard flex">
+      <span class="center">Total {{ solde | cent }}&euro;</span>
+      <span></span>
+    </div>
+  </div>
 </div>
