@@ -8,7 +8,7 @@ import {HeaderComponent} from "../lib/component/header/header.component";
 import { LoginComponent } from './login/login.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import { SubscribeComponent as UnsubscribeComponent } from './../lib/component/subscribe/subscribe.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "../lib/injector/injector";
 import { StoreModule } from '@ngrx/store';
@@ -25,34 +25,45 @@ import { CoinComponent } from './coin/coin.component';
 import {LoggedGuard} from "../lib/guard/logged.guard";
 import {ToastrModule} from "ngx-toastr";
 import {CentPipe} from "../lib/pipe/cent.pipe";
+import { AddComponent } from './add/add.component';
+import {PicturesComponent} from "../lib/component/pictures/pictures.component";
+import {FileUploadModule} from "../lib/module/file-upload/file-upload.module";
+import {PictureComponent} from "../lib/component/picture/picture.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [
-        AppComponent,
-        HomeComponent,
-        HeaderComponent,
-        LoginComponent,
-        SubscribeComponent,
-        UnsubscribeComponent,
-        ThingsComponent,
-        CalendarComponent,
-        CardComponent,
-        SetupCompleteComponent,
-        IncomeComponent,
-        PaymentCardComponent,
-        CoinComponent,
-        CentPipe
+      AppComponent,
+      HomeComponent,
+      HeaderComponent,
+      LoginComponent,
+      SubscribeComponent,
+      UnsubscribeComponent,
+      ThingsComponent,
+      CalendarComponent,
+      CardComponent,
+      SetupCompleteComponent,
+      IncomeComponent,
+      PaymentCardComponent,
+      CoinComponent,
+      CentPipe,
+      AddComponent,
+      PictureComponent,
+      PicturesComponent,
     ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        StoreModule.forRoot({login: loginReducer}, {}),
-        NgbModule,
-        NgbModalModule,
-        CommonModule,
-        ToastrModule.forRoot(),
+      BrowserModule,
+      BrowserAnimationsModule,
+      AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      HttpClientModule,
+      StoreModule.forRoot({login: loginReducer}, {}),
+      NgbModule,
+      NgbModalModule,
+      CommonModule,
+      ToastrModule.forRoot(),
+      FileUploadModule,
     ],
     providers: [
       {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
