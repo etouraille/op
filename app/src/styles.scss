@@ -214,7 +214,7 @@ form {
   position: inherit;
 }
 
-.income {
+.income, .coin {
   .blackboard {
     margin-left: 10em;
     margin-top: 53px;
@@ -231,6 +231,16 @@ form {
         .cell {
           padding: 1em;
           color: white;
+
+        }
+        .cell.initial {
+          color: yellow;
+        }
+        .cell.plus {
+          color: green;
+        }
+        .cell.minus {
+          color: darkred;
         }
 
       }

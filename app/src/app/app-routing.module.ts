@@ -9,17 +9,24 @@ import {SetupCompleteComponent} from "./setup-complete/setup-complete.component"
 import {IncomeComponent} from "./income/income.component";
 import {CoinComponent} from "./coin/coin.component";
 import {LoggedGuard} from "../lib/guard/logged.guard";
+import {MemberGuard} from "../lib/guard/member.guard";
+import {AddComponent} from "./add/add.component";
 
 const routes: Routes = [{
   path: '',
   component: HomeComponent,
   children: [
     {
+      path: 'add',
+      component: AddComponent,
+      canActivate: [LoggedGuard, MemberGuard]
+    },
+    {
       path: 'coin',
       component: CoinComponent,
-      canActivate: [LoggedGuard]
+      canActivate: [LoggedGuard, MemberGuard]
     },
-    { path: 'income', component: IncomeComponent, canActivate: [LoggedGuard]},
+    { path: 'income', component: IncomeComponent, canActivate: [LoggedGuard, MemberGuard]},
     { path: 'setup-complete', component: SetupCompleteComponent, canActivate: [LoggedGuard]},
     { path: 'card', component: CardComponent, canActivate: [LoggedGuard]},
     { path: 'login', component: LoginComponent},
