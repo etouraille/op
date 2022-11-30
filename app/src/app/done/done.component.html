@@ -1,0 +1,30 @@
+<div class="done parent">
+  <div></div>
+  <div>
+    <table class="table">
+      <tr class="border">
+        <th>Objet emprunté</th>
+        <th>Date d'emprunt</th>
+        <th>Date de retour</th>
+        <th>Coût</th>
+      </tr>
+      <tr *ngFor="let thing of things;let i = index" class="border">
+        <td class="cell">{{ thing.name }}</td>
+        <td class="cell">{{ thing.reservations[0].startDate | date}}</td>
+        <td class="cell">{{ thing.reservations[0].endDate | date}}</td>
+        <td class="cell">
+          <span *ngIf="isMember">{{ thing.reservations[0].delta * thing.dailyPrice * 100}} coins</span>
+          <span *ngIf="!isMember">{{ thing.reservations[0].delta * thing.dailyPrice }}&euro;</span></td>
+      </tr>
+      <tr class="border">
+        <td class="cell">Total</td>
+        <td class="cell">&nbsp;</td>
+        <td class="cell">&nbsp;</td>
+        <td class="cell">
+          <span *ngIf="isMember">{{ total * 100 }} coins</span>
+          <span *ngIf="!isMember">{{ total }}&euro;</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

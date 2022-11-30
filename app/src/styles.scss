@@ -90,7 +90,7 @@ div#container > .footer {
 .parent {
   background-color: $color-pale;
   height: 100%;
-  margin-top:50px;
+  margin-top: 64px;
 }
 .flex {
   display: flex;
@@ -246,4 +246,20 @@ form {
       }
     }
   }
+}
+
+.waiting, .done, .current {
+  div {
+   .table {
+      tr {
+        .cell {
+          padding: 10px;
+        }
+        .red {
+          background-color: red;
+        }
+      }
+    }
+  }
+
 }

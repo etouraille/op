@@ -11,6 +11,7 @@ import {ThingOutComponent} from "./thing-out/thing-out.component";
 import {ThingBackComponent} from "./thing-back/thing-back.component";
 import {IncomeComponent} from "./income/income.component";
 import {UserComponent} from "./user/user.component";
+import {PendingComponent} from "./pending/pending.component";
 const routes: Routes = [
 
 
@@ -18,6 +19,10 @@ const routes: Routes = [
     path: '',
     component: LoggedComponent,
     children: [
+      {
+        path: 'pending',
+        component: PendingComponent,
+      },
       {
         path: 'user',
         component: UserComponent,

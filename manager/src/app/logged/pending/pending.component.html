@@ -1,0 +1,21 @@
+<table class="table">
+  <div>
+    Depuis
+    <select [ngModel]="since" (ngModelChange)="changeValue($event)">
+      <option value="7">+ de 7 jours</option>
+      <option value="15">+ de 15 jours</option>
+      <option value="30">+ de 1 mois</option>
+      <option value="90"> + de 3 mois</option>
+    </select>
+  </div>
+  <tr>
+    <td>Objet</td>
+    <td>Locataire</td>
+    <td>Date de retour prévue</td>
+  </tr>
+  <tr *ngFor="let thing of things">
+    <td>{{ thing.name }}</td>
+    <td>{{ thing.reservations[0].owner.email}}</td>
+    <td>{{ thing.reservations[0].endDate | date }}</td>
+  </tr>
+</table>

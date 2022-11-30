@@ -30,6 +30,9 @@ import {PicturesComponent} from "../lib/component/pictures/pictures.component";
 import {FileUploadModule} from "../lib/module/file-upload/file-upload.module";
 import {PictureComponent} from "../lib/component/picture/picture.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { WaitingComponent } from './waiting/waiting.component';
+import { CurrentComponent } from './current/current.component';
+import { DoneComponent } from './done/done.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +53,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
       AddComponent,
       PictureComponent,
       PicturesComponent,
+      WaitingComponent,
+      CurrentComponent,
+      DoneComponent,
     ],
     imports: [
       BrowserModule,

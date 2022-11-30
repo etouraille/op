@@ -1,0 +1,17 @@
+<div class="current parent">
+  <div></div>
+  <div>
+    <table class="table">
+      <tr class="border">
+        <th>Objet emprunté</th>
+        <th>Date d'emprunt</th>
+        <th>Date de retour</th>
+      </tr>
+      <tr *ngFor="let thing of things;let i = index" class="border">
+        <td class="cell">{{ thing.name }}</td>
+        <td class="cell">{{ thing.reservations[0].startDate | date}}</td>
+        <td class="cell" [ngClass]="{'red' : pastDate(thing.reservations[0].endDate)}">{{ thing.reservations[0].endDate | date}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

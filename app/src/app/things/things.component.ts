@@ -38,7 +38,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     }))
     this.add(this.store.select((state:any) => state.login.logged).subscribe(data => {
       this.logged = data;
-      console.log( data);
+
     }));
     this.add(
       this.http.get('api/ping').subscribe((user: any) => {
@@ -62,7 +62,12 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
       dates = Object.assign(dates, { thing:  'api/things/' + this.things[index].id });
       this.add(this.http.post('api/reservations', dates).subscribe((reservation) => {
         this.things[index].reservations.push(reservation);
+        this.toastR.success('Réservation prise en compte');
+      }, (error: any) => {
+        this.toastR.error('Erreur lors de la reservation');
       }));
+    }, (reason: any) => {
+
     });
   }
 
