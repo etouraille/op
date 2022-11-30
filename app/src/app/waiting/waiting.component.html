@@ -1,0 +1,19 @@
+<div class="waiting parent">
+  <div></div>
+  <div>
+    <table class="table">
+      <tr class="border">
+        <th>Objet emprunté</th>
+        <th>Date d'emprunt prévue</th>
+        <th>Date de retour prévue</th>
+        <th class="center">Actions</th>
+      </tr>
+      <tr *ngFor="let thing of things;let i = index" class="border">
+        <td class="cell">{{ thing.name }}</td>
+        <td class="cell">{{ thing.reservations[0].startDate | date}}</td>
+        <td class="cell">{{ thing.reservations[0].endDate | date}}</td>
+        <td><button class="btn btn-danger" (click)="cancel(thing.reservations[0].id, i)">Annuler</button></td>
+      </tr>
+    </table>
+  </div>
+</div>
