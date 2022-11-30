@@ -1,4 +1,4 @@
-<app-who *ngIf="!user" (onChangeId)="changeUserId($event)"></app-who>
+<app-who *ngIf="!user" (onChangeId)="changeUserId($event)" [header]="'Pour quel utilisateur souhaitez vous sortir un objet'"></app-who>
 <div *ngIf="user">{{ user.email }}<button (click)="user=null" class="btn btn-secondary">Change User</button></div>
 <div *ngIf="user">
   <app-search [user]="user" [things]="things" (onChangeId)="changeThingId($event)"></app-search>

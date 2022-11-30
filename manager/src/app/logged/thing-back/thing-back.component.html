@@ -1,4 +1,9 @@
-<app-who (onChangeId)="selectUserId($event)" ></app-who>
-<div *ngFor="let thing of thingsOut;let i = index;">
-  {{ thing.name }}<button (click)="back(thing, i)" class="btn btn-danger">Back</button>
-</div>
+<app-who (onChangeId)="selectUserId($event)" [header]="'Pour quel utilisateur souhaitez vous rentrer un objet'"></app-who>
+<table class="table">
+  <tr *ngFor="let thing of thingsOut;let i = index;">
+    <td>{{ thing.name }}</td>
+    <td>
+      <button (click)="back(thing, i)" class="btn btn-danger">Back</button>
+    </td>
+  </tr>
+</table>

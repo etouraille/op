@@ -1,4 +1,4 @@
-<app-who (onChangeId)="selectUserId($event)"></app-who>
+<app-who (onChangeId)="selectUserId($event)" [header]="'Choisir un utilisateur pour modifier ces droits'"></app-who>
 <form [formGroup]="form" (ngSubmit)="patch()">
   <div class="form-group">
     <app-roles formControlName="roles"></app-roles>

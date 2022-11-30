@@ -4,6 +4,7 @@ import {SubscribeComponent} from "../../../lib/component/subscribe/subscribe.com
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {switchMap, tap} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-thing-edit',
@@ -29,7 +30,9 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private toastR: ToastrService,
   ) {
     super()
   }
@@ -40,7 +43,7 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
         this.id = param.get('id');
       return  this.http.get('api/things/' + this.id);
     }), tap((data: any) => {
-        data.owner = data.owner.id;
+        data.owner = data?.owner?.id;
         this.thing = data;
         this.editThingForm.patchValue(this.thing);
         })
@@ -48,7 +51,7 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
     this.add(
       this
         .http
-        .get('api/users')
+        .get('api/users?email=&lastname=&firstname=')
         .subscribe((data: any) => {
           this.users = data['hydra:member'];
         })
@@ -56,9 +59,16 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
   }
 
   submit(): void {
-    let obj = this.editThingForm.value;
+    let obj : any = Object.assign({}, this.editThingForm.value);
     obj.owner = 'api/users/' + obj.owner;
-    this.add(this.http.put('api/things/' + this.id, obj).subscribe())
+    obj.dailyPrice = parseFloat(obj.dailyPrice);
+    obj.price = parseFloat(obj.price)
+    this.add(this.http.put('api/things/' + this.id, obj).subscribe(() => {
+      this.toastR.success('Objet modifié');
+      this.router.navigate(['logged/thing-list'])
+    }, (error: any) => {
+      this.toastR.error(error, 'erreur');
+    }))
   }
 
   addPicture() {

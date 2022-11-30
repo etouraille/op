@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from "./app-routing.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthInterceptor} from "../injector/injector";
+import {AuthInterceptor} from "../lib/injector/injector";
 import { LoggedComponent } from './logged/logged.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {StoreModule} from "@ngrx/store";
+import {loginReducer} from "../lib/reducers/app-reducer";
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import {ToastrModule} from "ngx-toastr";
     ToastrModule.forRoot({
       positionClass :'toast-bottom-right'
     }),
+    StoreModule.forRoot({ login: loginReducer })
 
   ],
   providers: [
@@ -28,6 +31,10 @@ import {ToastrModule} from "ngx-toastr";
         provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptor,
         multi: true
+      },
+      {
+        provide: 'routes',
+        useValue: []
       }
     ]
   ],

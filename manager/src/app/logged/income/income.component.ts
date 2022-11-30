@@ -16,6 +16,7 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
   expenses: any[] = [];
   bill: any = null;
   url: any = null;
+  total: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -34,6 +35,7 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
       return this.http.get('api/expenses?userId=' + user.id);
     })).subscribe((data: any) => {
       this.expenses = data['hydra:member'];
+      this.total = this.expenses.reduce((a: any, b: any) => a + b.amount, 0);
       this.bill = this.expenses[0]?.incomeData?.file;
       if(this.bill) {
         setTimeout(() => {

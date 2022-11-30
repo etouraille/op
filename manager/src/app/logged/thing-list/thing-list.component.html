@@ -3,10 +3,11 @@
     <tr *ngFor="let thing of things;let i = index;">
       <td>{{ thing.name}}</td>
       <td>{{ thing.description}}</td>
-      <td>{{ thing.owner.email}}</td>
+      <td>{{ thing?.owner?.email}}</td>
       <td><app-picture [pictures]="thing.pictures"></app-picture></td>
       <td><button (click)=delete(thing.id) class="btn btn-danger">-</button></td>
       <td><button (click)="edit(thing.id)" class="btn btn-primary">Edit</button></td>
+      <td><input type="checkbox" [ngModel]="thing.status!=='pending'" (ngModelChange)="changeStatus(thing.id, $event)"/>Actif</td>
     </tr>
   </table>
 </div>
