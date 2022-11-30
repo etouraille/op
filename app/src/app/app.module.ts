@@ -69,9 +69,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
       {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
       { provide: 'routes', useValue: ['api/things']}
     ],
-    exports: [
-        CalendarComponent
-    ],
+  exports: [
+    CalendarComponent,
+    PicturesComponent
+  ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

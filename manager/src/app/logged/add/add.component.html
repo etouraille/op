@@ -14,12 +14,13 @@
           <label>Prix</label>
           <input id="price" class="form-control" formControlName="price" />
         </div>
+        <div class="form-group">
+          <label>Prix de location</label>
+          <input id="dailyPrice" class="form-control" formControlName="dailyPrice" />
+        </div>
         <div class="form-group" >
-            <label>Images</label>
-          <div formArrayName="pictures">
-            <app-file-upload *ngFor="let picture of pictures.controls; let i = index;" [formControlName]="i"></app-file-upload>
-          </div>
-          <button class="btn btn-secondary" (click)="addPicture()">+</button>
+          <label>Images</label>
+          <app-pictures formControlName="pictures"></app-pictures>
         </div>
         <div class="form-group">
           <select class="form-control" formControlName="owner">

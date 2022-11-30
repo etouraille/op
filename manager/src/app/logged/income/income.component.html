@@ -1,9 +1,14 @@
-<app-who (onChangeId)="changeUserId($event)"></app-who>
+<app-who (onChangeId)="changeUserId($event)" [header]="'Choisir un utilisateur pour lequel éditez une facture'" ></app-who>
 <table class="table">
   <tr *ngFor="let expense of expenses">
     <td>{{ expense.thing.name }}</td>
-    <td>{{ expense.reservation.startDate | date}} au {{ expense.reservation.backDate | date}} à {{ expense.thing.dailyPrice }} &euro;</td>
+    <td><span style="display: none">{{ expense.reservation.startDate | date}} au {{ expense.reservation.backDate | date}}</span><span>{{ expense.reservation.delta}} Jours</span> à {{ expense.thing.dailyPrice }} &euro;</td>
     <td>{{ expense.amount | cent }}&euro;</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td>&nbsp;</td>
+    <td>{{ total | cent }}&euro;</td>
   </tr>
 </table>
 <button *ngIf="expenses.length > 0 && !expenses[0]?.incomeData?.file" class="btn btn-primary" (click)="generate()">Générer la facture</button>

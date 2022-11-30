@@ -29,29 +29,31 @@ import {CentPipe} from "../../lib/pipe/cent.pipe";
 import { UserComponent } from './user/user.component';
 import {AppRolesComponent} from "../../lib/component/app-roles/app-roles.component";
 import {IndividualConfig, ToastrModule, ToastrService} from "ngx-toastr";
+import {SwitchComponent} from "../../lib/component/switch/switch.component";
 
 @NgModule({
-  declarations: [
-    AddComponent,
-    LoggedComponent,
-    ThingListComponent,
-    PictureComponent,
-    PicturesComponent,
-    ThingEditComponent,
-    ThingSearchComponent,
-    SearchComponent,
-    ThingComponent,
-    EditorComponent,
-    CalendarComponent,
-    WhoComponent,
-    WhoModalComponent,
-    ThingOutComponent,
-    ThingBackComponent,
-    IncomeComponent,
-    CentPipe,
-    UserComponent,
-    AppRolesComponent,
-  ],
+    declarations: [
+        AddComponent,
+        LoggedComponent,
+        ThingListComponent,
+        PictureComponent,
+        PicturesComponent,
+        ThingEditComponent,
+        ThingSearchComponent,
+        SearchComponent,
+        ThingComponent,
+        EditorComponent,
+        CalendarComponent,
+        WhoComponent,
+        WhoModalComponent,
+        ThingOutComponent,
+        ThingBackComponent,
+        IncomeComponent,
+        CentPipe,
+        UserComponent,
+        AppRolesComponent,
+        SwitchComponent,
+    ],
     imports: [
         CommonModule,
         LoggedRoutingModule,
