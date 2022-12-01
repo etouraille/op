@@ -4,7 +4,10 @@
 $color-red:#d770a7;
 $color-blue: #7999d7;
 $color-blue: #218BC3;
+$color-blue: #fcb714;
 $color-pale: #afbcd6;
+$color-pale: #f7f4eb;
+$color-grey: #CCCCCC;
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -13,11 +16,12 @@ $color-pale: #afbcd6;
 html {
   height: 100%;
 
+
 }
 body {
   height: 100%;
   position: relative;
-
+  font-family: "Lucida Console", monospace, sans-serif;
 }
 app-root {
   height: 100%;
@@ -28,12 +32,31 @@ app-home {
   display: block;
 }
 .header {
-  height:50px;
+  height:200px;
   width:100%;
   top:0px;
   left:0px;
-  background: #CCCCCC;
+  background: $color-blue;
   position:fixed;
+}
+.header-title {
+  padding: 1em;
+  div.container.title {
+    height: 60px;
+    font-size:43px;
+  }
+  div.container.subtitle {
+    height: 25px;
+    font-size: 16px;
+  }
+}
+.header-subtitle {
+  background-color: $color-grey;
+  height: 125px;
+  padding: 1em;
+  div.container{
+    max-width: 1060px;
+  }
 }
 .content {
   -webkit-box-sizing: border-box;
@@ -81,16 +104,19 @@ div#container > .footer {
   color: #d770a7;
 }
 .bg-light {
-  background-color: $color-blue !important;
+  background-color: $color-pale !important;
 }
 .btn-primary {
   background-color: $color-red !important;
   border: 1px solid $color-red !important;
 }
+.content {
+  background-color: $color-pale;
+}
 .parent {
   background-color: $color-pale;
   height: 100%;
-  margin-top: 64px;
+  margin-top: calc(300px + 2em);
 }
 .flex {
   display: flex;
@@ -105,6 +131,7 @@ div#container > .footer {
 .col {
   flex-direction: column;
 }
+/*
 form {
   margin: auto;
   background-color: $color-blue;
@@ -112,6 +139,7 @@ form {
   border:2px solid $color-red;
   border-radius: 10px;
 }
+ */
 .center {
   margin: auto;
 }
@@ -168,7 +196,7 @@ form {
   color: white;
 }
 .thing.parent {
-  margin-top: 50px;
+  margin-top: calc(300px + 2em)
 }
 .parent-center {
   display: flex;
@@ -262,4 +290,51 @@ form {
     }
   }
 
+}
+.icon {
+  width: 30px;
+  height: 30px;
+}
+.thing.parent {
+  margin-bottom: 2em;
+  border: 2px solid $color-red;
+  border-radius: 5px;
+  padding: 1em;
+  max-width : 700px;
+  .title {
+    color: $color-red;
+    font-size: 30px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .description, .type {
+    background-color: $color-grey;
+    padding: 1em;
+    margin-top: 1em;
+  }
+  .vignette {
+    width:650px;
+    height: 400px;
+  }
+  .consume {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: row;
+
+    .availabilities {
+      //float: right;
+      margin: 1em;
+    }
+
+    .price {
+      //float: right;
+      margin: 1em;
+      background-color: $color-blue;
+      color: $secondary;
+      height: 40px;
+      padding: 9px;
+      border-radius: 5px;
+      border: 1px solid $secondary;
+    }
+  }
 }

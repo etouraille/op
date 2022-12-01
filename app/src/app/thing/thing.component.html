@@ -1,0 +1,18 @@
+<div class="thing parent center flex col">
+  <div class="title center">{{ thing?.name }}</div>
+
+  <div class="illustration">
+    <img class="vignette" src="{{ cdn + thing?.pictures[0]?.picture }}" />
+  </div>
+  <div class="description">{{ thing?.description }}</div>
+  <div class="type">Type: {{ thing?.type?.name}}</div>
+  <div class="consume">
+    <div class="price">Location/jour : {{thing?.dailyPrice}}&euro;</div>
+    <div class="availabilities">
+      <button class="btn btn-primary" (click)="book()">
+        <span *ngIf="isLogged">Réserver</span>
+        <span *ngIf="!isLogged">Voir les disponibilités</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,7 @@ import { IncomeComponent } from './income/income.component';
 import {PaymentCardComponent} from "../lib/component/payment-card/payment-card.component";
 import { CoinComponent } from './coin/coin.component';
 import {LoggedGuard} from "../lib/guard/logged.guard";
-import {ToastrModule} from "ngx-toastr";
+import {OverlayContainer, ToastrModule} from "ngx-toastr";
 import {CentPipe} from "../lib/pipe/cent.pipe";
 import { AddComponent } from './add/add.component';
 import {PicturesComponent} from "../lib/component/pictures/pictures.component";
@@ -33,6 +33,12 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { WaitingComponent } from './waiting/waiting.component';
 import { CurrentComponent } from './current/current.component';
 import { DoneComponent } from './done/done.component';
+import {SearchComponent} from "../lib/component/search/search.component";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import { ThingComponent } from './thing/thing.component';
+
 
 @NgModule({
     declarations: [
@@ -56,24 +62,32 @@ import { DoneComponent } from './done/done.component';
       WaitingComponent,
       CurrentComponent,
       DoneComponent,
+      SearchComponent,
+      ThingComponent,
+
     ],
-    imports: [
-      BrowserModule,
-      BrowserAnimationsModule,
-      AppRoutingModule,
-      FormsModule,
-      ReactiveFormsModule,
-      HttpClientModule,
-      StoreModule.forRoot({login: loginReducer}, {}),
-      NgbModule,
-      NgbModalModule,
-      CommonModule,
-      ToastrModule.forRoot(),
-      FileUploadModule,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    StoreModule.forRoot({login: loginReducer}, {}),
+    NgbModule,
+    NgbModalModule,
+    CommonModule,
+    ToastrModule.forRoot(),
+    FileUploadModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+
+  ],
     providers: [
-      {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-      { provide: 'routes', useValue: ['api/things']}
+      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+      { provide: 'routes', useValue: ['api/things']},
+
     ],
   exports: [
     CalendarComponent,

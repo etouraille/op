@@ -1,7 +1,7 @@
-<div class="thing parent wrap flex">
+<div class="things parent wrap flex">
   <div *ngFor="let thing of things; let i = index;" class="item"
        [ngClass]="{'logged' : logged }">
-    <img class="icon-card" [src]="'http://localhost:3000/' + thing.pictures[0].picture" alt="Card image cap">
+    <img class="icon-card" [src]="'http://localhost:3000/' + thing.pictures[0]?.picture" alt="Card image cap">
     <div class="parent-center">
       <p class="mt-1 center">{{ thing.name }}</p>
       <p *ngIf="thing.dailyPrice" class="price">{{ thing.dailyPrice}}&euro; / Jour</p>

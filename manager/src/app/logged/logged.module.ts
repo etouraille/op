@@ -72,7 +72,8 @@ import { TypeComponent } from './type/type.component';
         NgbToastModule,
 
     ], exports: [
-    FormsModule,
-  ]
+        FormsModule,
+        SearchComponent,
+    ]
 })
 export class LoggedModule {}

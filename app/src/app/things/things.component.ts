@@ -10,6 +10,7 @@ import {logout} from "../../lib/actions/login-action";
 import {of, switchMap, tap} from "rxjs";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+import {ReservationService} from "../../lib/service/reservation.service";
 
 @Component({
   selector: 'app-things',
@@ -28,6 +29,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     private store: Store<{logged: boolean}>,
     private router: Router,
     private toastR: ToastrService,
+    private reservationService: ReservationService,
   ) {
     super();
   }
@@ -56,16 +58,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     this.modalRef = this.service.open(CalendarComponent);
     this.modalRef.componentInstance.reservations = this.things[index].reservations;
     this.modalRef.result.then((dates: any) => {
-      if(!dates.endDate) {
-        dates.endDate = dates.startDate;
-      }
-      dates = Object.assign(dates, { thing:  'api/things/' + this.things[index].id });
-      this.add(this.http.post('api/reservations', dates).subscribe((reservation) => {
-        this.things[index].reservations.push(reservation);
-        this.toastR.success('Réservation prise en compte');
-      }, (error: any) => {
-        this.toastR.error('Erreur lors de la reservation');
-      }));
+      this.add(this.reservationService.book(dates, this.things[index]))
     }, (reason: any) => {
 
     });
