@@ -12,6 +12,7 @@ import {ToastrService} from "ngx-toastr";
 export class ThingListComponent extends SubscribeComponent implements OnInit {
 
   things: any[] = [];
+  types: any[] = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -28,6 +29,7 @@ export class ThingListComponent extends SubscribeComponent implements OnInit {
         this.things = data['hydra:member'];
       }
     ));
+    this.add(this.http.get('api/thing_types').subscribe((data: any) => this.types = data['hydra:member']))
   }
 
   delete(id: any) {
@@ -55,5 +57,13 @@ export class ThingListComponent extends SubscribeComponent implements OnInit {
         this.toastR.success($event? 'L objet est maintenant disponible sur le front': 'L\'objet n\'est plus disponible sur le front')
       })
     )
+  }
+
+  changeType($event: any, id: number) {
+    this.add(this.http.patch('api/things/' + id , { type: '/api/thing_types/' + $event}).subscribe(() => {
+      this.toastR.success('Type définié');
+    }, (error) => {
+      this.toastR.error('Erreur dans la modification du type');
+    }));
   }
 }

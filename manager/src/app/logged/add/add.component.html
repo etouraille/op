@@ -7,6 +7,12 @@
           <input id="name" class="form-control" formControlName="name" />
         </div>
         <div class="form-group">
+          <label for="name">Type</label>
+          <select class="form-control" formControlName="type">
+            <option *ngFor="let type of types" value="{{ type.id }}">{{ type.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="description">description</label>
           <textarea id="description" class="form-control" formControlName="description" ></textarea>
         </div>
