@@ -13,6 +13,7 @@ import {ToastrService} from "ngx-toastr";
 export class AddComponent extends SubscribeComponent implements OnInit {
   addObjectForm = this.fb.group({
     name : ['', Validators.compose([ Validators.required])],
+    type: [null, Validators.required],
     description: ['', Validators.compose([ Validators.required])],
     pictures: new FormControl([]),
     price: ['', Validators.compose([ Validators.required])],
@@ -20,6 +21,7 @@ export class AddComponent extends SubscribeComponent implements OnInit {
     owner: ['', Validators.compose([ Validators.required])],
   });
   users: any[] = [];
+  types: any[] = [];
 
 
   constructor(
@@ -39,6 +41,9 @@ export class AddComponent extends SubscribeComponent implements OnInit {
         this.users = data['hydra:member'];
       })
     )
+    this.add(this.http.get('api/thing_types').subscribe((data: any) => {
+      this.types = data['hydra:member'];
+    }))
   }
   onSubmit(): void {
     let object : any = Object.assign({}, this.addObjectForm.value);
@@ -46,6 +51,7 @@ export class AddComponent extends SubscribeComponent implements OnInit {
     // @ts-ignore
     object.price = parseFloat(object.price);
     object.dailyPrice = parseFloat(object.dailyPrice);
+    object.type = 'api/thing_types/' + object.type;
     this.add(
       this.http.post('api/things', object).subscribe(
         data => {

@@ -31,6 +31,7 @@ import {AppRolesComponent} from "../../lib/component/app-roles/app-roles.compone
 import {IndividualConfig, ToastrModule, ToastrService} from "ngx-toastr";
 import {SwitchComponent} from "../../lib/component/switch/switch.component";
 import { PendingComponent } from './pending/pending.component';
+import { TypeComponent } from './type/type.component';
 
 @NgModule({
     declarations: [
@@ -55,6 +56,7 @@ import { PendingComponent } from './pending/pending.component';
         AppRolesComponent,
         SwitchComponent,
         PendingComponent,
+        TypeComponent,
     ],
     imports: [
         CommonModule,

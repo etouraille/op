@@ -12,6 +12,7 @@ import {ThingBackComponent} from "./thing-back/thing-back.component";
 import {IncomeComponent} from "./income/income.component";
 import {UserComponent} from "./user/user.component";
 import {PendingComponent} from "./pending/pending.component";
+import {TypeComponent} from "./type/type.component";
 const routes: Routes = [
 
 
@@ -19,6 +20,14 @@ const routes: Routes = [
     path: '',
     component: LoggedComponent,
     children: [
+      {
+        path: 'type/:id',
+        component: TypeComponent,
+      },
+      {
+        path: 'type-add',
+        component: TypeComponent,
+      },
       {
         path: 'pending',
         component: PendingComponent,

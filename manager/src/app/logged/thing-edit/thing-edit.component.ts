@@ -15,6 +15,7 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
   editThingForm: any = this.fb.group({
     id: [''],
     name : ['', Validators.compose([ Validators.required])],
+    type: ['', Validators.required],
     description: ['', Validators.compose([ Validators.required])],
     pictures: new FormControl([]),
     price: ['', Validators.compose([ Validators.required])],
@@ -25,6 +26,7 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
   thing: any;
   pictures: any = { control: []};
   id: any;
+  types: any[] = [];
 
 
   constructor(
@@ -56,6 +58,9 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
           this.users = data['hydra:member'];
         })
     )
+    this.add(this.http.get('api/thing_types').subscribe((data: any) => {
+      this.types = data['hydra:member'];
+    }))
   }
 
   submit(): void {
