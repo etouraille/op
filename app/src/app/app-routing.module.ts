@@ -14,11 +14,16 @@ import {AddComponent} from "./add/add.component";
 import {WaitingComponent} from "./waiting/waiting.component";
 import {CurrentComponent} from "./current/current.component";
 import {DoneComponent} from "./done/done.component";
+import {ThingComponent} from "./thing/thing.component";
 
 const routes: Routes = [{
   path: '',
   component: HomeComponent,
   children: [
+    {
+      path: 'thing/:id',
+      component: ThingComponent,
+    },
     {
       path: 'done',
       component: DoneComponent,
