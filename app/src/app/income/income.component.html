@@ -1,5 +1,8 @@
 <div class="parent flex wrap income">
-  <a class="btn btn-primary" href="{{ url }}">Revenus</a>
+  <a class="btn btn-primary" href="{{ url }}">
+    <span *ngIf="isAccountActive">Changer vos coordonnée banquaire</span>
+    <span *ngIf="!isAccountActive">Saisissez vos coordonnée banquaire</span>
+  </a>
   <div class="blackboard">
     <div class="in border row-blackboard flex">
       <span class="center">Montant</span>
