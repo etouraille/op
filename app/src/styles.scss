@@ -358,3 +358,21 @@ form {
 
   }
 }
+.things {
+  .star {
+    margin: 1em;
+    border: 1px solid $color-red;
+    border-radius: 5px;
+    padding: 2em;
+    width: 290px;
+    height: 290px;
+    .icon-card {
+      height: 115px;
+      width: 220px;
+    }
+    .price {
+      color: black;
+      float: right;
+    }
+  }
+}

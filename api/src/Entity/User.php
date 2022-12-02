@@ -102,6 +102,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Coin::class)]
     private Collection $coins;
 
+    #[Groups(['put', 'user'])]
+    #[ORM\Column(nullable: true)]
+    private ?bool $isMemberValidated = null;
+
     public function __construct()
     {
         $this->things = new ArrayCollection();
@@ -411,6 +415,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $coin->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsMemberValidated(): ?bool
+    {
+        return $this->isMemberValidated;
+    }
+
+    public function setIsMemberValidated(?bool $isMemberValidated): self
+    {
+        $this->isMemberValidated = $isMemberValidated;
 
         return $this;
     }

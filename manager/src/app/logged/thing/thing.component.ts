@@ -36,14 +36,14 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
       return this.http.get<{state: string}>('api/things/' +id )
     })).subscribe((data: {state: string}) => {
       this.thing = data;
-      this.state.patchValue(!(this.thing.status==='pending'))
+      this.state.patchValue(this.thing.status==='active')
     }));
     this.add(this.state.valueChanges.pipe(
       switchMap((state: boolean) => {
         if(typeof state === 'boolean') {
-          let obj: any = {status: 'pending'}
+          let obj: any = {status: 'inactive'}
           if (state) {
-            obj.status = null;
+            obj.status = 'active';
           }
           return this.http.patch('api/things/' + this.thing.id, obj);
         } else {

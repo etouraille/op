@@ -9,7 +9,7 @@
       <td><app-picture [pictures]="thing.pictures"></app-picture></td>
       <td><button (click)=delete(thing.id) class="btn btn-danger">-</button></td>
       <td><button (click)="edit(thing.id)" class="btn btn-primary">Edit</button></td>
-      <td><input type="checkbox" [ngModel]="thing.status!=='pending'" (ngModelChange)="changeStatus(thing.id, $event)"/>Actif</td>
+      <td><input type="checkbox" [ngModel]="thing.status==='active'" (ngModelChange)="changeStatus(thing.id, $event)"/>Actif</td>
     </tr>
   </table>
 </div>
