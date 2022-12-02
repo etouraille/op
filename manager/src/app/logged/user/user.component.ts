@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SubscribeComponent} from "../../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -12,10 +12,14 @@ import {ToastrService} from "ngx-toastr";
 export class UserComponent extends SubscribeComponent implements OnInit {
 
   form = this.fb.group({
-    roles: [],
+    roles: new FormControl([]),
+    isMemberValidated: [null]
   })
 
   user: any = null;
+  isMember: boolean = false;
+  _roles : never[] = [];
+
 
   constructor(
     private http: HttpClient,
@@ -28,16 +32,27 @@ export class UserComponent extends SubscribeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectUserId($event: number) {
+  getUser(id: any) {
     this.add(
       this
         .http
-        .get('api/users/' + $event)
+        .get('api/users/' + id)
         .subscribe((user: any) => {
           this.form.patchValue(user);
           this.user = user;
-          console.log(user);
+          this.isMember = this.user.roles.includes('ROLE_MEMBER');
+          this._roles = this.user.roles;
         })
+    )
+  }
+
+  selectUserId($event: number) {
+    this.getUser($event);
+    this.add(
+      this.form.valueChanges.subscribe((data: any) => {
+        //this.changeRoles(data.roles);
+
+      })
     )
   }
 
@@ -51,5 +66,13 @@ export class UserComponent extends SubscribeComponent implements OnInit {
             this.toastR.success('Droits modifiés');
         })
     )
+  }
+
+  changeRoles($event: any) {
+    this._roles = $event;
+    this.isMember = $event.includes('ROLE_MEMBER');
+    if(!this.isMember) {
+      this.form.patchValue({roles: this._roles, isMemberValidated: null});
+    }
   }
 }

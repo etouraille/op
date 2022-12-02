@@ -48,9 +48,9 @@ export class ThingListComponent extends SubscribeComponent implements OnInit {
   }
 
   changeStatus(id: number, $event: any) {
-    let obj : any = { status: 'pending'};
+    let obj : any = { status: 'inactive'};
     if($event) {
-      obj.status = null;
+      obj.status = 'active';
     }
     this.add(
       this.http.patch('api/things/' + id, obj).subscribe(() => {

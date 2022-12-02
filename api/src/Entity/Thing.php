@@ -22,10 +22,11 @@ use App\Controller\UrlContoller;
 use App\Controller\Waiting;
 use App\Filter\SearchOrFIlter;
 use App\Repository\ThingRepository;
+use App\State\StarStateProvider;
+use App\State\StartStateProvider;
 use App\State\ThingBackStateProcessor;
 use App\State\ThingStateProcessor;
 use App\State\ThingStateProvider;
-use App\State\UrlStateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -105,12 +106,20 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         name: 'mes url disponibles'
     )
 ])]
+#[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/stars',
+        normalizationContext: ['groups' => ['list', 'reservation']],
+        name: 'mes objets stars',
+        provider: StarStateProvider::class
+    )
+])]
 
 #[GetCollection(normalizationContext: ['groups' => ['search']], provider: ThingStateProvider::class)]
 #[Get(normalizationContext: ['groups' => ['get', 'reservation']])]
-#[Post(denormalizationContext: ['groups' => ['post']], processor: UrlStateProcessor::class)]
-#[Put(denormalizationContext: ['groups' => ['post', 'put']], processor: UrlStateProcessor::class)]
-#[Patch(denormalizationContext: ['groups' => ['post', 'put']], processor: UrlStateProcessor::class)]
+#[Post(denormalizationContext: ['groups' => ['post']], processor: ThingStateProcessor::class)]
+#[Put(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
+#[Patch(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
 #[ApiFilter(SearchOrFIlter::class, properties: ['name', 'description'])]
 
 class Thing
@@ -151,7 +160,7 @@ class Thing
     #[ORM\OneToMany(mappedBy: 'thing', targetEntity: Reservation::class, orphanRemoval: true)]
     private Collection $reservations;
 
-    #[Groups(['post', 'collection', 'get', 'put', 'expense', 'pending'])]
+    #[Groups(['post', 'collection', 'get', 'put', 'expense', 'pending', 'list'])]
     #[ORM\Column(nullable: true)]
     private ?float $dailyPrice = null;
 
@@ -178,6 +187,10 @@ class Thing
     #[Groups(['url'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
+
+    #[Groups(['put'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $activationDate = null;
 
     public function __construct()
     {
@@ -447,6 +460,18 @@ class Thing
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getActivationDate(): ?\DateTimeInterface
+    {
+        return $this->activationDate;
+    }
+
+    public function setActivationDate(?\DateTimeInterface $activationDate): self
+    {
+        $this->activationDate = $activationDate;
 
         return $this;
     }

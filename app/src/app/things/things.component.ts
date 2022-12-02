@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ReservationService} from "../../lib/service/reservation.service";
 import {PingService} from "../../lib/service/ping.service";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-things',
@@ -21,9 +22,12 @@ import {PingService} from "../../lib/service/ping.service";
 export class ThingsComponent extends SubscribeComponent implements OnInit {
 
   things: any[] = [];
+  stars: any[] = [];
   modalRef: any = null;
   logged: boolean = false;
   isMember: boolean = false;
+  cdn: string = environment.cdn;
+
   constructor(
     private http: HttpClient,
     private service: NgbModal,
@@ -46,13 +50,16 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     }));
     this.add(this.pingService.ping());
     this.redirectOnCardIfLoggedAndNoCard();
+    this.add(this.http.get('api/stars').subscribe((data:any) => {
+      this.stars = data['hydra:member'].map((elem: any) =>  elem[0]);
+    }))
   }
 
-  openModal(index: number) {
+  openModal(thing: any) {
     this.modalRef = this.service.open(CalendarComponent);
-    this.modalRef.componentInstance.reservations = this.things[index].reservations;
+    this.modalRef.componentInstance.reservations = thing.reservations;
     this.modalRef.result.then((dates: any) => {
-      this.add(this.reservationService.book(dates, this.things[index]))
+      this.add(this.reservationService.book(dates, thing))
     }, (reason: any) => {
 
     });

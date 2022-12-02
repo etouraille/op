@@ -52,6 +52,8 @@ export class AddComponent extends SubscribeComponent implements OnInit {
     object.price = parseFloat(object.price);
     object.dailyPrice = parseFloat(object.dailyPrice);
     object.type = 'api/thing_types/' + object.type;
+    object.shop = 'api/shops/1';
+    object.satus = 'active';
     this.add(
       this.http.post('api/things', object).subscribe(
         data => {

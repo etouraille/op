@@ -88,7 +88,14 @@ import {BasketComponent} from "../lib/component/basket/basket.component";
   ],
     providers: [
       { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-      { provide: 'routes', useValue: ['api/things', 'api/url']},
+      {
+        provide: 'routes',
+        useValue: [
+          'api/things',
+          'api/url',
+          'api/stars'
+        ]
+      },
 
     ],
   exports: [

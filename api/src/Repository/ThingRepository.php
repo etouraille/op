@@ -75,7 +75,7 @@ class ThingRepository extends ServiceEntityRepository
         } else {
 
             return $this->createQueryBuilder('t')
-                ->andWhere('t.status IS NULL')
+                ->andWhere('t.status = \'active\'')
                 //->andWhere('NOT EXISTS (SELECT r FROM \App\Entity\Reservation r)')
                 ->getQuery()
                 ->getResult();
@@ -122,14 +122,15 @@ class ThingRepository extends ServiceEntityRepository
             ;
     }
 
-
-//    public function findOneBySomeField($value): ?Thing
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findStars() {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'COUNT(r) as c')
+            ->innerJoin('t.reservations', 'r')
+            ->groupBy('t')
+            ->orderBy('c', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
