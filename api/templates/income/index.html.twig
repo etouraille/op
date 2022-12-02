@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture{% endblock %}
+{% block stylesheets %}
+<style type="text/css">
+    .parent {
+        display: flex;
+        flex-direction: row;
+    }
+    .child {
+        margin: auto;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Facture pour le prêt d'objets</h1>
+    <hr />
+    <h3>Le: {{ today | date }}</h3>
+    <hr >
+    <div class="parent">
+        <div class="child">
+            <div>Queel</div>
+            <div>34, cours de la république</div>
+            <div>69100, Villeurbanne</div>
+            <div>Tel : 06 26 57 05 28</div>
+        </div>
+        <div class="child">
+            <div>{{ user.firstname }} {{ user.lastname }}</div>
+            <div>{{ user.email }}</div>
+        </div>
+    </div>
+    <hr />
+    <table class="table">
+    {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.thing.name }}</td>
+            <td>{{ expense.reservation.startDate | date }} à {{ expense.reservation.backDate | date }}</td>
+            <td>soit {{ expense.reservation.delta }} Jours à {{ expense.thing.dailyPrice }} &euro;</td>
+            <td>{{ expense.amount }}</td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ total }}</td>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}

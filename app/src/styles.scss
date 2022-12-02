@@ -338,3 +338,23 @@ form {
     }
   }
 }
+
+.basket {
+  .circle {
+    padding: 0 0 0 5px;
+    position: relative;
+    top: -45px;
+    left: 21px;
+    height: 24px;
+    width: 24px;
+    color: white;
+    background-color: $color-red;
+    border-radius: 20px;
+    border: 2px solid black;
+  }
+  .icon {
+    height: 40px;
+    width: 40px;
+
+  }
+}
