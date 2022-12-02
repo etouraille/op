@@ -1,0 +1,5 @@
+# api/config/packages/api_platform.yaml
+api_platform:
+  eager_loading:
+    fetch_partial: true
+    force_eager: false

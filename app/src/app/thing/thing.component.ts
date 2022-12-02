@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {SubscribeComponent} from "../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
-import {switchMap} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {of, switchMap} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Store} from "@ngrx/store";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {CalendarComponent} from "../../lib/component/calendar/calendar.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ReservationService} from "../../lib/service/reservation.service";
+import {PingService} from "../../lib/service/ping.service";
 
 @Component({
   selector: 'app-thing',
@@ -24,32 +25,58 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
+    private router: Router,
     private store: Store<{ login: any}>,
     private modal: NgbModal,
     private reservationService: ReservationService,
+    private pingService: PingService,
+
   ) {
     super();
     this.cdn = environment.cdn;
   }
 
   ngOnInit(): void {
+
+    let url :string ;
+
     this.add(
       this.route.paramMap.pipe(
         switchMap((param: any) => {
+          console.log(this.router.url)
           let id = param.get('id');
-          return this.http.get('api/things/' + id)
+          url = param.get('url');
+          if(this.router.url.match(/\/thing/)) {
+            return of(id);
+          } else {
+            return this.http.get('api/url');
+          }
+        }),
+        switchMap((idOrObject: any) => {
+          if(typeof(idOrObject) === 'string') {
+            return this.http.get('api/things/' + idOrObject);
+          } else {
+            let data = idOrObject['hydra:member'];
+            let index = data.findIndex((elem :any) => elem.url === url);
+            if(index< 0) {
+              this.router.navigate(['/']);
+              return of(null);
+            } else {
+              return this.http.get('api/things/' + data[index].id);
+            }
+          }
         })
       ).subscribe((thing: any) => {
-        console.log(thing);
         this.thing = thing;
       })
     )
     this.add(this.store.select((data: any) => data.login.logged).subscribe((logged: boolean) => {
       this.isLogged = logged;
     }))
+    this.add(this.pingService.ping());
   }
 
-  book() {
+  book()  {
     this.ref = this.modal.open(CalendarComponent);
     this.ref.componentInstance.reservations = this.thing.reservations;
     this.ref.componentInstance.readOnly = !this.isLogged;

@@ -37,6 +37,7 @@ export class AddComponent extends SubscribeComponent implements OnInit {
     let thing : any = this.addForm.value;
     thing.price = parseFloat(thing.price);
     thing.status = 'pending';
+    thing.shop = 'api/shops/1';
     this.add(
       this.http.post('api/thing/add', thing).subscribe((data: any) => {
         this.addForm.patchValue({ name : '', description: '', status: 'pending', pictures: [], price: 0})

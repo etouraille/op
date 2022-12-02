@@ -38,6 +38,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { ThingComponent } from './thing/thing.component';
+import {BasketComponent} from "../lib/component/basket/basket.component";
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { ThingComponent } from './thing/thing.component';
       DoneComponent,
       SearchComponent,
       ThingComponent,
+      BasketComponent,
 
     ],
   imports: [
@@ -86,7 +88,7 @@ import { ThingComponent } from './thing/thing.component';
   ],
     providers: [
       { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-      { provide: 'routes', useValue: ['api/things']},
+      { provide: 'routes', useValue: ['api/things', 'api/url']},
 
     ],
   exports: [

@@ -11,6 +11,7 @@ import {of, switchMap, tap} from "rxjs";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ReservationService} from "../../lib/service/reservation.service";
+import {PingService} from "../../lib/service/ping.service";
 
 @Component({
   selector: 'app-things',
@@ -30,6 +31,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     private router: Router,
     private toastR: ToastrService,
     private reservationService: ReservationService,
+    private pingService: PingService,
   ) {
     super();
   }
@@ -42,15 +44,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
       this.logged = data;
 
     }));
-    this.add(
-      this.http.get('api/ping').subscribe((user: any) => {
-        if(user.roles) {
-          this.store.dispatch(setUser({user}))
-        } else {
-          this.store.dispatch(logout());
-        }
-      })
-    )
+    this.add(this.pingService.ping());
     this.redirectOnCardIfLoggedAndNoCard();
   }
 

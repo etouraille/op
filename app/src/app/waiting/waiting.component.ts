@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {SubscribeComponent} from "../../lib/component/subscribe/subscribe.component";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
+import {Store} from "@ngrx/store";
+import {decrease, increase} from "../../lib/actions/book-action";
 
 @Component({
   selector: 'app-waiting',
@@ -14,6 +16,7 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastR: ToastrService,
+    private store: Store<{login: any}>
   ) {
     super();
   }
@@ -31,6 +34,7 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
     this.add(this.http.delete('api/reservations/' + id).subscribe((data: any) => {
       this.toastR.success('Reservation annulée');
       this.things.splice(i,1);
+      this.store.dispatch(decrease());
     }, (error: any) => {
       this.toastR.error('Annulation impossible');
     }))

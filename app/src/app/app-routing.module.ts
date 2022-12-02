@@ -54,7 +54,12 @@ const routes: Routes = [{
     { path: 'card', component: CardComponent, canActivate: [LoggedGuard]},
     { path: 'login', component: LoginComponent},
     { path: 'subscribe', component: SubscribeComponent},
-    { path: '', component: ThingsComponent}
+    { path: '', component: ThingsComponent},
+    {
+      path: ':url',
+      component: ThingComponent,
+    },
+
   ]
 }];
 
