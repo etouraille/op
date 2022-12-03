@@ -22,6 +22,9 @@ use App\Controller\UrlContoller;
 use App\Controller\Waiting;
 use App\Filter\SearchOrFIlter;
 use App\Repository\ThingRepository;
+use App\State\LastStateProvider;
+use App\State\ProposedStateProvider;
+use App\State\SearchStateProvider;
 use App\State\StarStateProvider;
 use App\State\StartStateProvider;
 use App\State\ThingBackStateProcessor;
@@ -38,6 +41,14 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 #[ORM\Index(name: "search_index", columns: ["name", 'description'])]
 #[ORM\Index(name: "search_index_name", columns: ["name"])]
 #[ORM\Index(name: "search_index_description", columns: ['description'])]
+#[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/things/search',
+        normalizationContext: ['groups' => ['search']],
+        name: 'search things',
+        provider: SearchStateProvider::class,
+    )
+])]
 #[ApiResource(operations: [
     new GetCollection(
         uriTemplate: '/things-out',
@@ -115,6 +126,22 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
     )
 ])]
 
+#[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/lasts',
+        normalizationContext: ['groups' => ['list', 'reservation']],
+        name: 'mes objets dernièrement ajoutés',
+        provider: LastStateProvider::class
+    )
+])]
+#[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/proposed',
+        normalizationContext: ['groups' => ['list', 'reservation']],
+        name: 'Proposés par les membre',
+        provider: ProposedStateProvider::class
+    )
+])]
 #[GetCollection(normalizationContext: ['groups' => ['search']], provider: ThingStateProvider::class)]
 #[Get(normalizationContext: ['groups' => ['get', 'reservation']])]
 #[Post(denormalizationContext: ['groups' => ['post']], processor: ThingStateProcessor::class)]
@@ -152,7 +179,7 @@ class Thing
     private Collection $pictures;
 
     #[MaxDepth(2)]
-    #[Groups(['post', 'collection', 'get', 'tback'])]
+    #[Groups(['post', 'collection', 'get', 'tback', 'list'])]
     #[ORM\ManyToOne(cascade: ['persist'], fetch: 'EAGER', inversedBy: 'things')]
     private ?User $owner = null;
 

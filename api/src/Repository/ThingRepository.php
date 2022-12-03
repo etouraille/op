@@ -133,4 +133,32 @@ class ThingRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findLasts() {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.activationDate IS NOT NULL')
+            ->orderBy('t.activationDate', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findPendings() {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.status = \'pending\'')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function search($filter) {
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.type', 'type')
+            ->andWhere('type.name LIKE :like OR t.name LIKE :like OR t.description LIKE :like')
+            ->setParameter('like', '%' . $filter . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

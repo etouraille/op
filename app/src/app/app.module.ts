@@ -93,7 +93,9 @@ import {BasketComponent} from "../lib/component/basket/basket.component";
         useValue: [
           'api/things',
           'api/url',
-          'api/stars'
+          'api/stars',
+          'api/lasts',
+          'api/proposed',
         ]
       },
 

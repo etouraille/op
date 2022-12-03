@@ -36,6 +36,8 @@ security:
         - { path: ^/api/users, roles: PUBLIC_ACCESS  }
         - { path: ^/api/url, roles: PUBLIC_ACCESS  }
         - { path: ^/api/stars, roles: PUBLIC_ACCESS }
+        - { path: ^/api/lasts, roles: PUBLIC_ACCESS }
+        - { path: ^/api/proposed, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/users, roles: PUBLIC_ACCESS }

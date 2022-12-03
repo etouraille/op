@@ -23,10 +23,13 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
 
   things: any[] = [];
   stars: any[] = [];
+  lasts: any[] = [];
+  proposed: any[] = [];
   modalRef: any = null;
   logged: boolean = false;
   isMember: boolean = false;
   cdn: string = environment.cdn;
+  private user: any = null;
 
   constructor(
     private http: HttpClient,
@@ -44,20 +47,30 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     this.add(this.http.get('api/things?name=&description=').subscribe((data:any) => {
       this.things = data['hydra:member'];
     }))
-    this.add(this.store.select((state:any) => state.login.logged).subscribe(data => {
-      this.logged = data;
+    this.add(this.store.select((state:any) => state.login).subscribe(data => {
+      this.logged = data.logged;
+      this.user = data.user;
 
     }));
     this.add(this.pingService.ping());
     this.redirectOnCardIfLoggedAndNoCard();
-    this.add(this.http.get('api/stars').subscribe((data:any) => {
+    this.add(this.http.get('api/stars').pipe(switchMap((data:any) => {
       this.stars = data['hydra:member'].map((elem: any) =>  elem[0]);
+      return this.http.get('api/lasts')
+    })).subscribe((data: any) => {
+      this.lasts = data['hydra:member'];
+      // on exclue les entité deja présentés dans stars. pour ca qu'on en a pris le double.
+      this.lasts = this.lasts.filter((last:any)=> !this.stars.map(elem => elem.id).includes(last.id)).slice(0,4);
+    }));
+    this.add(this.http.get('api/proposed').subscribe((data: any) => {
+      this.proposed = data['hydra:member'];
     }))
   }
 
   openModal(thing: any) {
     this.modalRef = this.service.open(CalendarComponent);
     this.modalRef.componentInstance.reservations = thing.reservations;
+    this.modalRef.componentInstance.readOnly = !(this.logged && !this.user?.roles?.includes('ROLE_MEMBER') || this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated)
     this.modalRef.result.then((dates: any) => {
       this.add(this.reservationService.book(dates, thing))
     }, (reason: any) => {
@@ -89,5 +102,10 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
         })
       ).subscribe()
     );
+  }
+
+  navigate(id: number) {
+    this.router.navigate(['thing/' + id]);
+
   }
 }
