@@ -22,8 +22,8 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
     denormalizationContext: ['groups' => ['post']],
     processor: ReservationStateProcessor::class
 )]
-#[Patch(denormalizationContext: ['groups' => ['post']])]
-#[Delete]
+#[Patch(denormalizationContext: ['groups' => ['post']], processor: ReservationStateProcessor::class)]
+#[Delete(processor: ReservationStateProcessor::class)]
 class Reservation
 {
     const STATE_BOOKED = null; // or null mostly not set.

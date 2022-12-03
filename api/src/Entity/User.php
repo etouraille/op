@@ -45,10 +45,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['collection', 'get','put','tback', 'search', 'user', 'reservation'])]
+    #[Groups(['collection', 'get','put','tback', 'search', 'user', 'reservation', 'list'])]
     private ?int $id = null;
 
-    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation'])]
+    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation', 'list'])]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -70,11 +70,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Reservation::class)]
     private Collection $reservations;
 
-    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation'])]
+    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation', 'list'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstname = null;
 
-    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation'])]
+    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation', 'list'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastname = null;
 
@@ -102,7 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Coin::class)]
     private Collection $coins;
 
-    #[Groups(['put', 'user'])]
+    #[Groups(['put', 'user', 'get'])]
     #[ORM\Column(nullable: true)]
     private ?bool $isMemberValidated = null;
 

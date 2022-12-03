@@ -34,10 +34,8 @@ app-home {
 .header {
   height:200px;
   width:100%;
-  top:0px;
-  left:0px;
   background: $color-blue;
-  position:fixed;
+  position:relative;
 }
 .header-title {
   padding: 1em;
@@ -62,8 +60,9 @@ app-home {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  overflow-y:scroll;
-  height: 90%;
+  //overflow-y:scroll;
+  //height: 100%;
+
 }
 div#container {
   /* The power of flexboxes! */
@@ -73,19 +72,16 @@ div#container {
   min-height: 100vh;
 }
 
-div#container > .content > app-card > div {
-  height: 100vh;
-}
 div#container.web {
   height: 100vh;
 }
 div#container > .content {
   /* Key part: Eat the remaining space! */
-  flex-grow: 1;
+
 }
 
 div#container > .footer {
-  flex-basis: 50px;
+  //flex-basis: 50px;
 }
 
 .footer {
@@ -116,7 +112,7 @@ div#container > .footer {
 .parent {
   background-color: $color-pale;
   height: 100%;
-  margin-top: calc(300px + 2em);
+  margin-top: 10em;
 }
 .flex {
   display: flex;
@@ -141,7 +137,8 @@ form {
 }
  */
 .center {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 .cards {
   left: 200px;
@@ -194,9 +191,6 @@ form {
 
 .price {
   color: white;
-}
-.thing.parent {
-  margin-top: calc(300px + 2em)
 }
 .parent-center {
   display: flex;
@@ -359,7 +353,7 @@ form {
   }
 }
 .things {
-  .star {
+  .star, .last {
     margin: 1em;
     border: 1px solid $color-red;
     border-radius: 5px;
@@ -373,6 +367,25 @@ form {
     .price {
       color: black;
       float: right;
+    }
+  }
+  &.proposed {
+    border: 1px solid $color-red;
+    border-radius: 5px;
+    padding: 1em;
+    div {
+      padding-right: 1em;
+      .name {
+        font-size: 20px;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+
+      .by {
+        font-size: 10px;
+      }
     }
   }
 }

@@ -22,6 +22,7 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
   cdn: any = null;
   isLogged: boolean = false;
   ref: NgbModalRef | undefined;
+  user: any = null;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -43,7 +44,6 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
     this.add(
       this.route.paramMap.pipe(
         switchMap((param: any) => {
-          console.log(this.router.url)
           let id = param.get('id');
           url = param.get('url');
           if(this.router.url.match(/\/thing/)) {
@@ -70,8 +70,9 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
         this.thing = thing;
       })
     )
-    this.add(this.store.select((data: any) => data.login.logged).subscribe((logged: boolean) => {
-      this.isLogged = logged;
+    this.add(this.store.select((data: any) => data.login).subscribe((data: any) => {
+      this.isLogged = data.logged;
+      this.user = data.user;
     }))
     this.add(this.pingService.ping());
   }
@@ -79,7 +80,7 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
   book()  {
     this.ref = this.modal.open(CalendarComponent);
     this.ref.componentInstance.reservations = this.thing.reservations;
-    this.ref.componentInstance.readOnly = !this.isLogged;
+    this.ref.componentInstance.readOnly = !( this.isLogged && !this.user?.roles?.includes('ROLE_MEMBER') || (this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated ));
     this.ref.result.then((dates: any) => {
       this.add(this.reservationService.book(dates, this.thing))
     },reason => console.log(reason));
