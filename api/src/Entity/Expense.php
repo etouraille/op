@@ -52,7 +52,7 @@ class Expense
     #[ORM\Column]
     private ?int $amount = null;
 
-    #[Groups(['post', 'collection', 'get'])]
+    #[Groups(['post', 'collection', 'get', 'expense'])]
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
@@ -70,6 +70,9 @@ class Expense
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $paymentIntentId = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripeRefundId = null;
 
     public function getId(): ?int
     {
@@ -185,6 +188,18 @@ class Expense
     public function setPaymentIntentId(?string $paymentIntentId): self
     {
         $this->paymentIntentId = $paymentIntentId;
+
+        return $this;
+    }
+
+    public function getStripeRefundId(): ?string
+    {
+        return $this->stripeRefundId;
+    }
+
+    public function setStripeRefundId(?string $stripeRefundId): self
+    {
+        $this->stripeRefundId = $stripeRefundId;
 
         return $this;
     }

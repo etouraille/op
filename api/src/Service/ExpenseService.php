@@ -26,6 +26,8 @@ class ExpenseService
             return $a + $elem->getAmount();
         }, 0);
 
+
+
         $expense = array_values($expenses)[0];
 
         /** @var $expense Expense **/
@@ -33,45 +35,77 @@ class ExpenseService
         // if owner is user
         if (false === array_search('ROLE_MEMBER', $user->getRoles())) {
             // on lance le débit
-            $stripe = new \Stripe\StripeClient($this->secret);
-            $paymentMethod = $stripe->paymentMethods->all(
-                [
-                    'customer' => $user->getStripeCustomerId(),
-                    'type' => 'card'
-                ]
-            );
-            $data = $paymentMethod->toArray();
-            $index = 0;
-            if(count($data['data']) == 0) {
-                return ['error' => 'Pas de methode de paiement enregistrée'];
+            if( $total > 0 ) {
+                $stripe = new \Stripe\StripeClient($this->secret);
+                $paymentMethod = $stripe->paymentMethods->all(
+                    [
+                        'customer' => $user->getStripeCustomerId(),
+                        'type' => 'card'
+                    ]
+                );
+                $data = $paymentMethod->toArray();
+                $index = 0;
+                if (count($data['data']) == 0) {
+                    return ['error' => 'Pas de methode de paiement enregistrée'];
+                }
+                do {
+                    $paymentMethodId = $data['data'][$index]['id'];
+                    $intent = $this->payExpense($expense, $total, $paymentMethodId);
+                    $index++;
+                } while (!$intent && $index < count($data['data']));
+                // TODO : do something with the IncomeData.
+                // TODO allow payment only once the incomeData is generated. api.
+                // set Expense status.
+                array_map(function ($elem) use ($intent) {
+                    /** @var $elem Expense */
+                    if ($intent) {
+                        $elem->setStatus('paid');
+                        $elem->setPaymentIntentId($intent);
+                    } else {
+                        $elem->setStatus('error');
+                    }
+                    $this->em->merge($elem);
+                    $this->em->flush();
+                }, $expenses);
+            } elseif( $total < 0 ) {
+
+                $paymentIntentId = array_reduce($expense->getReservation()->getExpenses()->toArray(), function($a, $expense) {
+                    /** @var $expense Expense */
+                    return $a ? $a : $expense->getPaymentIntentId();
+                }, null);
+
+                $stripe = new \Stripe\StripeClient($this->secret);
+                $error = false;
+                $refundId = null;
+                try {
+                    $refund = $stripe->refunds->create(['payment_intent' => $paymentIntentId, 'amount' => -1 * $total]);
+                    $data = $refund->toArray();
+                    $refundId = $refund->toArray()['id'];
+
+                } catch(\Exception $e) {
+                    $error = $e->getMessage();
+                    $error;
+                }
+
+                array_map(function ($elem) use ($error, $refundId) {
+                    /** @var $elem Expense */
+                    if (!$error) {
+                        $elem->setStatus('paid');
+                        $elem->setStripeRefundId($refundId);
+                    } else {
+                        $elem->setStatus('error');
+                    }
+                    $this->em->merge($elem);
+                    $this->em->flush();
+                }, $expenses);
             }
-            do {
-                $paymentMethodId = $data['data'][$index]['id'];
-                $intent = $this->payExpense($expense, $total, $paymentMethodId);
-                $index ++;
-            } while(!$intent && $index < count($data['data']));
-            // TODO : do something with the IncomeData.
-            // TODO allow payment only once the incomeData is generated. api.
-            // set Expense status.
-            array_map(function($elem) use ($intent) {
-                /** @var $elem Expense */
-                if($intent) {
-                    $elem->setStatus('paid');
-                    $elem->setPaymentIntentId($intent);
-                }
-                else {
-                    $elem->setStatus('error');
-                }
-                $this->em->merge($elem);
-                $this->em->flush();
-            }, $expenses);
 
             array_map(function($elem) use($stripe, $reimburse){
                 /** @var $elem Expense */
                 $this->payIncomeForExpense($stripe, $elem, $reimburse);
             }, $expenses);
 
-            return ['success' => $intent];
+            return ['success' => isset($intent) || isset($refundId)];
 
         }
         if (false !== array_search('ROLE_MEMBER', $user->getRoles())) {
