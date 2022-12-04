@@ -13,6 +13,7 @@ import {IncomeComponent} from "./income/income.component";
 import {UserComponent} from "./user/user.component";
 import {PendingComponent} from "./pending/pending.component";
 import {TypeComponent} from "./type/type.component";
+import {UserAddComponent} from "./user-add/user-add.component";
 const routes: Routes = [
 
 
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'type-add',
         component: TypeComponent,
+      },
+      {
+        path: 'user-add',
+        component: UserAddComponent,
       },
       {
         path: 'pending',

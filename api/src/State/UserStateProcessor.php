@@ -16,13 +16,16 @@ class UserStateProcessor implements ProcessorInterface
 {
 
     protected $stripe;
+    private $secret;
 
     public function __construct(
         private UserPasswordHasherInterface $hasher,
         private EntityManagerInterface $em,
-        private Security $security
+        private Security $security,
+        $stripe
     ) {
-        $this->stripe = \Stripe\Stripe::setApiKey(getenv('STRIPE'));
+        $this->stripe = \Stripe\Stripe::setApiKey($stripe);
+        $this->secret = $stripe;
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
@@ -35,9 +38,15 @@ class UserStateProcessor implements ProcessorInterface
                 $stripeCustomer = \Stripe\Customer::create(['email' => $data->getEmail()]);
                 $data->setStripeCustomerId($stripeCustomer->id);
                 // encode password
-                $plainPassword = $data->getPassword();
-                $hashedPassword = $this->hasher->hashPassword($data, $plainPassword);
-                $data->setPassword($hashedPassword);
+                if($data->getPassword()) {
+                    $plainPassword = $data->getPassword();
+                    $hashedPassword = $this->hasher->hashPassword($data, $plainPassword);
+                    $data->setPassword($hashedPassword);
+                } else {
+                    $plainPassword = rand(1, 10000000000000000);
+                    $hashedPassword = $this->hasher->hashPassword($data, $plainPassword);
+                    $data->setPassword($hashedPassword);
+                }
                 // roles are unique
                 $roles = $data->getRoles();
                 $roles = array_unique($roles);
@@ -45,7 +54,7 @@ class UserStateProcessor implements ProcessorInterface
                 $roles = $this->removeRoleAdminIfIsNotAdmin($roles);
                 // si l'user est member on ajoute un compte stripe pour pouvoir faire les virements.
                 if (false !== array_search('ROLE_MEMBER', $roles)) {
-                    $stripe = new \Stripe\StripeClient(getenv('STRIPE'));
+                    $stripe = new \Stripe\StripeClient($this->secret);
                     $account = $stripe->accounts->create(['type' => 'express', 'email' => $data->getEmail()]);
                     $data->setStripeAccountId($account->id);
                 }

@@ -1,0 +1,37 @@
+<div>
+  <form [formGroup]="userForm" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Prénom</label>
+      <input class="form-control" formControlName="firstname" />
+    </div>
+    <div class="form-group">
+      <label>Nom</label>
+      <input class="form-control" formControlName="lastname" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input class="form-control" formControlName="email" />
+    </div>
+    <div class="form-group">
+      <label>Role</label>
+      <app-roles formControlName="roles"></app-roles>
+    </div>
+    <div class="form-group">
+      <label>Adresse</label>
+      <input class="form-control" formControlName="address" />
+    </div>
+    <div class="form-group">
+      <label>Code postale</label>
+      <input class="form-control" formControlName="zipcode" />
+    </div>
+    <div class="form-group">
+      <label>Ville</label>
+      <input class="form-control" formControlName="city" />
+    </div>
+    <div class="form-group">
+      <button  class="btn btn-success">Ajouter</button>
+    </div>
+  </form>
+
+
+</div>
