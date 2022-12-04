@@ -17,6 +17,9 @@
     </table>
   </div>
   <div class="flex-end flex" *ngIf="payment">
-    <div><button class="btn btn-primary" (click)="pay()">Payer</button></div>
+    <div><button class="btn btn-primary" (click)="pay()">
+      <span *ngIf="isMember">Payer en coin</span>
+      <span *ngIf="!isMember">Payer</span>
+    </button></div>
   </div>
 </div>
