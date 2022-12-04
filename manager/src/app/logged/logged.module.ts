@@ -33,6 +33,7 @@ import {SwitchComponent} from "../../lib/component/switch/switch.component";
 import { PendingComponent } from './pending/pending.component';
 import { TypeComponent } from './type/type.component';
 import { UserAddComponent } from './user-add/user-add.component';
+import {CardStripeComponent} from "../../lib/component/card-stripe/card-stripe.component";
 
 @NgModule({
     declarations: [
@@ -59,6 +60,7 @@ import { UserAddComponent } from './user-add/user-add.component';
         PendingComponent,
         TypeComponent,
         UserAddComponent,
+        CardStripeComponent,
     ],
     imports: [
         CommonModule,
