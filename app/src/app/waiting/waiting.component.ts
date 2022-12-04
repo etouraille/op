@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {Store} from "@ngrx/store";
 import {decrease, increase, set} from "../../lib/actions/book-action";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-waiting',
@@ -18,7 +19,8 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastR: ToastrService,
-    private store: Store<{login: any}>
+    private store: Store<{login: any}>,
+    private router: Router,
   ) {
     super();
   }
@@ -55,6 +57,10 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
     this.add(this.http.get('api/pay').subscribe((data: any) => {
       this.getWaiting();
       this.store.dispatch(set({quantity: 0}));
+      if(!data['hdydra:member'][0].success) {
+        this.router.navigate(['card-confirm/' + data['hdydra:member'][0].id]);
+        // TODO passer les payment en resolues dans un callback.
+      }
     }))
   }
 }

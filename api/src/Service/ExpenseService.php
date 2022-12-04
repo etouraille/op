@@ -50,7 +50,7 @@ class ExpenseService
                 }
                 do {
                     $paymentMethodId = $data['data'][$index]['id'];
-                    [ $success , $id ] = $this->payExpense($expense, $total, $paymentMethodId);
+                    list( $success , $id ) = $this->payExpense($expense, $total, $paymentMethodId);
                     $index++;
                 } while (!$success && $index < count($data['data']));
                 // TODO : do something with the IncomeData.
@@ -107,7 +107,7 @@ class ExpenseService
                 $this->payIncomeForExpense($stripe, $elem, $reimburse);
             }, $expenses);
 
-            return  ['success' => $success , 'isIntent' => $total > 0, 'id' => $id];
+            return  [$success ,  $total > 0,  $id];
 
 
         }
@@ -140,7 +140,7 @@ class ExpenseService
 
             }, $expenses);
 
-            return ['success' => true ];
+            return [ true ,  null,  null];
         }
 
         return [];
@@ -159,16 +159,15 @@ class ExpenseService
             ]);
 
             $data = $intent->toArray();
-            return [ 'success' => true , 'intent' =>$data['id']];
+            return [  true , $data['id']];
 
 
         } catch (\Stripe\Exception\CardException $e) {
             // Error code will be authentication_required if authentication is needed
-            echo 'Error code is:' . $e->getError()->code;
             $payment_intent_id = $e->getError()->payment_intent->id;
             $payment_intent = \Stripe\PaymentIntent::retrieve($payment_intent_id);
 
-            return ['success' => false, 'secret' => $payment_intent->client_secret];
+            return [ false, $payment_intent->client_secret];
         }
 
     }

@@ -15,11 +15,16 @@ import {WaitingComponent} from "./waiting/waiting.component";
 import {CurrentComponent} from "./current/current.component";
 import {DoneComponent} from "./done/done.component";
 import {ThingComponent} from "./thing/thing.component";
+import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.component";
 
 const routes: Routes = [{
   path: '',
   component: HomeComponent,
   children: [
+    {
+      path: 'card-confirm/:secret',
+      component: CardStripeComponent,
+    },
     {
       path: 'thing/:id',
       component: ThingComponent,
