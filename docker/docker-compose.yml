@@ -22,6 +22,15 @@ services:
             - database
         extra_hosts:
             - "host.docker.internal:host-gateway"
+    cdn:
+        image: node:latest
+        volumes:
+            - ./../cdn:/src
+            - ./../api/config/jwt:/src/jwt
+        working_dir: /src
+        ports:
+            - "3000:3000"
+        command: node app.js
     database:
         image: 'mariadb:10.3'
         container_name: database

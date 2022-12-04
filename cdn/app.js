@@ -9,6 +9,39 @@ const app = express();
 const { v4: uuidV4 } = require('uuid');
 const fs = require('fs');
 const path = require('path');
+const jwt = require('jsonwebtoken')
+
+
+const SECRET = fs.readFileSync( './jwt/public.pem');
+/* Récupération du header bearer */
+const extractBearerToken = headerValue => {
+    if (typeof headerValue !== 'string') {
+        return false
+    }
+
+    const matches = headerValue.match(/(bearer)\s+(\S+)/i)
+    return matches && matches[2]
+}
+
+/* Vérification du token */
+const checkTokenMiddleware = (req, res, next) => {
+    // Récupération du token
+    const token = req.headers.authorization && extractBearerToken(req.headers.authorization)
+
+    // Présence d'un token
+    if (!token) {
+        return res.status(401).json({ message: 'Error. Need a token' })
+    }
+
+    // Véracité du token
+    jwt.verify(token, SECRET, (err, decodedToken) => {
+        if (err) {
+            res.status(401).json({ message: 'Error. Bad token' })
+        } else {
+            return next()
+        }
+    })
+}
 // enable files upload
 
 app.use(fileUpload({
@@ -22,7 +55,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
-app.post('/upload', async (req, res) => {
+app.delete('/delete-picture/:file', checkTokenMiddleware, async( req, res ) => {
+    let file = req.params.file;
+    try {
+        fs.unlinkSync('./public/' + file);
+        return res.json({ success: true});
+    } catch (error) {
+        return res.json({ success: true, err: error});
+    }
+});
+
+app.post('/upload', checkTokenMiddleware,async (req, res) => {
     try {
         if(!req.files) {
             res.send({
