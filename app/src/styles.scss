@@ -56,6 +56,9 @@ app-home {
     max-width: 1060px;
   }
 }
+.container {
+  max-width: 1296px;
+}
 .content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -116,7 +119,9 @@ div#container > .footer {
 }
 .flex {
   display: flex;
-
+}
+.flex-end {
+  justify-content: flex-end;
 }
 
 .wrap {
@@ -350,6 +355,23 @@ form {
     height: 40px;
     width: 40px;
 
+  }
+}
+.things {
+  .left {
+    margin-top: 5em;
+    width: 20%;
+    .cell {
+      padding: 10px 1em 10px 1em;
+      margin-bottom: 1em;
+      border: 1px solid $color-red;
+      border-radius: 5px;
+      background-color: $color-grey;
+      color: $color-red;
+    }
+  }
+  .right {
+    width: 80%;
   }
 }
 .things {

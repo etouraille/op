@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
+use App\Entity\Expense;
 use App\Entity\Reservation;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,8 +19,14 @@ use Symfony\Component\Security\Core\Security;
 class ReservationStateProcessor implements ProcessorInterface
 {
 
-    public function __construct(private Security $security, private EntityManagerInterface $em) {
+    private $secret;
 
+    public function __construct(
+        private Security $security,
+        private EntityManagerInterface $em,
+        $stripe,
+    ) {
+        $this->secret = $stripe;
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
@@ -42,6 +49,32 @@ class ReservationStateProcessor implements ProcessorInterface
             $this->em->merge($data);
             $this->em->flush();
         } elseif($data instanceof Reservation && $operation instanceof Delete) {
+            // paid
+            if ($data->getState() === -1) {
+                // on rembourse
+                // TODO there can only be one reimbursement on a charge.
+                /*
+                $paymentIntentId = $data->getExpense()->getPaymentIntentId();
+                $amount = $data->getExpense()->getAmount();
+                $stripe = new \Stripe\StripeClient($this->secret);
+                try {
+                    $stripe->refunds->create(['payment_intent' => $paymentIntentId, 'amount' => $amount]);
+                    $expense = new Expense();
+                    $expense->setAmount(-1 * $amount);
+                    // TODO status is done only when refund is done, do callback
+                    $expense->setStatus('paid');
+                    $expense->setUser($data->getExpense()->getUser());
+                    $expense->setOwner($data->getExpense()->getOwner());
+                    $expense->setThing($data->getExpense()->getThing());
+                    $expense->setReservation($data->getExpense()->getReservation());
+                    $this->em->persist($expense);
+                    $this->em->flush();
+                } catch(\Exception $e) {
+                    $message = $e->getMessage();
+                    $message;
+                }
+                */
+            }
             $this->em->remove($data);
             $this->em->flush();
         }

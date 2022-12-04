@@ -16,6 +16,11 @@ framework:
     #fragments: true
     php_errors:
         log: true
+doctrine:
+    orm:
+        dql:
+            numeric_functions:
+                Rand: App\Doctrine\Rand
 
 when@test:
     framework:

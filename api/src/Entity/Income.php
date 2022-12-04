@@ -51,6 +51,8 @@ class Income
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
+    private $pendingIncomes = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,5 +128,14 @@ class Income
         $this->date = $date;
 
         return $this;
+    }
+
+    public function addPendingIncome(Income $income) {
+        $this->pendingIncomes[] = $income;
+        return $this;
+    }
+
+    public function getPendingIncomes() {
+        return $this->pendingIncomes;
     }
 }

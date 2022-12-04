@@ -24,12 +24,16 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
   things: any[] = [];
   stars: any[] = [];
   lasts: any[] = [];
+  types: any[] = [];
+  rands: any[] = [];
   proposed: any[] = [];
   modalRef: any = null;
   logged: boolean = false;
   isMember: boolean = false;
   cdn: string = environment.cdn;
-  private user: any = null;
+  user: any = null;
+  payment: boolean = false;
+  checked: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -50,29 +54,43 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     this.add(this.store.select((state:any) => state.login).subscribe(data => {
       this.logged = data.logged;
       this.user = data.user;
-
+      this.payment = data.payment;
     }));
     this.add(this.pingService.ping());
     this.redirectOnCardIfLoggedAndNoCard();
-    this.add(this.http.get('api/stars').pipe(switchMap((data:any) => {
-      this.stars = data['hydra:member'].map((elem: any) =>  elem[0]);
-      return this.http.get('api/lasts')
-    })).subscribe((data: any) => {
-      this.lasts = data['hydra:member'];
-      // on exclue les entité deja présentés dans stars. pour ca qu'on en a pris le double.
-      this.lasts = this.lasts.filter((last:any)=> !this.stars.map(elem => elem.id).includes(last.id)).slice(0,4);
-    }));
     this.add(this.http.get('api/proposed').subscribe((data: any) => {
       this.proposed = data['hydra:member'];
     }))
+    this.add(this.http.get('api/thing_types').subscribe((data: any) => {
+      this.types = data['hydra:member'];
+      console.log(this.types);
+    }))
+    this.getCategories(null);
+  }
+
+  getCategories(filter: any) {
+    this.add(this.http.get(filter ? 'api/stars?filter=' + filter : 'api/stars').pipe(
+      switchMap((data:any) => {
+      this.stars = data['hydra:member'].map((elem: any) =>  elem[0]);
+      return this.http.get(filter ? 'api/lasts?filter=' + filter : 'api/lasts')
+    }), switchMap((data:any) => {
+        this.lasts = data['hydra:member'];
+        // on exclue les entité deja présentés dans stars. pour ca qu'on en a pris le double.
+        this.lasts = this.lasts.filter((last:any)=> !this.stars.map(elem => elem.id).includes(last.id)).slice(0,4);
+      return this.http.get(filter ? 'api/thing/all?filter=' + filter : 'api/thing/all')
+      })).subscribe((data: any) => {
+        this.rands = data['hydra:member'].filter((data: any) => !this.stars.map(elem =>elem.id).includes(data.id) && !this.lasts.map(elem =>elem.id).includes(data.id)).splice(0,4)
+    }));
+
   }
 
   openModal(thing: any) {
     this.modalRef = this.service.open(CalendarComponent);
     this.modalRef.componentInstance.reservations = thing.reservations;
     this.modalRef.componentInstance.readOnly = !(this.logged && !this.user?.roles?.includes('ROLE_MEMBER') || this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated)
+    this.modalRef.componentInstance.payment = this.payment;
     this.modalRef.result.then((dates: any) => {
-      this.add(this.reservationService.book(dates, thing))
+      this.add(this.reservationService.book(dates, thing, this.payment))
     }, (reason: any) => {
 
     });
@@ -107,5 +125,18 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
   navigate(id: number) {
     this.router.navigate(['thing/' + id]);
 
+  }
+
+  changeRadio($event: any, id: any) {
+    let filter = $event?.target?.checked;
+    if(typeof $event === 'boolean') {
+      filter = $event;
+    }
+    if(filter) {
+      this.checked.push(id);
+    } else {
+      this.checked.splice(this.checked.indexOf(id), 1);
+    }
+    this.getCategories(this.checked.join(','));
   }
 }

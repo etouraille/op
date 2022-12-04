@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\Put;
 use App\Controller\Current;
 use App\Controller\Done;
 use App\Controller\GetOutThingsForUser;
+use App\Controller\PayController;
 use App\Controller\Pending;
 use App\Controller\SetThingBack;
 use App\Controller\ThingAdd;
@@ -83,7 +84,14 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         name: 'Les objets en retard'
     )
 ])]
-
+#[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/waiting',
+        controller: Waiting::class,
+        normalizationContext: ['groups' => ['pending', 'reservation']],
+        name: 'mes reservationq en attente'
+    )
+])]
 #[ApiResource(operations: [
     new GetCollection(
         uriTemplate: '/current',
@@ -101,14 +109,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
     )
 ])]
 
-#[ApiResource(operations: [
-    new GetCollection(
-        uriTemplate: '/waiting',
-        controller: Waiting::class,
-        normalizationContext: ['groups' => ['pending', 'reservation']],
-        name: 'mes reservationq en attente'
-    )
-])]
+
 #[ApiResource(operations: [
     new GetCollection(
         uriTemplate: '/url',
@@ -140,6 +141,15 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         normalizationContext: ['groups' => ['list', 'reservation']],
         name: 'Proposés par les membre',
         provider: ProposedStateProvider::class
+    )
+])]
+#[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/pay',
+        controller: PayController::class,
+        normalizationContext: ['groups' => ['list', 'reservation']],
+        name: 'Payer depuis le site',
+
     )
 ])]
 #[GetCollection(normalizationContext: ['groups' => ['search']], provider: ThingStateProvider::class)]

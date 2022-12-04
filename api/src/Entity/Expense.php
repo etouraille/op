@@ -10,18 +10,17 @@ use App\Repository\ExpenseRepository;
 use App\State\ExpenseStateProvider;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+#[ORM\Entity(repositoryClass: ExpenseRepository::class)]
+#[ORM\Index(columns: ['user_id', 'status'], name: "find_for_income")]
 #[ApiResource(operations: [
     new GetCollection(
         uriTemplate: '/expense/process',
         controller: ExpenseProcess::class,
-        name: 'expenseProcess',
-        normalizationContext: ['groups' => ['expense']]
+        normalizationContext: ['groups' => ['expense']],
+        name: 'expenseProcess'
     ),
 ])]
 
-#[ORM\Entity(repositoryClass: ExpenseRepository::class)]
-#[ORM\Index(name: "find_for_income", columns: ['user_id', 'status'])]
 #[GetCollection(
     normalizationContext: ['groups' => ['expense']],
     provider: ExpenseStateProvider::class
@@ -35,7 +34,7 @@ class Expense
     private ?int $id = null;
 
     #[Groups(['post', 'collection', 'get', 'tback', 'expense'])]
-    #[ORM\OneToOne(inversedBy: 'expense', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'expense', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Reservation $reservation = null;
 
@@ -68,6 +67,9 @@ class Expense
     #[Groups(['collection', 'expense'])]
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     private ?IncomeData $incomeData = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paymentIntentId = null;
 
     public function getId(): ?int
     {
@@ -171,6 +173,18 @@ class Expense
     public function setIncomeData(?IncomeData $incomeData): self
     {
         $this->incomeData = $incomeData;
+
+        return $this;
+    }
+
+    public function getPaymentIntentId(): ?string
+    {
+        return $this->paymentIntentId;
+    }
+
+    public function setPaymentIntentId(?string $paymentIntentId): self
+    {
+        $this->paymentIntentId = $paymentIntentId;
 
         return $this;
     }

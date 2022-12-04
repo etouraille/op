@@ -12,6 +12,7 @@ import {decrease, increase} from "../../lib/actions/book-action";
 })
 export class WaitingComponent extends SubscribeComponent implements OnInit {
   things: any[] = [];
+  payment: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -25,9 +26,12 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
     this.add(
       this.http.get('api/waiting').subscribe((data: any) => {
         this.things = data['hydra:member'];
-        this.things = this.things.map((thing: any) => ({ ...thing, reservations: thing.reservations.filter((reservation:any) => !!!reservation.state )}));
+        this.things = this.things.map((thing: any) => ({ ...thing, reservations: thing.reservations.filter((reservation:any) => !reservation.state || reservation.state === -2 )}));
       })
     )
+    this.add(this.store.select((data: any) => data.login.payment).subscribe((data: boolean) => {
+      this.payment = data;
+    }))
   }
 
   cancel(id:number, i: number) {
@@ -39,5 +43,11 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
       this.toastR.error('Annulation impossible');
     }))
 
+  }
+
+  pay() {
+    this.add(this.http.get('api/pay').subscribe((data: any) => {
+      console.log(data);
+    }))
   }
 }

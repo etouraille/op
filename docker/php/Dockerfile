@@ -20,3 +20,5 @@ RUN pecl install xdebug \
 RUN apt-get -y install wkhtmltopdf
 
 ENV XDG_RUNTIME_DIR=/tmp
+
+RUN chown 33 /tmp

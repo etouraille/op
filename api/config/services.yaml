@@ -8,6 +8,7 @@ parameters:
     app.app_url: '%env(APP_URL)%'
     app.api_url: '%env(API_URL)%'
     app.cdn_url: '%env(CDN_URL)%'
+    app.payment_front: '%env(PAYMENT_FRONT)%'
 
 services:
     # default configuration for services in *this* file
@@ -36,6 +37,12 @@ services:
         $stripe: '%env(STRIPE)%'
 
     App\Command\PassIncomeCommand:
+        $stripe: '%env(STRIPE)%'
+
+    App\Service\GenerateBill:
+        $api_url: '%env(API_URL)%'
+
+    App\State\ReservationStateProcessor:
         $stripe: '%env(STRIPE)%'
 
 

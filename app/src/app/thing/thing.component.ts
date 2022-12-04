@@ -23,6 +23,7 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
   isLogged: boolean = false;
   ref: NgbModalRef | undefined;
   user: any = null;
+  payment: boolean = false;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -73,6 +74,7 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
     this.add(this.store.select((data: any) => data.login).subscribe((data: any) => {
       this.isLogged = data.logged;
       this.user = data.user;
+      this.payment = data.payment;
     }))
     this.add(this.pingService.ping());
   }
@@ -81,8 +83,9 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
     this.ref = this.modal.open(CalendarComponent);
     this.ref.componentInstance.reservations = this.thing.reservations;
     this.ref.componentInstance.readOnly = !( this.isLogged && !this.user?.roles?.includes('ROLE_MEMBER') || (this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated ));
+    this.ref.componentInstance.payment = this.payment;
     this.ref.result.then((dates: any) => {
-      this.add(this.reservationService.book(dates, this.thing))
+      this.add(this.reservationService.book(dates, this.thing, this.payment))
     },reason => console.log(reason));
   }
 }

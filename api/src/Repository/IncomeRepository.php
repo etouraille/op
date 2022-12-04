@@ -45,15 +45,18 @@ class IncomeRepository extends ServiceEntityRepository
             ->join('i.user', 'u')
             ->andWhere('u.id = :userId')
             ->andWhere("i.status = 'paid'")
+            ->orderBy('i.date', 'DESC')
             ->setParameter('userId', $user->getId())
             ->getQuery()
             ->getResult()
             ;
     }
 
-    public function getErrors() {
+    public function getErrorsAndPendings() {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.status = \'error\'')
+            ->andWhere('i.status = \'error\' OR i.status = \'pending\'')
+            ->innerJoin('i.user', 'u')
+            ->orderBy('u.id', 'DESC')
             ->getQuery()
             ->getResult()
             ;

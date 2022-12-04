@@ -32,7 +32,19 @@ class PassIncomeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
-        $incomes = $this->em->getRepository(Income::class)->getErrors();
+        $incomes = array_reduce(
+            $this->em->getRepository(Income::class)->getErrorsAndPendings(),
+            function($a, $income) {
+               /** @var $income Income */
+               $userId = $income->getUser()->getId();
+                if (isset($a[$userId])) {
+                    $a[$userId]->setAmount($a[$userId]->getAmount() + $income->getAmount());
+                    $a[$userId]->addPendingIncome($income);
+                } else {
+                    $a[$userId] = $income->addPendingIncome($income);
+                }
+                return $a;
+            },[]);
 
         $stripe = new \Stripe\StripeClient($this->secret);
 
@@ -56,10 +68,15 @@ class PassIncomeCommand extends Command
                     'destination' => $income->getUser()->getStripeAccountId(),
                     'transfer_group' => 'transert pour ' . $income->getThing()->getName(),
                 ]);
+                array_map(function($elem) {
+                    /** @var $elem Income */
+                    $elem->setStatus('paid');
+                    $elem->setDate(new \DateTime());
+                    $this->em->merge($elem);
+                    $this->em->flush();
 
-                $income->setStatus('paid');
-                $this->em->merge($income);
-                $this->em->flush();
+                }, $income->getPendingIncomes());
+
                 return $a && true;
 
             } catch (\Exception $e ) {
