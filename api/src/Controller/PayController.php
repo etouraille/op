@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Expense;
 use App\Entity\Reservation;
 use App\Entity\Thing;
+use App\Entity\User;
 use App\Service\ExpenseService;
 use App\Service\GenerateBill;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Security;
 
 #[AsController]
@@ -24,6 +26,13 @@ class PayController extends AbstractController
 
     public function __invoke() :array {
         $user = $this->security->getUser();
+        /** @var $user User */
+        if(
+            false !== array_search('ROLE_MEMBER', $user->getRoles())
+            && !$user->isIsMemberValidated()
+        ) {
+            throw new UnauthorizedHttpException('Member not valid');
+        }
         $things = $this
             ->em
             ->getRepository(Thing::class)
@@ -70,7 +79,6 @@ class PayController extends AbstractController
 
         try {
             $bill = $this->billService->process($user->getId());
-
         } catch(\Exception $e) {
 
         }
