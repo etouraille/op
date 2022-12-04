@@ -83,9 +83,9 @@ class PayController extends AbstractController
 
         }
 
-        $this->expenseService->process($expenses, false);
+        $ret = $this->expenseService->process($expenses, false);
 
-        return [];
+        return $ret;
 
     }
 

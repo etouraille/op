@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {switchMap} from "rxjs";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-income',
@@ -22,6 +23,7 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
     private http: HttpClient,
     private sanitizer: DomSanitizer,
     private toastR: ToastrService,
+    private router: Router,
   ) {
     super();
   }
@@ -55,6 +57,7 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
             this.toastR.success('Paiement réussi !');
           } else if(data['hydra:member'][0].error) {
             this.toastR.error(data['hydra:member'][0].error);
+            this.router.navigate(['card/' + data['hydra:member'][0].error.id + '?redirect=logged/thing-list']);
           }
           this.changeUserId(this.user.id);
         }));
