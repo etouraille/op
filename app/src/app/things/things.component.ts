@@ -8,11 +8,13 @@ import {Store} from "@ngrx/store";
 import { user as setUser } from '../../lib/actions/user-action'
 import {logout} from "../../lib/actions/login-action";
 import {of, switchMap, tap} from "rxjs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ReservationService} from "../../lib/service/reservation.service";
 import {PingService} from "../../lib/service/ping.service";
 import {environment} from "../../environments/environment";
+import {Location} from "@angular/common";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-things',
@@ -43,6 +45,8 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     private toastR: ToastrService,
     private reservationService: ReservationService,
     private pingService: PingService,
+    private location: Location,
+    private route: ActivatedRoute,
   ) {
     super();
   }
@@ -61,11 +65,16 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     this.add(this.http.get('api/proposed').subscribe((data: any) => {
       this.proposed = data['hydra:member'];
     }))
-    this.add(this.http.get('api/thing_types').subscribe((data: any) => {
+    this.add(this.http.get('api/thing_types').pipe(switchMap((data: any) => {
       this.types = data['hydra:member'];
-      console.log(this.types);
+      return this.route.queryParams;
+    })).subscribe((param: any) => {
+      this.getCategories(param.filter);
+      this.types = this.types.map((type: any) => ({ ...type, selected: param?.filter?.split(',').map((id: string) => parseInt(id))?.includes( type.id)}));
+      this.checked = param.filter ? _.uniq(param?.filter?.split(',').map((id: string) => parseInt(id))): [];
     }))
-    this.getCategories(null);
+
+
   }
 
   getCategories(filter: any) {
@@ -132,11 +141,15 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     if(typeof $event === 'boolean') {
       filter = $event;
     }
+    console.log(this.checked);
+    this.checked = _.uniq(this.checked);
+    console.log( id);
     if(filter) {
-      this.checked.push(id);
+      this.checked.push(parseInt(id));
     } else {
-      this.checked.splice(this.checked.indexOf(id), 1);
+      this.checked.splice(this.checked.indexOf(parseInt(id)), 1);
     }
+    this.location.go('/?filter=' + this.checked.join(','));
     this.getCategories(this.checked.join(','));
   }
 }

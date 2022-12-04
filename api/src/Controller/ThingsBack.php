@@ -51,7 +51,7 @@ class ThingsBack extends AbstractController {
                 $this->em->merge($_currentR);
                 $this->em->flush();
 
-                if(!$_currentR->getExpense()) {
+                if(!$_currentR->getExpenses()) {
 
                     $startDate = $_currentR->getStartDate();
                     $backDate = $_currentR->getBackDate();
@@ -87,7 +87,7 @@ class ThingsBack extends AbstractController {
 
                     }
                 } else {
-                    $expense = $_currentR->getExpense();
+                    $expense = $_currentR->getExpenses()->toArray()[0];
                     $startDate = $_currentR->getEndDate();
                     $backDate = $_currentR->getBackDate();
                     $startDate->setTime(0, 0, 0);

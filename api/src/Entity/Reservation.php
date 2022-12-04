@@ -10,6 +10,8 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\ReservationRepository;
 use App\State\ReservationStateProcessor;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -63,11 +65,17 @@ class Reservation
     private ?\DateTimeInterface $backDate = null;
 
     #[Groups(['back'])]
-    #[ORM\OneToOne(mappedBy: 'reservation', cascade: ['persist', 'remove'])]
-    private ?Expense $expense = null;
+    #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Expense::class, cascade: ['persist', 'remove'])]
+    private Collection $expenses;
 
     #[Groups(['collection', 'put', 'get', 'post', 'add', 'reservation', 'expense'])]
     private ?int $delta;
+
+
+    public function __construct()
+    {
+        $this->expenses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -146,22 +154,36 @@ class Reservation
         return $this;
     }
 
-    public function getExpense(): ?Expense
+    /**
+     * @return Collection<int, Expense>
+     */
+    public function getExpenses(): Collection
     {
-        return $this->expense;
+        return $this->expenses;
     }
 
-    public function setExpense(Expense $expense): self
+    public function addExpense(Expense $expense): self
     {
-        // set the owning side of the relation if necessary
-        if ($expense->getReservation() !== $this) {
+        if (!$this->expenses->contains($expense)) {
+            $this->pictures->add($expense);
             $expense->setReservation($this);
         }
 
-        $this->expense = $expense;
+        return $this;
+    }
+
+    public function removeExpense(Expense $expense): self
+    {
+        if ($this->expenses->removeElement($expense)) {
+            // set the owning side to null (unless already changed)
+            if ($expense->getReservation() === $this) {
+                $expense->setReservation(null);
+            }
+        }
 
         return $this;
     }
+
 
     public function getDelta() {
         $delta = null;
