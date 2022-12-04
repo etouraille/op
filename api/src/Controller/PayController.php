@@ -83,9 +83,9 @@ class PayController extends AbstractController
 
         }
 
-        $ret = $this->expenseService->process($expenses, false);
+        list($success, $isIntent, $id) = $this->expenseService->process($expenses, false);
 
-        return $ret;
+        return [['success' => $success, 'isIntent' => $isIntent, 'id' => $id]];
 
     }
 

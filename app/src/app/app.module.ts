@@ -39,6 +39,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { ThingComponent } from './thing/thing.component';
 import {BasketComponent} from "../lib/component/basket/basket.component";
+import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.component";
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import {BasketComponent} from "../lib/component/basket/basket.component";
       SearchComponent,
       ThingComponent,
       BasketComponent,
+      CardStripeComponent,
 
     ],
   imports: [
