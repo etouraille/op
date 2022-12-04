@@ -1,31 +1,52 @@
-<h1 class="things parent"><div class="center">Les plus demandés</div></h1>
-<div class="things wrap flex">
-  <div class="star flex col" *ngFor="let star of stars; let i = index" (click)="navigate(star.id)">
-    <img class="icon-card" [src]="cdn + star?.pictures[0]?.picture" alt="Card image cap">
-    <div class="name center">{{ star.name }}</div>
-    <div class="price">
-      {{ star.dailyPrice }}&euro;
-      <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(star)" >Reserver</button>
+<div class="things flex row parent">
+  <div class="left">
+    <div class="cell" *ngFor="let type of types;let i = index" (click)="type.selected=!!!type.selected;changeRadio(!!type.selected, type.id);">
+      <input name="types" type="checkbox" [(ngModel)]="type.selected" (change)="changeRadio($event, type.id)"/>&nbsp;{{ type.name}}
     </div>
-  </div>
-</div>
-<h1 class="things"><div class="center">Les derniers ajoutés</div></h1>
-<div class="things wrap flex">
-  <div class="last flex col" *ngFor="let last of lasts; let i = index" (click)="navigate(last.id)">
-    <img class="icon-card" [src]="cdn + last?.pictures[0]?.picture" alt="Card image cap">
-    <div class="name center">{{ last.name }}</div>
-    <div class="price">
-      {{ last.dailyPrice }}&euro;
-      <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(last)" >Reserver</button>
-    </div>
-  </div>
-</div>
-<h1 class="things"><div class="center">Proposés par les utilisateurs</div></h1>
-<div class="things wrap flex proposed">
-  <div *ngFor="let _proposed of proposed">
-    <div class="name">{{ _proposed.name}}</div>
-    <div class="description">{{ _proposed.description}}</div>
-    <div class="by">Par : {{ _proposed.owner.email }}</div>
+
   </div>
 
+  <div class="right">
+    <h1 class="things"><div class="center">Les plus demandés</div></h1>
+    <div class="things wrap flex">
+      <div class="star flex col" *ngFor="let star of stars; let i = index" (click)="navigate(star.id)">
+        <img class="icon-card" [src]="cdn + star?.pictures[0]?.picture" alt="Card image cap">
+        <div class="name center">{{ star.name }}</div>
+        <div class="price">
+          {{ star.dailyPrice }}&euro;
+          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(star)" >Reserver</button>
+        </div>
+      </div>
+    </div>
+    <h1 class="things"><div class="center">Les derniers ajoutés</div></h1>
+    <div class="things wrap flex">
+      <div class="last flex col" *ngFor="let last of lasts; let i = index" (click)="navigate(last.id)">
+        <img class="icon-card" [src]="cdn + last?.pictures[0]?.picture" alt="Card image cap">
+        <div class="name center">{{ last.name }}</div>
+        <div class="price">
+          {{ last.dailyPrice }}&euro;
+          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(last)" >Reserver</button>
+        </div>
+      </div>
+    </div>
+    <h1 class="things"><div class="center">Proposés par les utilisateurs</div></h1>
+    <div class="things wrap flex proposed">
+      <div *ngFor="let _proposed of proposed">
+        <div class="name">{{ _proposed.name}}</div>
+        <div class="description">{{ _proposed.description}}</div>
+        <div class="by">Par : {{ _proposed.owner.email }}</div>
+      </div>
+    </div>
+    <h1 class="things"><div class="center">Random</div></h1>
+    <div class="things wrap flex">
+      <div class="last flex col" *ngFor="let last of rands; let i = index" (click)="navigate(last.id)">
+        <img class="icon-card" [src]="cdn + last?.pictures[0]?.picture" alt="Card image cap">
+        <div class="name center">{{ last.name }}</div>
+        <div class="price">
+          {{ last.dailyPrice }}&euro;
+          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(last)" >Reserver</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -15,10 +15,12 @@ class StarStateProvider implements ProviderInterface
     }
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): array
     {
+        $filter = isset($context['filters']) ? $context['filters']['filter'] : null;
+
         return $this
             ->em
             ->getRepository(Thing::class)
-            ->findStars()
+            ->findStars($filter)
             ;
     }
 }

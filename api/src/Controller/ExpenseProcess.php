@@ -27,7 +27,8 @@ class ExpenseProcess extends AbstractController
 
         if ($userId) {
             $ret =  $this->service->process(
-                $this->em->getRepository(Expense::class)->findForIncome($userId)
+                $this->em->getRepository(Expense::class)->findForIncome($userId),
+                false
             );
             return [$ret];
         } else {

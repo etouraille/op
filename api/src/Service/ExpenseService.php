@@ -19,14 +19,14 @@ class ExpenseService
         $this->secret = $stripe;
     }
 
-    public function process(array $expenses): array {
+    public function process(array $expenses, bool $reimburse = true): array {
 
         $total = array_reduce($expenses, function($a, $elem) {
             /** @var $elem Expense */
             return $a + $elem->getAmount();
         }, 0);
 
-        $expense = $expenses[0];
+        $expense = array_values($expenses)[0];
 
         /** @var $expense Expense **/
         $user = $expense->getUser();
@@ -47,25 +47,31 @@ class ExpenseService
             }
             do {
                 $paymentMethodId = $data['data'][$index]['id'];
-                $paymentSuccess = $this->payExpense($expense, $total, $paymentMethodId);
+                $intent = $this->payExpense($expense, $total, $paymentMethodId);
                 $index ++;
-            } while(!$paymentSuccess && $index < count($data['data']));
+            } while(!$intent && $index < count($data['data']));
             // TODO : do something with the IncomeData.
             // TODO allow payment only once the incomeData is generated. api.
             // set Expense status.
-            array_map(function($elem) use ($paymentSuccess) {
+            array_map(function($elem) use ($intent) {
                 /** @var $elem Expense */
-                $paymentSuccess ? $elem->setStatus('paid') : $elem->setStatus('error');
+                if($intent) {
+                    $elem->setStatus('paid');
+                    $elem->setPaymentIntentId($intent);
+                }
+                else {
+                    $elem->setStatus('error');
+                }
                 $this->em->merge($elem);
                 $this->em->flush();
             }, $expenses);
 
-            array_map(function($elem) use($stripe){
+            array_map(function($elem) use($stripe, $reimburse){
                 /** @var $elem Expense */
-                $this->payIncomeForExpense($stripe, $elem);
+                $this->payIncomeForExpense($stripe, $elem, $reimburse);
             }, $expenses);
 
-            return ['success' => $paymentSuccess];
+            return ['success' => $intent];
 
         }
         if (false !== array_search('ROLE_MEMBER', $user->getRoles())) {
@@ -106,7 +112,7 @@ class ExpenseService
     public function payExpense($expense, $total , $paymentMethodId) {
 
         try {
-            \Stripe\PaymentIntent::create([
+            $intent = \Stripe\PaymentIntent::create([
                 'amount' => $total,
                 'currency' => 'eur',
                 'customer' => $expense->getUser()->getStripeCustomerId(),
@@ -115,7 +121,8 @@ class ExpenseService
                 'confirm' => true,
             ]);
 
-            return true;
+            $data = $intent->toArray();
+            return $data['id'];
 
 
         } catch (\Stripe\Exception\CardException $e) {
@@ -129,7 +136,7 @@ class ExpenseService
 
     }
 
-    private function payIncomeForExpense($stripe, $expense) {
+    private function payIncomeForExpense($stripe, $expense, $reimburse) {
 
         try {
 
@@ -147,7 +154,7 @@ class ExpenseService
             $dataBalance = $balance->toArray();
             $available = $dataBalance['available'][0]['amount'];
             // TODO when test is over set relation oneToOne.
-            if ($available > $incomeAmount) {
+            if ($available > $incomeAmount && $reimburse) {
 
                 $transfer = \Stripe\Transfer::create([
                     'amount' => $incomeAmount,

@@ -76,10 +76,21 @@ class ThingRepository extends ServiceEntityRepository
 
             return $this->createQueryBuilder('t')
                 ->andWhere('t.status = \'active\'')
-                //->andWhere('NOT EXISTS (SELECT r FROM \App\Entity\Reservation r)')
                 ->getQuery()
                 ->getResult();
         }
+    }
+
+    public function findRand($filter) {
+        $qb = $this->createQueryBuilder('t')
+            ->andWhere('t.status = \'active\'');
+        if($filter) {
+            $qb->join('t.type', 'type', 'WITH', $qb->expr()->in('type.id', explode(',', $filter)));
+        }
+        return $qb->orderBy('RAND()')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult();
     }
 
     public function findPending($delta = 10)  {
@@ -92,14 +103,24 @@ class ThingRepository extends ServiceEntityRepository
 
     }
 
-    public function waitingForUser(User $user) {
+    public function waitingForUser(User $user, bool $payment) {
         return $this->createQueryBuilder('t')
-            ->innerJoin('t.reservations', 'r', 'WITH', 'r.state IS NULL or r.state = 0')
+            ->innerJoin('t.reservations', 'r', 'WITH', $payment ? 'r.state = -2': 'r.state IS NULL or r.state = 0')
             ->innerJoin('r.owner', 'o', 'WITH', 'o.id = :userId')
             ->setParameter('userId', $user->getId())
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function waitingForUserId($userId, bool $payment) {
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.reservations', 'r', 'WITH', $payment ? 'r.state = -1': 'r.state IS NULL or r.state = 0')
+            ->innerJoin('r.owner', 'o', 'WITH', 'o.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     public function currentForUser(User $user) {
@@ -122,10 +143,18 @@ class ThingRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findStars() {
-        return $this->createQueryBuilder('t')
+    public function findStars($typeId = null) {
+        $qb = $this->createQueryBuilder('t')
             ->select('t', 'COUNT(r) as c')
-            ->innerJoin('t.reservations', 'r')
+            ->innerJoin('t.reservations', 'r');
+
+        if($typeId) {
+            $qb
+                ->join('t.type', 'type', 'WITH', $qb->expr()->in('type.id', explode(',', $typeId)));
+                //->setParameter('typeId', $typeId);
+
+        }
+        return $qb
             ->groupBy('t')
             ->orderBy('c', 'DESC')
             ->setMaxResults(4)
@@ -134,13 +163,19 @@ class ThingRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findLasts() {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.activationDate IS NOT NULL')
-            ->orderBy('t.activationDate', 'DESC')
-            ->setMaxResults(8)
-            ->getQuery()
-            ->getResult()
+    public function findLasts($typeId=null) {
+        $qb =  $this->createQueryBuilder('t');
+
+        if ($typeId) {
+            $qb
+                ->join('t.type', 'type', 'WITH', $qb->expr()->in('type.id', explode(',', $typeId)));
+        }
+        return $qb
+                ->andWhere('t.activationDate IS NOT NULL')
+                ->orderBy('t.activationDate', 'DESC')
+                ->setMaxResults(8)
+                ->getQuery()
+                ->getResult()
         ;
     }
 

@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {CalendarComponent} from "../../../lib/component/calendar/calendar.component";
 import {Router} from "@angular/router";
+import {switchMap} from "rxjs";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-thing-out',
@@ -14,11 +16,15 @@ export class ThingOutComponent extends SubscribeComponent implements OnInit {
 
   user: any = null;
   things: any[] = [];
+  waiting: any[] = [];
   ref: NgbModalRef|null = null;
+  skipThings: any[] = [];
+  payment: boolean = false;
   constructor(
     private http: HttpClient,
     private modalService: NgbModal,
     private router: Router,
+    private store: Store<{login: any}>
   ) {
     super();
   }
@@ -26,18 +32,48 @@ export class ThingOutComponent extends SubscribeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.add(this.store.select((data: any) => data.login.payment).subscribe(payment => {
+      this.payment = payment
+    }));
   }
 
   changeUserId($event: number) {
-    this.add(this.http.get('api/users/' + $event).subscribe((data: any) => {
-      this.user = data;
+    this.add(this.http.get('api/users/' + $event).pipe(switchMap((user: any) => {
+      this.user = user;
       this.things = [];
+      return this.http.get('api/waiting?userId=' + this.user.id);
+    })).subscribe((data: any)=> {
+      this.waiting = data['hydra:member'].map((thing: any) => {
+        let reservation = thing.reservations.find((reservation:any) => !reservation.state || reservation.state == -1);
+        return {
+          ...thing,
+          startDate: reservation.startDate,
+          endDate: reservation.endDate,
+          owner: reservation.owner['@id'],
+          reservationId: reservation.id
+        }
+      });
+      this.skipThings = this.waiting.slice();
     }))
   }
 
   changeThingId($event: number) {
     this.add(this.http.get('api/things/' + $event).subscribe((data: any) => {
       this.things.push(data);
+      this.skipThings.push(data);
+    }))
+  }
+
+  removeThing(i: number, id: number) {
+    this.things.splice(i, 1);
+    let index = this.skipThings.findIndex(elem => elem.id = id);
+    this.skipThings.splice(index, 1);
+  }
+
+  removeWaiting(i: number, id: number, reservationId: number) {
+    this.add(this.http.delete('api/reservations/' + reservationId).subscribe((reservation: any) => {
+      this.waiting.splice(i,1);
+      this.skipThings.splice(this.skipThings.findIndex(elem => elem.id = id), 1);
     }))
   }
 
@@ -63,7 +99,7 @@ export class ThingOutComponent extends SubscribeComponent implements OnInit {
   }
 
   finish() {
-    Promise.all(this.things.map((thing: any) => {
+    Promise.all(this.things.concat(this.waiting).map((thing: any) => {
         let reservation = {
           owner: thing.owner,
           thing: 'api/things/' + thing.id ,
@@ -71,7 +107,11 @@ export class ThingOutComponent extends SubscribeComponent implements OnInit {
           endDate: thing.endDate,
           state: 1,
         }
-        return this.http.post('api/reservations', reservation).toPromise();
+        if(thing.reservationId) {
+          return this.http.patch('api/reservations/' + thing.reservationId, reservation).toPromise()
+        } else {
+          return this.http.post('api/reservations', reservation).toPromise();
+        }
       })
     ).then(() => this.router.navigate(['logged/thing-list']));
   }

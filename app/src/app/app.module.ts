@@ -96,6 +96,8 @@ import {BasketComponent} from "../lib/component/basket/basket.component";
           'api/stars',
           'api/lasts',
           'api/proposed',
+          'api/thing_types',
+          'api/thing/all',
         ]
       },
 
