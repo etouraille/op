@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {Store} from "@ngrx/store";
 import {decrease, increase, set} from "../../lib/actions/book-action";
 import {Router} from "@angular/router";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-waiting',
@@ -54,13 +55,19 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
   }
 
   pay() {
-    this.add(this.http.get('api/pay').subscribe((data: any) => {
-      this.getWaiting();
-      this.store.dispatch(set({quantity: 0}));
-      if(!data['hdydra:member'][0].success) {
-        this.router.navigate(['card-confirm/' + data['hdydra:member'][0].id]);
-        // TODO passer les payment en resolues dans un callback.
-      }
-    }))
+    let datesInFuture = this.things.reduce((a: boolean, thing: any) => a && moment(thing.reservations[0].startDate).isSameOrAfter(moment(), 'day'), true);
+    if( ! datesInFuture ) {
+      this.toastR.error('Il y a une date de reservation qui est dépassée');
+    } else {
+      this.add(this.http.get('api/pay').subscribe((data: any) => {
+        this.getWaiting();
+        this.store.dispatch(set({quantity: 0}));
+        if (!data['hdydra:member'][0].success) {
+          this.router.navigate(['card-confirm/' + data['hdydra:member'][0].id]);
+
+        }
+
+      }))
+    }
   }
 }
