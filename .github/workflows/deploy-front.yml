@@ -30,4 +30,3 @@ jobs:
           REMOTE_USER: 'ubuntu'
           TARGET: "front/app"
           EXCLUDE: "/dist/, /node_modules/"
-          
