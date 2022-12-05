@@ -53,11 +53,12 @@ class UserStateProcessor implements ProcessorInterface
                 // if user is not admin remove role_admin from roles
                 $roles = $this->removeRoleAdminIfIsNotAdmin($roles);
                 // si l'user est member on ajoute un compte stripe pour pouvoir faire les virements.
-                if (false !== array_search('ROLE_MEMBER', $roles)) {
+                //TODO stripe account id not compulsory. restore code.
+                //if (false !== array_search('ROLE_MEMBER', $roles)) {
                     $stripe = new \Stripe\StripeClient($this->secret);
                     $account = $stripe->accounts->create(['type' => 'express', 'email' => $data->getEmail()]);
                     $data->setStripeAccountId($account->id);
-                }
+                //}
                 $data->setRoles($roles);
                 // persist
                 $this->em->persist($data);

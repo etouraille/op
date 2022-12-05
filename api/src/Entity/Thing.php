@@ -71,7 +71,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/thing/all',
         controller: ThingAll::class,
         normalizationContext: ['groups' => ['list']],
-        denormalizationContext: ['groups' => ['collection']],
+        denormalizationContext: ['groups' => ['list']],
         name: 'thingsAll'
     )
 ])]
@@ -154,7 +154,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 ])]
 #[GetCollection(normalizationContext: ['groups' => ['search']], provider: ThingStateProvider::class)]
 #[Get(normalizationContext: ['groups' => ['get', 'reservation']])]
-#[Post(denormalizationContext: ['groups' => ['post']], processor: ThingStateProcessor::class)]
+#[Post(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
 #[Put(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
 #[Patch(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
 #[ApiFilter(SearchOrFIlter::class, properties: ['name', 'description'])]
@@ -217,7 +217,7 @@ class Thing
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $status = null;
 
-    #[Groups(['add'])]
+    #[Groups(['add', 'put', 'list'])]
     #[ORM\ManyToOne(inversedBy: 'things')]
     private ?Shop $shop = null;
 

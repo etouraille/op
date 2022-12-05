@@ -17,7 +17,7 @@ class ThingAll extends AbstractController {
     }
 
     public function __invoke(Request $request) : array {
-        return $this->em->getRepository(Thing::class)->findRand($request->get('filter'));
+        return $this->em->getRepository(Thing::class)->findAll();
 
     }
 }
