@@ -28,5 +28,5 @@ jobs:
           SOURCE: "manager/dist/manager"
           REMOTE_HOST: 'queel.io'
           REMOTE_USER: 'ubuntu'
-          TARGET: "manager/app"
+          TARGET: "front/manager"
           EXCLUDE: "/dist/, /node_modules/"
