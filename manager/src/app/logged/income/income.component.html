@@ -1,0 +1,28 @@
+<app-who (onChangeId)="changeUserId($event)" [header]="'Choisir un utilisateur pour lequel éditez une facture'" ></app-who>
+<table class="table">
+  <tr *ngFor="let expense of expenses">
+    <td>{{ expense.status }}</td>
+    <td>{{ expense.thing.name }}</td>
+    <td><span style="display: none">{{ expense.reservation.startDate | date}} au {{ expense.reservation.backDate | date}}</span><span>{{ expense.reservation.delta}} Jours</span> à {{ expense.thing.dailyPrice }} &euro;</td>
+    <td>{{ expense.amount | cent }}&euro;</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td>&nbsp;</td>
+    <td>{{ total | cent }}&euro;</td>
+  </tr>
+</table>
+<button *ngIf="expenses.length > 0 && !expenses[0]?.incomeData?.file" class="btn btn-primary" (click)="generate()">Générer la facture</button>
+<button *ngIf="expenses[0]?.incomeData?.file && expenses[0]?.status=='pending' "class="btn btn-danger" (click)="payExpense()">Régler</button>
+<button *ngIf="expenses[0]?.status=='pending' "class="btn btn-danger" (click)="payExpense()">Régler</button>
+
+{{ bill }}
+<div *ngIf="url">
+  <iframe
+    [src]="url"
+    frameBorder="0"
+    scrolling="auto"
+    height="1200px"
+    width="100%"
+  ></iframe>
+</div>

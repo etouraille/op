@@ -1,0 +1,9 @@
+<app-editor [field]="'name'" [ngModel]="thing"></app-editor>
+<app-editor [field]="'type'" [type]="'select'" [api]="'api/thing_types'" [ngModel]="thing"></app-editor>
+<app-editor [field]="'description'" [ngModel]="thing"></app-editor>
+<app-editor [field]="'price'" [type]="'price'" [ngModel]="thing"></app-editor>
+<app-editor [field]="'dailyPrice'" [type]="'price'" [ngModel]="thing"></app-editor>
+<app-switch [formControl]="state"></app-switch>
+<app-editor [field]="'pictures'" [type]="'pictures'" [ngModel]="thing"></app-editor>
+<button (click)="openModal()" class="btn btn-secondary">Reservation</button>
+<button *ngIf="isBackable()" class="btn btn-danger" (click)="back()">Retour</button>

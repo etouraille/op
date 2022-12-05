@@ -1,0 +1,4 @@
+application de saisie des objet renseignés dans l'app
+un compte super utilisateur pour se logger ( un compte classique avec ces droits la )
+une page de listing des objets
+une page d'ajout ajout simple + ajout détaillé. des notification pour renseigner les compte partiellement renseignés.

@@ -1,0 +1,417 @@
+@import '~bootstrap/scss/bootstrap';
+
+
+$color-red:#d770a7;
+$color-blue: #7999d7;
+$color-blue: #218BC3;
+$color-blue: #fcb714;
+$color-pale: #afbcd6;
+$color-pale: #f7f4eb;
+$color-grey: #CCCCCC;
+
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+
+html {
+  height: 100%;
+
+
+}
+body {
+  height: 100%;
+  position: relative;
+  font-family: "Lucida Console", monospace, sans-serif;
+}
+app-root {
+  height: 100%;
+  display: block;
+}
+app-home {
+  height: 100%;
+  display: block;
+}
+.header {
+  height:200px;
+  width:100%;
+  background: $color-blue;
+  position:relative;
+}
+.header-title {
+  padding: 1em;
+  div.container.title {
+    height: 60px;
+    font-size:43px;
+  }
+  div.container.subtitle {
+    height: 25px;
+    font-size: 16px;
+  }
+}
+.header-subtitle {
+  background-color: $color-grey;
+  height: 125px;
+  padding: 1em;
+  div.container{
+    max-width: 1060px;
+  }
+}
+.container {
+  max-width: 1296px;
+}
+.content {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  //overflow-y:scroll;
+  //height: 100%;
+
+}
+div#container {
+  /* The power of flexboxes! */
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+div#container.web {
+  height: 100vh;
+}
+div#container > .content {
+  /* Key part: Eat the remaining space! */
+
+}
+
+div#container > .footer {
+  //flex-basis: 50px;
+}
+
+.footer {
+  //height:50px;
+  width:100%;
+  bottom:0px;
+  left:0px;
+  background: #CCCCCC;
+  position:static;
+  height: 10%;
+}
+.color-blue {
+  color: #7999d7;
+}
+.color-red {
+  color: #d770a7;
+}
+.bg-light {
+  background-color: $color-pale !important;
+}
+.btn-primary {
+  background-color: $color-red !important;
+  border: 1px solid $color-red !important;
+}
+.content {
+  background-color: $color-pale;
+}
+.parent {
+  background-color: $color-pale;
+  height: 100%;
+  margin-top: 10em;
+}
+.flex {
+  display: flex;
+}
+.flex-end {
+  justify-content: flex-end;
+}
+
+.wrap {
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: flex-start;
+}
+.col {
+  flex-direction: column;
+}
+/*
+form {
+  margin: auto;
+  background-color: $color-blue;
+  padding: 1em;
+  border:2px solid $color-red;
+  border-radius: 10px;
+}
+ */
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.cards {
+  left: 200px;
+  position: relative;
+}
+.center {
+  .item.large {
+    width: 27em;
+    height: 240px;
+  }
+  .item > button {
+    float: right;
+  }
+}
+@media(screen and max-width: 400px) {
+  .center {
+    .item.large {
+      width: 21em;
+      left: -27px;
+      position: inherit;
+      height: 271px;
+    }
+    .item > button {
+      bottom: -200px;
+      position: relative;
+    }
+  }
+
+}
+/* . */
+.item {
+  margin: 30px 10px 10px 10px;
+  border: 2px solid $color-red;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: $color-blue;
+  color: $secondary;
+  height: 170px;
+
+}
+.item.logged {
+  height: 176px;
+
+}
+.icon-card {
+  height: 70px;
+  width: 100px;
+}
+
+
+.price {
+  color: white;
+}
+.parent-center {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 400px) {
+  .parent {
+    flex-direction: column;
+  }
+  .item {
+    width: 260px;
+    height: 300px;
+
+    margin-left: 60px;
+  }
+  .item.logged {
+    height: 225px;
+
+  }
+  .icon-card {
+    width: 220px;
+    height: 120px;
+  }
+
+}
+@media(screen and max-width: 401px) {
+  .calendar-base {
+    width: 300px;
+    height: 500px;
+    border-radius: 5px;
+    background-color: white;
+    position: relative;
+    z-index: 2;
+    color: black;
+  }
+
+  .modal {
+    overflow-x: visible;
+    overflow-y: visible;
+  }
+}
+.card {
+  position: inherit;
+}
+
+.income, .coin {
+  .blackboard {
+    margin-left: 10em;
+    margin-top: 53px;
+    .row-blackboard {
+      background-color: $color-blue;
+      padding: 1em;
+      border-radius: 5px;
+      .in {
+        margin: -12px;
+        background-color: grey;
+        border: 1px solid white;
+        border-radius: 5px;
+        //border: 1px solid white;
+        .cell {
+          padding: 1em;
+          color: white;
+
+        }
+        .cell.initial {
+          color: yellow;
+        }
+        .cell.plus {
+          color: green;
+        }
+        .cell.minus {
+          color: darkred;
+        }
+
+      }
+    }
+  }
+}
+
+.waiting, .done, .current {
+  div {
+   .table {
+      tr {
+        .cell {
+          padding: 10px;
+        }
+        .red {
+          background-color: red;
+        }
+      }
+    }
+  }
+
+}
+.icon {
+  width: 30px;
+  height: 30px;
+}
+.thing.parent {
+  margin-bottom: 2em;
+  border: 2px solid $color-red;
+  border-radius: 5px;
+  padding: 1em;
+  max-width : 700px;
+  .title {
+    color: $color-red;
+    font-size: 30px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .description, .type {
+    background-color: $color-grey;
+    padding: 1em;
+    margin-top: 1em;
+  }
+  .vignette {
+    width:650px;
+    height: 400px;
+  }
+  .consume {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: row;
+
+    .availabilities {
+      //float: right;
+      margin: 1em;
+    }
+
+    .price {
+      //float: right;
+      margin: 1em;
+      background-color: $color-blue;
+      color: $secondary;
+      height: 40px;
+      padding: 9px;
+      border-radius: 5px;
+      border: 1px solid $secondary;
+    }
+  }
+}
+
+.basket {
+  .circle {
+    padding: 0 0 0 5px;
+    position: relative;
+    top: -45px;
+    left: 21px;
+    height: 24px;
+    width: 24px;
+    color: white;
+    background-color: $color-red;
+    border-radius: 20px;
+    border: 2px solid black;
+  }
+  .icon {
+    height: 40px;
+    width: 40px;
+
+  }
+}
+.things {
+  .left {
+    margin-top: 5em;
+    width: 20%;
+    .cell {
+      padding: 10px 1em 10px 1em;
+      margin-bottom: 1em;
+      border: 1px solid $color-red;
+      border-radius: 5px;
+      background-color: $color-grey;
+      color: $color-red;
+      input {
+        background-color: $color-blue;
+        color: $color-blue;
+      }
+    }
+  }
+  .right {
+    width: 80%;
+  }
+}
+.things {
+  .star, .last {
+    margin: 1em;
+    border: 1px solid $color-red;
+    border-radius: 5px;
+    padding: 2em;
+    width: 290px;
+    height: 290px;
+    .icon-card {
+      height: 115px;
+      width: 220px;
+    }
+    .price {
+      color: black;
+      float: right;
+    }
+  }
+  &.proposed {
+    border: 1px solid $color-red;
+    border-radius: 5px;
+    padding: 1em;
+    div {
+      padding-right: 1em;
+      .name {
+        font-size: 20px;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+
+      .by {
+        font-size: 10px;
+      }
+    }
+  }
+}

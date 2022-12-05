@@ -1,0 +1,39 @@
+<div class="container">
+  <form [formGroup]="editThingForm" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input id="name" class="form-control" formControlName="name" />
+    </div>
+    <div class="form-group">
+      <label for="type">Types</label>
+      <select id="type" class="form-control" formControlName="type" >
+        <option *ngFor="let type of types" value="{{ type['@id']}}">{{ type.name }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="description">description</label>
+      <textarea id="description" class="form-control" formControlName="description" ></textarea>
+    </div>
+    <div class="form-group">
+      <label>Prix</label>
+      <input id="price" class="form-control" formControlName="price" />
+    </div>
+    <div class="form-group">
+      <label>Prix à la journée</label>
+      <input id="dailyPrice" class="form-control" formControlName="dailyPrice" />
+    </div>
+
+    <div class="form-group" >
+      <label>Images</label>
+      <app-pictures formControlName="pictures"></app-pictures>
+    </div>
+    <div class="form-group">
+      <select class="form-control" formControlName="owner">
+        <option *ngFor="let user of users" value="{{user.id}}">{{user.email}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-secondary">Modifier</button>
+    </div>
+  </form>
+</div>

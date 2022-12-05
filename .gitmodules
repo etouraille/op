@@ -1,0 +1,6 @@
+[submodule "manager/src/lib"]
+	path = manager/src/lib
+	url = git@github.com:etouraille/utils.git
+[submodule "lib"]
+	path = app/src/lib
+	url = git@github.com:etouraille/utils.git

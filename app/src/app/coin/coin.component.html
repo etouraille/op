@@ -1,0 +1,20 @@
+<div class="parent flex wrap coin">
+  <div class="blackboard">
+    <div class="in border row-blackboard flex">
+      <span class="center">Montant</span>
+      <span class="center">Intitulé</span>
+      <span class="center">Raison</span>
+    </div>
+    <div *ngFor="let coin of coins" class="border row-blackboard">
+      <div class="in">
+        <span class="cell" [ngClass]="{'initial' : coin.reason === 0, 'plus' : coin.reason === 1, 'minus' : coin.reason === 2}">{{ coin.amount }}</span>
+        <span class="cell blue">{{ coin.reason===0 ? 'Apport initial': coin?.thing?.name}}</span>
+        <span class="cell" [ngClass]="{'initial' : coin.reason === 0, 'plus' : coin.reason === 1, 'minus' : coin.reason === 2}">{{ coin.reason === 1 ? 'Prêt' : ( coin.reason === 2 ? 'Emprunt' : '~')}}</span>
+      </div>
+    </div>
+    <div class="in border row-blackboard flex">
+      <span class="center">Total {{ solde }}</span>
+      <span></span>
+    </div>
+  </div>
+</div>

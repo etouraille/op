@@ -1,0 +1,21 @@
+<div class="container p-3">
+  <div class="offset-3 col-6">
+    <div class="card">
+      <div class="card-header  font-weight-bold">
+        Sign Up Form
+      </div>
+      <div class="card card-body">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+          <div class="form-group">
+            <input class="form-control-sm" type="text" name="username" formControlName="username"/>
+        </div>
+        <div class="form-group">
+          <input class="form-control-sm" type="text" name="password" formControlName="password"/>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

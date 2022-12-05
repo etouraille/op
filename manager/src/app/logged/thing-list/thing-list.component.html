@@ -1,0 +1,15 @@
+<div class="container">
+  <table class="table">
+    <tr *ngFor="let thing of things;let i = index;">
+      <td>{{ thing.name}}</td>
+      <td>{{ thing.description}}</td>
+      <td>{{ thing?.owner?.email}}</td>
+      <td><select class="form-control" [ngModel]="thing.type?.id" (ngModelChange)="changeType($event, thing.id)">
+        <option *ngFor="let type of types" value="{{ type.id }}">{{ type.name}}</option></select></td>
+      <td><app-picture [pictures]="thing.pictures"></app-picture></td>
+      <td><button (click)=delete(thing.id) class="btn btn-danger">-</button></td>
+      <td><button (click)="edit(thing.id)" class="btn btn-primary">Edit</button></td>
+      <td><input type="checkbox" [ngModel]="thing.status==='active'" (ngModelChange)="changeStatus(thing.id, $event)"/>Actif</td>
+    </tr>
+  </table>
+</div>

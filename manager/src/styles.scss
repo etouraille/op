@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+#toast-container > div {
+  opacity:1;
+}
+.icon {
+  width: 30px;
+  height: 30px;
+}
+.cdk-overlay-pane {
+  z-index: 1060 !important;
+
+}
+.cdk-overlay-container{
+  z-index: 1060;
+}

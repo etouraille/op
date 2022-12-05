@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <h1>Add your object</h1>
+  <app-search (onChangeId)="onSelected($event)" [all]="true"></app-search>
+</nav>
+<div class="left">
+  <ul>
+    <li><a [routerLink]="['/logged/add']" >Ajouter un objet</a></li>
+    <li><a [routerLink]="['/logged/type-add']" >Ajouter un type d'objet</a></li>
+    <li><a [routerLink]="['/logged/user-add']" >Ajouter un utilisateur</a></li>
+    <li><a [routerLink]="['/logged/thing-list']">Liste des objets</a></li>
+    <li><a [routerLink]="['/logged/out']">Sortir des objets</a></li>
+    <li><a [routerLink]="['/logged/back']">Retour d'objets</a></li>
+    <li><a [routerLink]="['/logged/income']">Factures</a></li>
+    <li><a [routerLink]="['/logged/user']">Users</a></li>
+    <li><a [routerLink]="['/logged/pending']">En attente de retour</a></li>
+
+  </ul>
+</div>
+<div class="right">
+  <router-outlet></router-outlet>
+</div>

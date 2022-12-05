@@ -1,0 +1,19 @@
+<app-who *ngIf="!user" (onChangeId)="changeUserId($event)" [header]="'Pour quel utilisateur souhaitez vous sortir un objet'"></app-who>
+<div *ngIf="user">{{ user.email }}<button (click)="user=null" class="btn btn-secondary">Change User</button></div>
+<div *ngIf="user">
+  <app-search [user]="user" [things]="skipThings" (onChangeId)="changeThingId($event)"></app-search>
+  <table class="table">
+    <tr *ngFor="let thing of waiting; let i = index">
+      <td>{{thing.name}}</td>
+      <td *ngIf="thing.startDate">reservé du {{ thing.startDate }} au {{ thing.endDate }}</td>
+      <td *ngIf="!payment"><button class="btn btn-danger" (click)="removeWaiting(i, thing.id, thing.reservationId)">Supprimer</button></td>
+    </tr>
+    <tr *ngFor="let thing of things; let i = index">
+      <td>{{thing.name}}</td>
+      <td *ngIf="thing.startDate">reservé du {{ thing.startDate }} au {{ thing.endDate }}<a >-</a></td>
+      <td><button class="btn btn-danger" (click)="removeThing(i, thing.id)">Supprimer</button></td>
+      <td><button *ngIf="!thing.startDate"(click)="book(thing, i)">Reserver</button></td>
+    </tr>
+  </table>
+  <button [disabled]="finishDisabled()" (click)="finish()" class="btn btn-primary">Finish</button>
+</div>

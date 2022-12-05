@@ -1,0 +1,11 @@
+<app-who (onChangeId)="selectUserId($event)" [header]="'Choisir un utilisateur pour modifier ces droits'"></app-who>
+<form [formGroup]="form" (ngSubmit)="patch()">
+  <div class="form-group">
+    <app-roles formControlName="roles"></app-roles>
+  </div>
+  <div class="form-group" *ngIf="isMember">
+    <label>Is Member Valid</label>
+    <app-switch formControlName="isMemberValidated"></app-switch>
+  </div>
+  <button class="btn btn-primary">Modifier</button>
+</form>
