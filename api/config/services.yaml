@@ -46,6 +46,9 @@ services:
     App\State\ReservationStateProcessor:
         $stripe: '%env(STRIPE)%'
 
+    App\Controller\WebhookController:
+        $stripeSecretIntent: '%env(STRIPE_SECRET_INTENT)%'
+
 
 
 

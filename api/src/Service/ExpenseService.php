@@ -50,7 +50,7 @@ class ExpenseService
                 }
                 do {
                     $paymentMethodId = $data['data'][$index]['id'];
-                    list( $success , $id ) = $this->payExpense($expense, $total, $paymentMethodId);
+                    list( $success , $id ) = $this->payExpense($expenses, $expense, $total, $paymentMethodId);
                     $index++;
                 } while (!$success && $index < count($data['data']));
                 // TODO : do something with the IncomeData.
@@ -146,7 +146,7 @@ class ExpenseService
         return [];
     }
 
-    public function payExpense($expense, $total , $paymentMethodId) {
+    public function payExpense($expenses, $expense, $total , $paymentMethodId) {
 
         try {
             $intent = \Stripe\PaymentIntent::create([
@@ -156,6 +156,9 @@ class ExpenseService
                 'payment_method' => $paymentMethodId,
                 'off_session' => true,
                 'confirm' => true,
+                'metadata' => [
+                    'ids' => implode(',',array_map(function($elem) {return $elem->getId();}, $expenses))
+                ]
             ]);
 
             $data = $intent->toArray();
