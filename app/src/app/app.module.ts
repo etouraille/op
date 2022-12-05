@@ -40,6 +40,7 @@ import {MatInputModule} from "@angular/material/input";
 import { ThingComponent } from './thing/thing.component';
 import {BasketComponent} from "../lib/component/basket/basket.component";
 import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.component";
+import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-login.component";
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.comp
       ThingComponent,
       BasketComponent,
       CardStripeComponent,
+      FacebookLoginComponent,
 
     ],
   imports: [
