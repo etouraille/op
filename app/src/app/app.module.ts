@@ -41,6 +41,9 @@ import { ThingComponent } from './thing/thing.component';
 import {BasketComponent} from "../lib/component/basket/basket.component";
 import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.component";
 import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-login.component";
+import {GoogleLoginProvider, SocialLoginModule} from "angularx-social-login";
+import {environment} from "../environments/environment";
+import {GoogleSigninComponent} from "../lib/component/google-signin/google-signin.component";
 
 
 @NgModule({
@@ -70,6 +73,7 @@ import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-l
       BasketComponent,
       CardStripeComponent,
       FacebookLoginComponent,
+      GoogleSigninComponent,
 
     ],
   imports: [
@@ -88,6 +92,8 @@ import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-l
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    SocialLoginModule,
+
 
   ],
     providers: [
@@ -103,7 +109,18 @@ import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-l
           'api/thing_types',
           'api/thing/all',
         ]
-      },
+      },{
+        provide: 'SocialAuthServiceConfig',
+        useValue: {
+          autoLogin: true, //keeps the user signed in
+          providers: [
+            {
+              id: GoogleLoginProvider.PROVIDER_ID,
+              provider: new GoogleLoginProvider(environment.google) // your client id
+            }
+          ]
+        }
+      }
 
     ],
   exports: [

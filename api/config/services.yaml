@@ -57,6 +57,11 @@ services:
               name: 'doctrine.event_listener'
               event: 'postRemove'
 
+    App\Controller\GoogleSigninController:
+        $googleClientId: '%env(GOOGLE_CLIENT_ID)%'
+
+    App\Service\UserService:
+        $stripe: '%env(STRIPE)%'
 
 
 

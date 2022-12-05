@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Coin;
 use App\Entity\User;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use ApiPlatform\Metadata\Put;
@@ -21,7 +22,7 @@ class UserStateProcessor implements ProcessorInterface
     public function __construct(
         private UserPasswordHasherInterface $hasher,
         private EntityManagerInterface $em,
-        private Security $security,
+        private UserService $service,
         $stripe
     ) {
         $this->stripe = \Stripe\Stripe::setApiKey($stripe);
@@ -35,43 +36,16 @@ class UserStateProcessor implements ProcessorInterface
             if($operation instanceof Post) {
 
                 //create stripe user:
-                $stripeCustomer = \Stripe\Customer::create(['email' => $data->getEmail()]);
-                $data->setStripeCustomerId($stripeCustomer->id);
-                // encode password
-                if($data->getPassword()) {
-                    $plainPassword = $data->getPassword();
-                    $hashedPassword = $this->hasher->hashPassword($data, $plainPassword);
-                    $data->setPassword($hashedPassword);
-                } else {
-                    $plainPassword = rand(1, 10000000000000000);
-                    $hashedPassword = $this->hasher->hashPassword($data, $plainPassword);
-                    $data->setPassword($hashedPassword);
-                }
-                // roles are unique
-                $roles = $data->getRoles();
-                $roles = array_unique($roles);
-                // if user is not admin remove role_admin from roles
-                $roles = $this->removeRoleAdminIfIsNotAdmin($roles);
-                // si l'user est member on ajoute un compte stripe pour pouvoir faire les virements.
-                //TODO stripe account id not compulsory. restore code.
-                //if (false !== array_search('ROLE_MEMBER', $roles)) {
-                    $stripe = new \Stripe\StripeClient($this->secret);
-                    $account = $stripe->accounts->create(['type' => 'express', 'email' => $data->getEmail()]);
-                    $data->setStripeAccountId($account->id);
-                //}
-                $data->setRoles($roles);
-                // persist
-                $this->em->persist($data);
-                $this->em->flush();
-
-                // add coins
-                $coin = new Coin();
-                $coin->setAmount(100000);
-                $coin->setReason(Coin::REASON_PROVIDE);
-                $coin->setOwner($data);
-
-                $this->em->persist($coin);
-                $this->em->flush();
+                $this->service->create(
+                    $data->getEmail(),
+                    $data->getPassword(),
+                    $data->getRoles(),
+                    $data->getFirstname(),
+                    $data->getLastname(),
+                    $data->getAddress(),
+                    $data->getZipcode(),
+                    $data->getCity()
+                );
 
             } elseif ($operation instanceof Put) {
                 if($data->getPassword()) {
@@ -80,7 +54,7 @@ class UserStateProcessor implements ProcessorInterface
                     $roles = $data->getRoles();
                     $roles = array_unique($roles);
                     // is user is not admin remove role_admin from roles.
-                    $roles = $this->removeRoleAdminIfIsNotAdmin($roles);
+                    $roles = $this->service->removeRoleAdminIfIsNotAdmin($roles);
                     $data->setRoles($roles);
                     $this->em->merge($data);
                     $this->em->flush();
@@ -89,17 +63,5 @@ class UserStateProcessor implements ProcessorInterface
         }
     }
 
-    // Here for security Reason, because some user might log with no admin rights
-    // even more, in app when créate user they log with no right
-    // prevent from malicious usage of the api.
-    private function removeRoleAdminIfIsNotAdmin($roles) {
-        // TODO à revoir.
-        $isAdmin = $this->security?->getUser()?->getRoles();
-        if(!$isAdmin) {
-            if($key = array_search('ROLE_ADMIN',$roles) !== false ) {
-                unset($roles[$key]);
-            }
-        }
-        return $roles;
-    }
+
 }
