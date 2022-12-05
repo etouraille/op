@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'https://queel.io/',
-  cdn: 'http://localhos:3000/',
+  api: 'http://localhost:8080/',
+  cdn: 'http://localhost:3000/',
   stripe: 'pk_test_51M5VUJE2cCuT5clEeeLgqsVbClfFzBuLWQbGNWDRekYxKxFRG2mDmpitmvnBayHi9GWNNSBxghxwPC9HaeK6fkgE00VEh9lRDu',
   local: 'http://localhost:4200/',
   app: 'manager',

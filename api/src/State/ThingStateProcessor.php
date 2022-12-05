@@ -59,6 +59,22 @@ class ThingStateProcessor implements ProcessorInterface
                 $data->setActivationDate(null);
             }
         }
+        // remove old pictures
+        if($operation instanceof Put || $operation instanceof Patch) {
+            $oldThing = clone $this->em->getRepository(Thing::class)->findOneBy(['id'=> $data->getId()]);
+            $pictures = $oldThing->getPictures();
+            // check which one are preserved
+            foreach($pictures as $oldPicture) {
+                $preserved = false;
+                foreach($data->getPictures() as $newPic) {
+                    if($newPic->getId() === $oldPicture->getId() && $newPic->getId() && $oldPicture->getId()) {
+                        $preserved = true;
+                    }
+                }
+                if(!$preserved) $this->em->remove($oldPicture);
+            }
+
+        }
 
         if ($operation instanceof Post) {
             $this->em->persist($data);
