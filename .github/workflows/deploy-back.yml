@@ -38,6 +38,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker exec -ti php /bin/bash -c "cd migrations;rm *"
-            docker exec -ti php /bin/bash -c "bin/console doctrine:migration:diff"
-            docker exec -ti php /bin/bash -c "bin/console doctrine:migration:migrate -y"
+            docker exec -i php /bin/bash -c "cd migrations;rm *"
+            docker exec -i php /bin/bash -c "bin/console doctrine:migration:diff"
+            docker exec -i php /bin/bash -c "bin/console doctrine:migration:migrate -y"
