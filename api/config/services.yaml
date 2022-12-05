@@ -49,6 +49,14 @@ services:
     App\Controller\WebhookController:
         $stripeSecretIntent: '%env(STRIPE_SECRET_INTENT)%'
 
+    App\EventListener\DeletePicture:
+        arguments:
+            $cdn_url: '%env(CDN_URL)%'
+        tags:
+            -
+              name: 'doctrine.event_listener'
+              event: 'postRemove'
+
 
 
 
