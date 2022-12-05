@@ -55,6 +55,8 @@ export class ThingListComponent extends SubscribeComponent implements OnInit {
     this.add(
       this.http.patch('api/things/' + id, obj).subscribe(() => {
         this.toastR.success($event? 'L objet est maintenant disponible sur le front': 'L\'objet n\'est plus disponible sur le front')
+      }, (error: any) => {
+        this.toastR.error('Erreur lors de la modification de l\'état' + error.error['hydra:description']);
       })
     )
   }
