@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '16.x'
       - name: Install npm dependencies
-        run: cd manager && npm install
+        run: cd manager && npm install --force
       - name: Run build task
         run: cd manager && npm run build --if-present
       - name: Deploy to Server
