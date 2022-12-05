@@ -1,0 +1,43 @@
+name: Code Quality
+on: [ push, pull_request ]
+jobs:
+  code-quality:
+    name: PHPStan & PHP-CS-Fixer
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '8.0' ]
+      fail-fast: false
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - uses: actions/checkout@v3
+        with:
+          ref: 'main'
+
+      - name: Composer Install
+        run: cd api && composer install --ansi --prefer-dist --no-interaction --no-progress
+
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "api"
+          REMOTE_HOST: 'queel.io'
+          REMOTE_USER: 'ubuntu'
+          TARGET: "api"
+      - name: Executing migration scrip
+        uses: appleboy/ssh-action@master
+        with:
+          host: 'queel.io'
+          username: 'ubuntu'
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            docker exec -ti php /bin/bash -c "cd migrations;rm *"
+            docker exec -ti php /bin/bash -c "bin/console doctrine:migration:diff"
+            docker exec -ti php /bin/bash -c "bin/console doctrine:migration:migrate -y"
