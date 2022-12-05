@@ -14,7 +14,7 @@
         <div class="name center">{{ star.name }}</div>
         <div class="price">
           {{ star.dailyPrice }}&euro;
-          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(star)" >Reserver</button>
+          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(star, $event)" >Reserver</button>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="name center">{{ last.name }}</div>
         <div class="price">
           {{ last.dailyPrice }}&euro;
-          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(last)" >Reserver</button>
+          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(last, $event)" >Reserver</button>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
         <div class="name center">{{ last.name }}</div>
         <div class="price">
           {{ last.dailyPrice }}&euro;
-          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(last)" >Reserver</button>
+          <button *ngIf="logged" class="btn btn-secondary" (click)="openModal(last, $event)" >Reserver</button>
         </div>
       </div>
     </div>

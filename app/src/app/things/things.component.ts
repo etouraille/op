@@ -93,7 +93,8 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
 
   }
 
-  openModal(thing: any) {
+  openModal(thing: any, event: Event) {
+    event.stopPropagation();
     this.modalRef = this.service.open(CalendarComponent);
     this.modalRef.componentInstance.reservations = thing.reservations;
     this.modalRef.componentInstance.readOnly = !(this.logged && !this.user?.roles?.includes('ROLE_MEMBER') || this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated)
