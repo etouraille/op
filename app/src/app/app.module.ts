@@ -92,7 +92,7 @@ import {GoogleSigninComponent} from "../lib/component/google-signin/google-signi
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    SocialLoginModule,
+
 
 
   ],
@@ -109,20 +109,8 @@ import {GoogleSigninComponent} from "../lib/component/google-signin/google-signi
           'api/thing_types',
           'api/thing/all',
         ]
-      },{
-        provide: 'SocialAuthServiceConfig',
-        useValue: {
-          autoLogin: true, //keeps the user signed in
-          providers: [
-            {
-              id: GoogleLoginProvider.PROVIDER_ID,
-              provider: new GoogleLoginProvider(environment.google) // your client id
-            }
-          ]
-        }
       }
-
-    ],
+  ],
   exports: [
     CalendarComponent,
     PicturesComponent

@@ -24,7 +24,6 @@
     "@popperjs/core": "^2.10.2",
     "@stripe/stripe-js": "^1.44.1",
     "@types/lodash": "^4.14.191",
-    "angularx-social-login": "^4.1.0",
     "bootstrap": "^5.2.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
