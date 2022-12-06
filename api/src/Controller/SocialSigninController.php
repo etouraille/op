@@ -83,7 +83,6 @@ class SocialSigninController extends AbstractController
 
 
         if ($me) {
-            $email = $me->getField('email');
             if($noEmail) {
                 $user = $this->em->getRepository(User::class)->findOneBy(['facebookId' => $me->getField('id')]);
             } else {
@@ -94,8 +93,8 @@ class SocialSigninController extends AbstractController
                     $email,
                     null,
                     isset($data['roles']) ? $data['roles'] : [],
-                    $me->getField('first_name'),
-                    $me->getField('last_name'),
+                    $me->getField('name'),
+                    null,
                     null,
                     null,
                     null,
