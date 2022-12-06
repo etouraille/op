@@ -71,6 +71,8 @@ class SocialSigninController extends AbstractController
 
         $me = $response->getGraphNode();
 
+        return new JsonResponse(['fields' => $me->getFieldNames()]);
+
         if ($me) {
             $email = $me->getField('email');
             $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
