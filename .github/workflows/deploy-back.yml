@@ -1,4 +1,4 @@
-name: Code Quality
+name: Deploy back
 on: [ push, pull_request ]
 jobs:
   code-quality:
