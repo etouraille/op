@@ -49,30 +49,27 @@ class SocialSigninController extends AbstractController
         $payload = @file_get_contents('php://input');
         $data = json_decode($payload, true);
 
-        $provider = new \League\OAuth2\Client\Provider\Facebook([
-            'clientId'          => '1867394790282222',
-            'clientSecret'      => 'd082cb017a76c6323ee4ceaabc08e9be',
-            'redirectUri'       => 'https://app.queel.io/callback-url',
-            'graphApiVersion'   => 'v2.10',
-        ]);
-
-        $token = $provider->getAccessToken('authorization_code', [
-            'idToken' => $data['token']
+        $fb = new \JanuSoftware\Facebook\Facebook([
+            'app_id' => '1867394790282222',
+            'app_secret' => 'd082cb017a76c6323ee4ceaabc08e9be',
+            'default_graph_version' => 'v15.0',
+            //'default_access_token' => '{access-token}', // optional
         ]);
 
         try {
-
-            // We got an access token, let's now get the user's details
-            $me = $provider->getResourceOwner($token);
-
-
-
-        } catch (\Exception $e) {
-
-            // Failed to get user details
-            exit('Oh dear...');
+            // If you provided a 'default_access_token', the '{access-token}' is optional.
+            $response = $fb->get('/me', '{access-token}');
+        } catch(\JanuSoftware\Facebook\Exception\ResponseException $e) {
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(\JanuSoftware\Facebook\Exception\SDKException $e) {
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
         }
 
+        $me = $response->getGraphNode();
 
         if ($me) {
             $email = $me->getEmail();

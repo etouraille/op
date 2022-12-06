@@ -141,6 +141,16 @@
       <path value="$PROJECT_DIR$/api/vendor/symfony/monolog-bundle" />
       <path value="$PROJECT_DIR$/api/vendor/league/oauth2-facebook" />
       <path value="$PROJECT_DIR$/api/vendor/league/oauth2-client" />
+      <path value="$PROJECT_DIR$/api/vendor/php-http/message" />
+      <path value="$PROJECT_DIR$/api/vendor/php-http/httplug" />
+      <path value="$PROJECT_DIR$/api/vendor/php-http/promise" />
+      <path value="$PROJECT_DIR$/api/vendor/php-http/message-factory" />
+      <path value="$PROJECT_DIR$/api/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/api/vendor/clue/stream-filter" />
+      <path value="$PROJECT_DIR$/api/vendor/thecodingmachine/safe" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/api/vendor/janu-software/facebook-php-sdk" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">

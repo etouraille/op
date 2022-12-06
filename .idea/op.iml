@@ -101,6 +101,16 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/monolog-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/oauth2-facebook" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/oauth2-client" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-http/message" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-http/httplug" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-http/promise" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-http/message-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-http/discovery" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/clue/stream-filter" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/thecodingmachine/safe" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/http-client-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/janu-software/facebook-php-sdk" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
