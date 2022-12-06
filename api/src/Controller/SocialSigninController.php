@@ -52,7 +52,7 @@ class SocialSigninController extends AbstractController
         $provider = new \League\OAuth2\Client\Provider\Facebook([
             'clientId'          => '1867394790282222',
             'clientSecret'      => 'd082cb017a76c6323ee4ceaabc08e9be',
-            'redirectUri'       => 'https://queel.io/callback-url',
+            'redirectUri'       => 'https://app.queel.io/callback-url',
             'graphApiVersion'   => 'v2.10',
         ]);
 
