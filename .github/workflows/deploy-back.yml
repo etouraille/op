@@ -27,8 +27,8 @@ jobs:
           PUBLIC_PEM: ${{ secrets.PUBLIC_PEM }}
         run: |
             mkdir -p api/config/jwt
-            echo PRIVATE_PEM | base64 -d > api/config/jwt/private.pem
-            echo PUBLIC_PEM | base64 -d > api/config/jwt/public.pem
+            echo PRIVATE_PEM | base64 -di > api/config/jwt/private.pem
+            echo PUBLIC_PEM | base64 -di > api/config/jwt/public.pem
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
