@@ -72,12 +72,12 @@ class SocialSigninController extends AbstractController
         $me = $response->getGraphNode();
 
         if ($me) {
-            $email = $me->getEmail();
+            $email = $me->getField('email');
             $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
             if(!$user) {
-                $user = $this->userService->create($email, null, isset($data['roles']) ? $data['roles'] : [], $me->getFirstName(), $me->getLastName());
+                $user = $this->userService->create($email, null, isset($data['roles']) ? $data['roles'] : [], $me->getField('first_name'), $me->getField('last_name'));
             }
-            return new JsonResponse(['token' => $this->JWTManager->create($user), 'id' => $user->getId(), 'email' => $email]);
+            return new JsonResponse(['token' => $this->JWTManager->create($user), 'id' => $user->getId(), 'email' => $email, 'fields'=> $me->getFieldNames()]);
         } else {
             return new JsonResponse(['token' => null], 401);
         }
