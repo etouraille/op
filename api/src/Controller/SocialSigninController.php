@@ -71,13 +71,38 @@ class SocialSigninController extends AbstractController
 
         $me = $response->getGraphNode();
 
-        return new JsonResponse(['fields' => $me->getFieldNames()]);
+        $fields = $me->getFieldNames();
+        $noEmail = false;
+        if(false === array_search('email', $fields)) {
+            $noEmail = true;
+            $email = $me->getField('name') . '@facebook.com';
+        } else {
+            $email = $me->getField('email');
+        }
+
+
 
         if ($me) {
             $email = $me->getField('email');
-            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+            if($noEmail) {
+                $user = $this->em->getRepository(User::class)->findOneBy(['facebookId' => $me->getField('id')]);
+            } else {
+                $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+            }
             if(!$user) {
-                $user = $this->userService->create($email, null, isset($data['roles']) ? $data['roles'] : [], $me->getField('first_name'), $me->getField('last_name'));
+                $user = $this->userService->create(
+                    $email,
+                    null,
+                    isset($data['roles']) ? $data['roles'] : [],
+                    $me->getField('first_name'),
+                    $me->getField('last_name'),
+                    null,
+                    null,
+                    null,
+                    null,
+                    $me->getField('id')
+
+                );
             }
             return new JsonResponse(['token' => $this->JWTManager->create($user), 'id' => $user->getId(), 'email' => $email, 'fields'=> $me->getFieldNames()]);
         } else {

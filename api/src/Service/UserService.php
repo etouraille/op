@@ -22,7 +22,7 @@ class UserService
         $this->secret = $stripe;
     }
 
-    public function create($email, $password = null, $roles=[], $firstname = null, $lastname= null, $address = null, $zipcode=null, $city=null, $photo=null) {
+    public function create($email, $password = null, $roles=[], $firstname = null, $lastname= null, $address = null, $zipcode=null, $city=null, $photo=null, $facebookId = null) {
 
         $user = new User();
 
@@ -54,6 +54,7 @@ class UserService
         $user->setAddress($address);
         $user->setZipcode($zipcode);
         $user->setCity($city);
+        $user->setFacebookId($facebookId);
 
         // persist
         $this->em->persist($user);
