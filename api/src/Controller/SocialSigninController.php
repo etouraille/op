@@ -57,7 +57,7 @@ class SocialSigninController extends AbstractController
         ]);
 
         $token = $provider->getAccessToken('authorization_code', [
-            'code' => $data['token']
+            'idToken' => $data['token']
         ]);
 
         try {
