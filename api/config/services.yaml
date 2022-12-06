@@ -57,7 +57,7 @@ services:
               name: 'doctrine.event_listener'
               event: 'postRemove'
 
-    App\Controller\GoogleSigninController:
+    App\Controller\SocialSigninController:
         $googleClientId: '%env(GOOGLE_CLIENT_ID)%'
 
     App\Service\UserService:
