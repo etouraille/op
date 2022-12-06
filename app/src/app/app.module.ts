@@ -41,7 +41,6 @@ import { ThingComponent } from './thing/thing.component';
 import {BasketComponent} from "../lib/component/basket/basket.component";
 import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.component";
 import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-login.component";
-import {GoogleLoginProvider, SocialLoginModule} from "angularx-social-login";
 import {environment} from "../environments/environment";
 import {GoogleSigninComponent} from "../lib/component/google-signin/google-signin.component";
 
