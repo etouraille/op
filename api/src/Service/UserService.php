@@ -28,7 +28,7 @@ class UserService
 
         $user->setEmail($email);
         //create stripe user:
-        $stripeCustomer = \Stripe\Customer::create(['email' => $$email]);
+        $stripeCustomer = \Stripe\Customer::create(['email' => $email]);
         $user->setStripeCustomerId($stripeCustomer->id);
 
         // encode password

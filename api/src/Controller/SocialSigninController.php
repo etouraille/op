@@ -75,7 +75,7 @@ class SocialSigninController extends AbstractController
         $noEmail = false;
         if(false === array_search('email', $fields)) {
             $noEmail = true;
-            $email = $me->getField('name') . '@facebook.com';
+            $email = str_replace(' ', '_',  $me->getField('name')) . '@facebook.com';
         } else {
             $email = $me->getField('email');
         }
