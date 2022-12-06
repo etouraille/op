@@ -58,7 +58,7 @@ class SocialSigninController extends AbstractController
 
         try {
             // If you provided a 'default_access_token', the '{access-token}' is optional.
-            $response = $fb->get('/me', '{access-token}');
+            $response = $fb->get('/me', $data['token']);
         } catch(\JanuSoftware\Facebook\Exception\ResponseException $e) {
             // When Graph returns an error
             echo 'Graph returned an error: ' . $e->getMessage();
