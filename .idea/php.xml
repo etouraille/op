@@ -139,6 +139,8 @@
       <path value="$PROJECT_DIR$/api/vendor/facebook/graph-sdk" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/monolog-bridge" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/api/vendor/league/oauth2-facebook" />
+      <path value="$PROJECT_DIR$/api/vendor/league/oauth2-client" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">

@@ -16,6 +16,7 @@
         "facebook/graph-sdk": "^5.1",
         "google/apiclient": "^2.12",
         "knplabs/knp-snappy": "^1.4",
+        "league/oauth2-facebook": "^2.2",
         "lexik/jwt-authentication-bundle": "^2.16",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",

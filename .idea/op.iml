@@ -99,6 +99,8 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/facebook/graph-sdk" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/monolog-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/monolog-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/oauth2-facebook" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/oauth2-client" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
