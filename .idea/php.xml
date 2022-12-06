@@ -137,6 +137,8 @@
       <path value="$PROJECT_DIR$/api/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/api/vendor/paragonie/constant_time_encoding" />
       <path value="$PROJECT_DIR$/api/vendor/facebook/graph-sdk" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/monolog-bridge" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/monolog-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">

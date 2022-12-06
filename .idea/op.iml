@@ -97,6 +97,8 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/paragonie/constant_time_encoding" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/facebook/graph-sdk" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/monolog-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/monolog-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
