@@ -41,7 +41,7 @@ jobs:
           REMOTE_USER: 'ubuntu'
           TARGET: "/home/ubuntu/"
       - name: Executing migration scrip
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.5
         with:
           host: 'queel.io'
           username: 'ubuntu'
