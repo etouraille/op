@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Expense;
+use App\Entity\Picture;
 use App\Entity\Reservation;
 use App\Entity\Thing;
 use App\Entity\User;
+use App\Dto\PayReturn;
 use App\Service\ExpenseService;
 use App\Service\GenerateBill;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +26,7 @@ class PayController extends AbstractController
         private GenerateBill $billService,
     ) {}
 
-    public function __invoke() :array {
+    public function __invoke(): PayReturn {
         $user = $this->security->getUser();
         /** @var $user User */
         if(
@@ -46,7 +48,9 @@ class PayController extends AbstractController
             /** @var $thing Thing */
             $expenses = array_map(function($reservation) use($thing) {
                 /** @var $reservation Reservation */
-                if(-2 === $reservation->getState()) {
+                $state = $reservation->getState();
+                $expenses = $reservation->getExpenses();
+                if(-2 === $reservation->getState() && count($reservation->getExpenses()) === 0) {
                     $startDate = $reservation->getStartDate();
                     $backDate = $reservation->getEndDate();
                     $startDate->setTime(0, 0, 0);
@@ -64,11 +68,12 @@ class PayController extends AbstractController
                         $this->em->persist($expense);
                         $this->em->flush();
                     }
-                    $reservation->setState(-1);
                     $this->em->merge($reservation);
                     $this->em->flush();
 
                     return $expense;
+                } else if(-2 === $reservation->getState() && $reservation->getExpenses() && count($reservation->getExpenses()) === 1) {
+                    return $reservation->getExpenses()->toArray()[0];
                 }
             }, $thing->getReservations()->toArray());
 
@@ -83,10 +88,9 @@ class PayController extends AbstractController
 
         }
 
-        list($success, $isIntent, $id) = $this->expenseService->process($expenses, false);
+        list($success, $isIntent, $id, $error) = $this->expenseService->process($expenses, false, true);
 
-        return [['success' => $success, 'isIntent' => $isIntent, 'id' => $id]];
-
+        return new PayReturn($success, $isIntent, $id, $error);
     }
 
 }

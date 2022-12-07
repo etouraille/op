@@ -144,10 +144,10 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
     )
 ])]
 #[ApiResource(operations: [
-    new GetCollection(
+    new Put(
         uriTemplate: '/pay',
         controller: PayController::class,
-        normalizationContext: ['groups' => ['list', 'reservation']],
+        normalizationContext: ['groups' => ['pay']],
         name: 'Payer depuis le site',
 
     )

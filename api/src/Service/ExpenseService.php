@@ -19,7 +19,7 @@ class ExpenseService
         $this->secret = $stripe;
     }
 
-    public function process(array $expenses, bool $reimburse = true): array {
+    public function process(array $expenses, bool $reimburse = true, $setState = false): array {
 
         $total = array_reduce($expenses, function($a, $elem) {
             /** @var $elem Expense */
@@ -46,21 +46,26 @@ class ExpenseService
                 $data = $paymentMethod->toArray();
                 $index = 0;
                 if (count($data['data']) == 0) {
-                    return ['error' => 'Pas de methode de paiement enregistrée'];
+                    return [false, $total > 0 , null, 'Pas de moyent de paiement enregistré'];
                 }
                 do {
                     $paymentMethodId = $data['data'][$index]['id'];
-                    list( $success , $id ) = $this->payExpense($expenses, $expense, $total, $paymentMethodId);
+                    list( $success , $id , $error ) = $this->payExpense($expenses, $expense, $total, $paymentMethodId);
                     $index++;
                 } while (!$success && $index < count($data['data']));
                 // TODO : do something with the IncomeData.
                 // TODO allow payment only once the incomeData is generated. api.
                 // set Expense status.
-                array_map(function ($elem) use ($success, $id) {
+                array_map(function ($elem) use ($success, $id, $setState) {
                     /** @var $elem Expense */
                     if ($success) {
                         $elem->setStatus('paid');
                         $elem->setPaymentIntentId($id);
+                        $reservation = $elem->getReservation();
+                        if($setState) {
+                            $reservation->setState(-1);
+                            $this->em->merge($reservation);
+                        }
                     } else {
                         $elem->setStatus('error');
                     }
@@ -107,7 +112,7 @@ class ExpenseService
                 $this->payIncomeForExpense($stripe, $elem, $reimburse);
             }, $expenses);
 
-            return  [$success ,  $total > 0,  $id];
+            return  [$success ,  $total > 0,  $id, $error];
 
 
         }
@@ -140,7 +145,7 @@ class ExpenseService
 
             }, $expenses);
 
-            return [ true ,  null,  null];
+            return [ true ,  null,  null, null];
         }
 
         return [];
@@ -162,7 +167,7 @@ class ExpenseService
             ]);
 
             $data = $intent->toArray();
-            return [  true , $data['id']];
+            return [  true , $data['id'], null];
 
 
         } catch (\Stripe\Exception\CardException $e) {
@@ -170,7 +175,7 @@ class ExpenseService
             $payment_intent_id = $e->getError()->payment_intent->id;
             $payment_intent = \Stripe\PaymentIntent::retrieve($payment_intent_id);
 
-            return [ false, $payment_intent->client_secret];
+            return [ false, $payment_intent->client_secret, $e->getMessage()];
         }
 
     }

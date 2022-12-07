@@ -59,12 +59,16 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
     if( ! datesInFuture ) {
       this.toastR.error('Il y a une date de reservation qui est dépassée');
     } else {
-      this.add(this.http.get('api/pay').subscribe((data: any) => {
+      this.add(this.http.put('api/pay', {data: 1}).subscribe((data: any) => {
         this.getWaiting();
-        this.store.dispatch(set({quantity: 0}));
-        if (!data['hdydra:member'][0].success) {
-          this.router.navigate(['card-confirm/' + data['hdydra:member'][0].id]);
-
+        if(data.success) {
+          this.store.dispatch(set({quantity: 0}));
+        }
+        if (!data.success) {
+          this.toastR.error(data.error);
+          if(data.id) {
+            this.router.navigate(['card-confirm/' + data.id]);
+          }
         }
 
       }))

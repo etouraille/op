@@ -1,0 +1,16 @@
+# api/config/packages/api_platform.yaml
+when@prod:
+  api_platform:
+    eager_loading:
+      fetch_partial: true
+      force_eager: false
+    http_cache:
+      invalidation:
+        enabled: true
+        varnish_urls: ['http://cache:80']
+      public: true
+    defaults:
+      cache_headers:
+        max_age: 0
+        shared_max_age: 360000
+        vary: ['Content-Type', 'Authorization', 'Origin']
