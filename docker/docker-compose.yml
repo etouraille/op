@@ -3,13 +3,13 @@ version: "3.9"
 services:
     web:
         image: nginx:latest
-        ports:
-            - "8080:80"
         volumes:
             - ./../api:/var/www/html
             - ./default.conf:/etc/nginx/conf.d/default.conf
         links:
             - php-fpm
+        networks:
+            - web
     php-fpm:
         build: ./php
         volumes:
@@ -22,6 +22,8 @@ services:
             - database
         extra_hosts:
             - "host.docker.internal:host-gateway"
+        networks:
+            - web
     cdn:
         image: node:latest
         volumes:
@@ -45,3 +47,21 @@ services:
             - '3306:3306'
         volumes:
             - ${PWD}/mariadb/:/var/lib/mysql/
+        networks:
+            - web
+    cache:
+        image: varnish
+        container_name: cache
+        restart: unless-stopped
+        volumes:
+            - ./default.vcl:/etc/varnish/default.vcl:ro
+        networks:
+            - web
+        ports:
+            - "8080:80"
+        depends_on:
+         - web
+
+networks:
+    web:
+     external: true
