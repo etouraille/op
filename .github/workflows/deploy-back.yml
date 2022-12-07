@@ -50,5 +50,5 @@ jobs:
           port: 22
           script: |
             docker exec -i php /bin/bash -c "bin/console doctrine:schema:update --force"
-            sudo chown -R ubuntu:ubuntu api
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/api
             sudo chown -R 33:ubuntu /tmp
