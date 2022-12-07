@@ -68,4 +68,10 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
       this.changeUserId(this.user.id);
     }))
   }
+
+  markAsPaid() {
+    this.add(this.http.get('api/mark-as-paid?userId=' + this.user.id).subscribe(() => {
+      this.changeUserId(this.user.id);
+    }))
+  }
 }

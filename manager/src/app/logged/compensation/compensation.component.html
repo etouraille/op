@@ -1,0 +1,17 @@
+<div>
+  <app-search [all]="true" (onChangeId)="selectThing($event)"></app-search>
+  {{ thing?.name }}
+  <app-who (onChangeId)="selectUser($event)" [header]="'Quel utilisateur souhaitez vous débiter pour la compensation'"></app-who>
+  {{ user?.email }}
+  <label>Taux de compensation</label>
+  <input class="form-control" [(ngModel)]="rate" />
+  <button class="btn btn-primary" [disabled]="!canAdd()" (click)="submit()">Ajouter</button>
+</div>
+<table class="table">
+  <tr *ngFor="let compensation of compensations">
+    <td>{{ compensation.user.email}}</td>
+    <td>{{ compensation.thing.name}}</td>
+    <td>{{ compensation.rate}}</td>
+    <td>{{ compensation.thing.price }}&euro;</td>
+  </tr>
+</table>

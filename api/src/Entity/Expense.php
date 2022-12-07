@@ -5,7 +5,9 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Put;
 use App\Controller\ExpenseProcess;
+use App\Controller\MarkAsPaidController;
 use App\Repository\ExpenseRepository;
 use App\State\ExpenseStateProvider;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,6 +21,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
         normalizationContext: ['groups' => ['expense']],
         name: 'expenseProcess'
     ),
+    new GetCollection(
+        uriTemplate: '/mark-as-paid',
+        controller: MarkAsPaidController::class,
+        name: 'mark as paid'
+    )
 ])]
 
 #[GetCollection(
