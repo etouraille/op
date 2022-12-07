@@ -14,14 +14,20 @@ class SocialSigninController extends AbstractController
 {
 
     private $secret;
+    private $facebookAppId;
+    private $facebookAppSecret;
 
     public function __construct(
         $googleClientId,
+        $facebookAppId,
+        $facebookAppSecret,
         private EntityManagerInterface $em,
         private UserService $userService,
         private JWTTokenManagerInterface $JWTManager
     ) {
         $this->secret = $googleClientId;
+        $this->facebookAppId = $facebookAppId;
+        $this->facebookAppSecret = $facebookAppSecret;
     }
 
     #[Route('/google/signin', name: 'app_google_signin')]

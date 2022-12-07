@@ -25,10 +25,12 @@ jobs:
         env:
           PRIVATE_PEM: ${{ secrets.PRIVATE_PEM }}
           PUBLIC_PEM: ${{ secrets.PUBLIC_PEM }}
+          ENV: ${{ secrets..ENV }}
         run: |
             mkdir -p api/config/jwt
             echo $PRIVATE_PEM | base64 -di > api/config/jwt/private.pem
             echo $PUBLIC_PEM | base64 -di > api/config/jwt/public.pem
+            echo $ENV | base64 -di > api/.env
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:

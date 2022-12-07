@@ -1,5 +1,5 @@
 # api/config/packages/api_platform.yaml
-when@prod:
+when@staging:
   api_platform:
     eager_loading:
       fetch_partial: true

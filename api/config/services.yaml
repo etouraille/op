@@ -60,6 +60,8 @@ services:
 
     App\Controller\SocialSigninController:
         $googleClientId: '%env(GOOGLE_CLIENT_ID)%'
+        $facebookAppId: '%env(FACEBOOK_APP_ID)%'
+        $facebookAppSecret: '%env(FACEBOOK_APP_SECRET)%'
 
     App\Service\UserService:
         $stripe: '%env(STRIPE)%'
