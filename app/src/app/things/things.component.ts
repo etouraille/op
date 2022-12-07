@@ -69,6 +69,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
       this.types = data['hydra:member'];
       return this.route.queryParams;
     })).subscribe((param: any) => {
+      console.log(' subscribe to query params');
       this.getCategories(param.filter);
       this.types = this.types.map((type: any) => ({ ...type, selected: param?.filter?.split(',').map((id: string) => parseInt(id))?.includes( type.id)}));
       this.checked = param.filter ? _.uniq(param?.filter?.split(',').map((id: string) => parseInt(id))): [];
@@ -142,9 +143,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     if(typeof $event === 'boolean') {
       filter = $event;
     }
-    console.log(this.checked);
     this.checked = _.uniq(this.checked);
-    console.log( id);
     if(filter) {
       this.checked.push(parseInt(id));
     } else {

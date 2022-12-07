@@ -1,0 +1,10 @@
+<div class="parent flex row">
+  <div>Role</div>
+  <form [formGroup]="formGroup" (ngSubmit)="submit()">
+    <select formControlName="role" class="form-control">
+      <option value="ROLE_MEMBER">Membre</option>
+      <option value="ROLE_USER">Utilisateur</option>
+    </select>
+    <button class="btn btn-primary">Valider</button>
+  </form>
+</div>

@@ -43,6 +43,7 @@ import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.comp
 import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-login.component";
 import {environment} from "../environments/environment";
 import {GoogleSigninComponent} from "../lib/component/google-signin/google-signin.component";
+import { SettingComponent } from './setting/setting.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import {GoogleSigninComponent} from "../lib/component/google-signin/google-signi
       CardStripeComponent,
       FacebookLoginComponent,
       GoogleSigninComponent,
+      SettingComponent,
 
     ],
   imports: [
