@@ -15,6 +15,7 @@ import {PendingComponent} from "./pending/pending.component";
 import {TypeComponent} from "./type/type.component";
 import {UserAddComponent} from "./user-add/user-add.component";
 import {CardStripeComponent} from "../../lib/component/card-stripe/card-stripe.component";
+import {CompensationComponent} from "./compensation/compensation.component";
 const routes: Routes = [
 
 
@@ -22,6 +23,10 @@ const routes: Routes = [
     path: '',
     component: LoggedComponent,
     children: [
+      {
+        path: 'compensation',
+        component: CompensationComponent,
+      },
       {
         path: 'card/:secret',
         component: CardStripeComponent,

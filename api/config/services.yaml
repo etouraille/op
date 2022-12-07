@@ -44,7 +44,13 @@ services:
     App\Service\GenerateBill:
         $api_url: '%env(API_URL)%'
 
+    App\Service\StripePaymentMethod:
+        $stripe: '%env(STRIPE)%'
+
     App\State\ReservationStateProcessor:
+        $stripe: '%env(STRIPE)%'
+
+    App\State\CompensationStateProcessor:
         $stripe: '%env(STRIPE)%'
 
     App\Controller\WebhookController:

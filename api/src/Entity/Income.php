@@ -44,7 +44,7 @@ class Income
 
     #[Groups(['collection'])]
     #[ORM\ManyToOne(inversedBy: 'income', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Expense $expense = null;
 
     #[Groups(['incomes'])]

@@ -117,7 +117,8 @@ import {RoleComponent} from "../lib/component/role/role.component";
   ],
   exports: [
     CalendarComponent,
-    PicturesComponent
+    PicturesComponent,
+    SearchComponent
   ],
     bootstrap: [AppComponent]
 })

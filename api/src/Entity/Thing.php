@@ -176,7 +176,7 @@ class Thing
     #[Groups(['post', 'collection', 'get', 'put', 'tback', 'out', 'search', 'expense', 'list', 'pending', 'incomes', 'coins', 'url'])]
     private ?int $id = null;
 
-    #[Groups(['post', 'collection', 'get', 'add', 'tback', 'out', 'search','expense', 'list','pending', 'incomes', 'coins'])]
+    #[Groups(['post', 'collection', 'get', 'add', 'tback', 'out', 'search','expense', 'list','pending', 'incomes', 'coins','compensation'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -184,7 +184,7 @@ class Thing
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[Groups(['post', 'collection', 'get', 'add', 'list'])]
+    #[Groups(['post', 'collection', 'get', 'add', 'list','compensation'])]
     #[ORM\Column]
     private ?float $price = null;
 
@@ -238,6 +238,9 @@ class Thing
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $activationDate = null;
 
+    #[ORM\OneToMany(mappedBy: 'thing', targetEntity: Compensation::class)]
+    private Collection $compensation;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -245,6 +248,7 @@ class Thing
         $this->expenses = new ArrayCollection();
         $this->incomes = new ArrayCollection();
         $this->coins = new ArrayCollection();
+        $this->compensation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -518,6 +522,36 @@ class Thing
     public function setActivationDate(?\DateTimeInterface $activationDate): self
     {
         $this->activationDate = $activationDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compensation>
+     */
+    public function getCompensation(): Collection
+    {
+        return $this->compensation;
+    }
+
+    public function addCompensation(Compensation $compensation): self
+    {
+        if (!$this->compensation->contains($compensation)) {
+            $this->compensation->add($compensation);
+            $compensation->setThing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompensation(Compensation $compensation): self
+    {
+        if ($this->compensation->removeElement($compensation)) {
+            // set the owning side to null (unless already changed)
+            if ($compensation->getThing() === $this) {
+                $compensation->setThing(null);
+            }
+        }
 
         return $this;
     }

@@ -48,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['collection', 'get','put','tback', 'search', 'user', 'reservation', 'list'])]
     private ?int $id = null;
 
-    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation', 'list'])]
+    #[Groups(['post', 'collection', 'get', 'search', 'user', 'reservation', 'list', 'compensation'])]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -118,6 +118,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $facebookId = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Compensation::class)]
+    private Collection $compensation;
+
     public function __construct()
     {
         $this->things = new ArrayCollection();
@@ -126,6 +129,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->incomes = new ArrayCollection();
         $this->incomeData = new ArrayCollection();
         $this->coins = new ArrayCollection();
+        $this->compensation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -487,6 +491,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFacebookId(?string $facebookId): self
     {
         $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compensation>
+     */
+    public function getCompensation(): Collection
+    {
+        return $this->compensation;
+    }
+
+    public function addCompensation(Compensation $compensation): self
+    {
+        if (!$this->compensation->contains($compensation)) {
+            $this->compensation->add($compensation);
+            $compensation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompensation(Compensation $compensation): self
+    {
+        if ($this->compensation->removeElement($compensation)) {
+            // set the owning side to null (unless already changed)
+            if ($compensation->getUser() === $this) {
+                $compensation->setUser(null);
+            }
+        }
 
         return $this;
     }
