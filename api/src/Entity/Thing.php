@@ -25,6 +25,7 @@ use App\Filter\SearchOrFIlter;
 use App\Repository\ThingRepository;
 use App\State\LastStateProvider;
 use App\State\ProposedStateProvider;
+use App\State\RandomStateProvider;
 use App\State\SearchStateProvider;
 use App\State\StarStateProvider;
 use App\State\StartStateProvider;
@@ -141,6 +142,14 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         normalizationContext: ['groups' => ['list', 'reservation']],
         name: 'Proposés par les membre',
         provider: ProposedStateProvider::class
+    )
+])]
+#[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/thing/rand',
+        normalizationContext: ['groups' => ['list', 'reservation']],
+        name: 'Random',
+        provider: RandomStateProvider::class
     )
 ])]
 #[ApiResource(operations: [

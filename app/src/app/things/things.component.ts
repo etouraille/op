@@ -87,7 +87,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
         this.lasts = data['hydra:member'];
         // on exclue les entité deja présentés dans stars. pour ca qu'on en a pris le double.
         this.lasts = this.lasts.filter((last:any)=> !this.stars.map(elem => elem.id).includes(last.id)).slice(0,4);
-      return this.http.get(filter ? 'api/thing/all?filter=' + filter : 'api/thing/all')
+      return this.http.get(filter ? 'api/thing/rand?filter=' + filter : 'api/thing/rand')
       })).subscribe((data: any) => {
         this.rands = data['hydra:member'].filter((data: any) => !this.stars.map(elem =>elem.id).includes(data.id) && !this.lasts.map(elem =>elem.id).includes(data.id)).splice(0,4)
     }));

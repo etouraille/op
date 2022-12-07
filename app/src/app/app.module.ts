@@ -111,6 +111,7 @@ import {RoleComponent} from "../lib/component/role/role.component";
           'api/proposed',
           'api/thing_types',
           'api/thing/all',
+          'api/thing/rand'
         ]
       }
   ],
