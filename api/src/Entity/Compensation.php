@@ -17,11 +17,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
             uriTemplate: '/compensations',
             normalizationContext: ['groups' => ['compensation', 'pay' ]],
             denormalizationContext: ['groups' => ['compensation']],
+            security: "is_granted('ROLE_ADMIN')",
+
             processor: CompensationStateProcessor::class
         ),
         new GetCollection(
             uriTemplate: '/compensations',
             normalizationContext: ['groups' => ['compensation']],
+            security: "is_granted('ROLE_ADMIN')",
 
         )
     ]

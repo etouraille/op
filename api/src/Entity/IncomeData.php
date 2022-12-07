@@ -20,7 +20,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
         uriTemplate: '/export/income',
         controller: ExportIncomeController::class,
         denormalizationContext: ['groups' => ['post', 'put']],
+        security: "is_granted('ROLE_ADMIN')",
         name: 'exportIncomeController',
+
 
     ),
 ], denormalizationContext: ['groups' => ['post']])]

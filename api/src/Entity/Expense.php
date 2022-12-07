@@ -19,11 +19,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
         uriTemplate: '/expense/process',
         controller: ExpenseProcess::class,
         normalizationContext: ['groups' => ['expense']],
+        security: "is_granted('ROLE_ADMIN')",
         name: 'expenseProcess'
+
     ),
     new GetCollection(
         uriTemplate: '/mark-as-paid',
         controller: MarkAsPaidController::class,
+        security: "is_granted('ROLE_ADMIN')",
         name: 'mark as paid'
     )
 ])]

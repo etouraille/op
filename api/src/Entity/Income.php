@@ -14,7 +14,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: IncomeRepository::class)]
 #[ApiResource(denormalizationContext: ['groups' => ['post']])]
-#[GetCollection(normalizationContext: ['groups' => ['incomes']], provider: IncomeStateProvider::class)]
+#[GetCollection(
+    normalizationContext: ['groups' => ['incomes']],
+    security: "is_granted('ROLE_USER')",
+    provider: IncomeStateProvider::class,
+)]
 
 class Income
 {

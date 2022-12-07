@@ -64,6 +64,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/thing/add',
         controller: ThingAdd::class,
         denormalizationContext: ['groups' => ['add']],
+        security: "is_granted('ROLE_USER)",
         name: 'thingAddFromApp'
     )
 ])]
@@ -82,6 +83,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/pending',
         controller: Pending::class,
         normalizationContext: ['groups' => ['pending', 'reservation']],
+        security: "is_granted('ROLE_ADMIN')",
         name: 'Les objets en retard'
     )
 ])]
@@ -90,6 +92,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/waiting',
         controller: Waiting::class,
         normalizationContext: ['groups' => ['pending', 'reservation']],
+        security: "is_granted('ROLE_USER')",
         name: 'mes reservationq en attente'
     )
 ])]
@@ -98,6 +101,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/current',
         controller: Current::class,
         normalizationContext: ['groups' => ['pending', 'reservation']],
+        security: "is_granted('ROLE_USER')",
         name: 'mes objets en cours de réservation'
     )
 ])]
@@ -106,6 +110,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/done',
         controller: Done::class,
         normalizationContext: ['groups' => ['pending', 'reservation']],
+        security: "is_granted('ROLE_USER')",
         name: 'Mes objets réservés par la passé'
     )
 ])]
@@ -157,15 +162,33 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/pay',
         controller: PayController::class,
         normalizationContext: ['groups' => ['pay']],
+        security: "is_granted('ROLE_USER')",
         name: 'Payer depuis le site',
 
     )
 ])]
-#[GetCollection(normalizationContext: ['groups' => ['search']], provider: ThingStateProvider::class)]
-#[Get(normalizationContext: ['groups' => ['get', 'reservation']])]
-#[Post(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
-#[Put(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
-#[Patch(denormalizationContext: ['groups' => ['post', 'put']], processor: ThingStateProcessor::class)]
+#[GetCollection(
+    normalizationContext: ['groups' => ['search']],
+    provider: ThingStateProvider::class
+)]
+#[Get(
+    normalizationContext: ['groups' => ['get', 'reservation']]
+)]
+#[Post(
+    denormalizationContext: ['groups' => ['post', 'put']],
+    security: "is_granted('ROLE_USER')",
+    processor: ThingStateProcessor::class,
+
+)]
+#[Put(
+    denormalizationContext: ['groups' => ['post', 'put']],
+    security: "is_granted('ROLE_ADMIN')",
+    processor: ThingStateProcessor::class)]
+#[Patch(
+    denormalizationContext: ['groups' => ['post', 'put']],
+    security: "is_granted('ROLE_ADMIN')",
+    processor: ThingStateProcessor::class
+)]
 #[ApiFilter(SearchOrFIlter::class, properties: ['name', 'description'])]
 
 class Thing

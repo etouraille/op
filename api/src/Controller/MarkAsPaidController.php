@@ -16,7 +16,7 @@ class MarkAsPaidController extends AbstractController
     }
 
     public function __invoke(Request $request): array {
-        $expenses = $this->em->getRepository(Expense::class)->findForIncome($request->get('userId'))
+        $expenses = $this->em->getRepository(Expense::class)->findForIncome($request->get('userId'));
         array_map(function($expense) {
             /** @var $expense Expense */
             $expense->setStatus('paid');

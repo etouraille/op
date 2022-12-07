@@ -22,10 +22,20 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 #[Post(
     normalizationContext: ['groups' => ['reservation']],
     denormalizationContext: ['groups' => ['post']],
-    processor: ReservationStateProcessor::class
+    security: "is_granted('ROLE_USER')",
+    processor: ReservationStateProcessor::class,
+
 )]
-#[Patch(denormalizationContext: ['groups' => ['post']], processor: ReservationStateProcessor::class)]
-#[Delete(processor: ReservationStateProcessor::class)]
+#[Patch(
+    denormalizationContext: ['groups' => ['post']],
+    security: "is_granted('ROLE_USER')",
+    processor: ReservationStateProcessor::class,
+
+)]
+#[Delete(
+    security: "is_granted('ROLE_USER')",
+    processor: ReservationStateProcessor::class,
+)]
 class Reservation
 {
     const STATE_BOOKED = null; // or null mostly not set.

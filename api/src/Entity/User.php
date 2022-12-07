@@ -23,9 +23,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[Post(processor: UserStateProcessor::class)]
-#[Put(processor: UserStateProcessor::class)]
-#[GetCollection(normalizationContext: ['groups' => ['search']])]
-#[Get(normalizationContext: ['groups' => ['user']])]
+#[Put(
+    security: "is_granted('ROLE_USER')",
+    processor: UserStateProcessor::class,
+)]
+#[GetCollection(
+    normalizationContext: ['groups' => ['search']],
+    security: "is_granted('ROLE_ADMIN')"
+
+)]
+#[Get(
+    normalizationContext: ['groups' => ['user']],
+    security: "is_granted('ROLE_USER')",
+)]
 #[Patch]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Index(name: "search_index_email", columns: ['email'])]
@@ -37,6 +47,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         uriTemplate: '/ping',
         controller: PingController::class,
         normalizationContext: ['groups' => ['get']],
+        security: "is_granted('ROLE_USER')",
         name: 'ping'
     ),
 ])]

@@ -14,8 +14,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ThingTypeRepository::class)]
 #[GetCollection(normalizationContext: ['groups' => ['type']])]
-#[Post]
-#[Patch]
+#[Post(security: "is_granted('ROLE_ADMIN')",
+)]
+#[Patch(security: "is_granted('ROLE_ADMIN')",
+)]
 class ThingType
 {
     #[ORM\Id]

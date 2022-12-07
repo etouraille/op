@@ -10,7 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CoinRepository::class)]
-#[GetCollection(normalizationContext: ['groups' => ['coins']], provider: CoinStateProvider::class)]
+#[GetCollection(
+    normalizationContext: ['groups' => ['coins']],
+    security: "is_granted('ROLE_MEMBER')",
+    provider: CoinStateProvider::class,
+
+)]
 class Coin
 {
 
