@@ -17,20 +17,21 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: 'main'
-
-      - name: Composer Install
-        run: cd api && composer install --ansi --prefer-dist --no-interaction --no-progress
-
       - name: Retrieve pem and copy it to file
         env:
           PRIVATE_PEM: ${{ secrets.PRIVATE_PEM }}
           PUBLIC_PEM: ${{ secrets.PUBLIC_PEM }}
           ENV: ${{ secrets.ENV }}
         run: |
-            mkdir -p api/config/jwt
-            echo $PRIVATE_PEM | base64 -di > api/config/jwt/private.pem
-            echo $PUBLIC_PEM | base64 -di > api/config/jwt/public.pem
-            echo $ENV | base64 -di > api/.env
+          mkdir -p api/config/jwt
+          echo $PRIVATE_PEM | base64 -di > api/config/jwt/private.pem
+          echo $PUBLIC_PEM | base64 -di > api/config/jwt/public.pem
+          echo $ENV | base64 -di > api/.env
+
+
+      - name: Composer Install
+        run: cd api && composer install --ansi --prefer-dist --no-interaction --no-progress
+
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
