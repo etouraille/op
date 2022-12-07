@@ -34,9 +34,11 @@ class ReservationStateProcessor implements ProcessorInterface
         // if user is role_member it must be isMemberValidated
         $user = $this->security->getUser();
         /** @var $user User */
-        if(false !== array_search('ROLE_MEMBER', $user->getRoles()) && !$user->isIsMemberValidated()) {
-            throw new UnauthorizedHttpException('Member is not Authorized');
-        }
+        //TODO also used in admin. Find a solution to separate both.
+        //if(false !== array_search('ROLE_MEMBER', $user->getRoles()) && !$user->isIsMemberValidated()) {
+        //    throw new UnauthorizedHttpException('Member is not Authorized');
+        //}
+
         if($data instanceof Reservation && $operation instanceof Post) {
             // set owner as current user only when it's not defined.
             // on the app side of the api

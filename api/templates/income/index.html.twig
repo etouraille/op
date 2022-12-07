@@ -33,12 +33,22 @@
     <hr />
     <table class="table">
     {% for expense in expenses %}
-        <tr>
-            <td>{{ expense.thing.name }}</td>
-            <td>{{ expense.reservation.startDate | date }} à {{ expense.reservation.backDate | date }}</td>
-            <td>soit {{ expense.reservation.delta }} Jours à {{ expense.thing.dailyPrice }} &euro;</td>
-            <td>{{ expense.amount }}</td>
-        </tr>
+        {% if expense.reservation.expenses|length == 2 %}
+            <tr>
+                <td>{{ expense.thing.name }}</td>
+                <td>{{ expense.reservation.endDate | date }} à {{ expense.reservation.backDate | date }}</td>
+                <td>soit {{ expense.reservation.deltaEnd }} Jours à {{ expense.thing.dailyPrice }} &euro;</td>
+                <td>{{ expense.amount }}</td>
+            </tr>
+        {%  else %}
+            <tr>
+                <td>{{ expense.thing.name }}</td>
+                <td>{{ expense.reservation.startDate | date }} à {{ expense.reservation.backDate | date }}</td>
+                <td>soit {{ expense.reservation.delta }} Jours à {{ expense.thing.dailyPrice }} &euro;</td>
+                <td>{{ expense.amount }}</td>
+            </tr>
+        {% endif %}
+
     {% endfor %}
         <tr>
             <td></td>

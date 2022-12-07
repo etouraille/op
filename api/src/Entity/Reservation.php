@@ -64,12 +64,15 @@ class Reservation
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $backDate = null;
 
-    #[Groups(['back'])]
+    #[Groups(['back', 'expense'])]
     #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Expense::class, cascade: ['persist', 'remove'])]
     private Collection $expenses;
 
     #[Groups(['collection', 'put', 'get', 'post', 'add', 'reservation', 'expense'])]
     private ?int $delta;
+
+    #[Groups(['collection', 'put', 'get', 'post', 'add', 'reservation', 'expense'])]
+    private ?int $deltaEnd;
 
 
     public function __construct()
@@ -191,6 +194,17 @@ class Reservation
             $this->startDate->setTime(0, 0, 0);
             $this->backDate->setTime(0, 0, 0);
             $delta = 1 + $this->startDate->diff($this->backDate)->format("%r%a");
+        }
+        return $delta;
+
+    }
+
+    public function getDeltaEnd() {
+        $delta = null;
+        if ($this->endDate && $this->backDate) {
+            $this->endDate->setTime(0, 0, 0);
+            $this->backDate->setTime(0, 0, 0);
+            $delta = (int) $this->endDate->diff($this->backDate)->format("%r%a");
         }
         return $delta;
 
