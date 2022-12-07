@@ -49,7 +49,7 @@ class SocialSigninController extends AbstractController
         }
     }
 
-    #[Route('/facebook/signin', name: 'app_google_signin')]
+    #[Route('/facebook/signin', name: 'app_facebook_signin')]
     public function facebook(): JsonResponse
     {
         $payload = @file_get_contents('php://input');
