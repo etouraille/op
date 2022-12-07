@@ -44,6 +44,7 @@ import {FacebookLoginComponent} from "../lib/component/facebook-login/facebook-l
 import {environment} from "../environments/environment";
 import {GoogleSigninComponent} from "../lib/component/google-signin/google-signin.component";
 import { SettingComponent } from './setting/setting.component';
+import {RoleComponent} from "../lib/component/role/role.component";
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { SettingComponent } from './setting/setting.component';
       FacebookLoginComponent,
       GoogleSigninComponent,
       SettingComponent,
+      RoleComponent,
 
     ],
   imports: [
