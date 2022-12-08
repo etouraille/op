@@ -46,6 +46,7 @@ import {GoogleSigninComponent} from "../lib/component/google-signin/google-signi
 import { SettingComponent } from './setting/setting.component';
 import {RoleComponent} from "../lib/component/role/role.component";
 import { BillComponent } from './bill/bill.component';
+import {PdfViewerModule} from "ng2-pdf-viewer";
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import { BillComponent } from './bill/bill.component';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    PdfViewerModule,
 
 
 
@@ -106,6 +108,7 @@ import { BillComponent } from './bill/bill.component';
       {
         provide: 'routes',
         useValue: [
+          'api/users',
           'api/things',
           'api/url',
           'api/stars',

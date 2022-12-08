@@ -17,11 +17,18 @@ import {DoneComponent} from "./done/done.component";
 import {ThingComponent} from "./thing/thing.component";
 import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.component";
 import {SettingComponent} from "./setting/setting.component";
+import {BillComponent} from "./bill/bill.component";
 
 const routes: Routes = [{
   path: '',
   component: HomeComponent,
   children: [
+
+    {
+      path: 'bill',
+      component: BillComponent,
+      canActivate: [LoggedGuard]
+    },
     {
       path: 'settings',
       component: SettingComponent,
