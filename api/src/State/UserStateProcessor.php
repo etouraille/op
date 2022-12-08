@@ -29,7 +29,7 @@ class UserStateProcessor implements ProcessorInterface
         $this->secret = $stripe;
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): User
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
         // Handle the state
         if($data instanceof User) {
@@ -60,10 +60,6 @@ class UserStateProcessor implements ProcessorInterface
                     $this->em->flush();
                 }
             }
-
-            return $data;
         }
     }
-
-
 }

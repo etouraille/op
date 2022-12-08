@@ -22,8 +22,9 @@ use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-#[Post(processor: UserStateProcessor::class)]
+#[Post(processor: UserStateProcessor::class, normalizationContext: ['groups' => ['user']])]
 #[Put(
+    normalizationContext: ['groups' => ['user']],
     security: "is_granted('ROLE_USER')",
     processor: UserStateProcessor::class,
 )]
