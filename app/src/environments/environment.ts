@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://queel.io/',
+  api: 'http://localhost:8080/',
   cdn: 'https://cdn.queel.io/',
   stripe: 'pk_test_51M5VUJE2cCuT5clEeeLgqsVbClfFzBuLWQbGNWDRekYxKxFRG2mDmpitmvnBayHi9GWNNSBxghxwPC9HaeK6fkgE00VEh9lRDu',
   local: 'http://localhost:4200/',

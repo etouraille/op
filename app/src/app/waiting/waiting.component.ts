@@ -63,11 +63,14 @@ export class WaitingComponent extends SubscribeComponent implements OnInit {
         this.getWaiting();
         if(data.success) {
           this.store.dispatch(set({quantity: 0}));
+          this.toastR.success('Paiement réussi avec succès!');
         }
         if (!data.success) {
           this.toastR.error(data.error);
           if(data.id) {
-            this.router.navigate(['card-confirm/' + data.id]);
+            this.router.navigate(['/card-confirm/' + data.id]);
+          } else {
+            this.router.navigate(['card'], {queryParams: { redirect: 'waiting'}});
           }
         }
 
