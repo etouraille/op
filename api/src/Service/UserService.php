@@ -22,9 +22,8 @@ class UserService
         $this->secret = $stripe;
     }
 
-    public function create($email, $password = null, $roles=[], $firstname = null, $lastname= null, $address = null, $zipcode=null, $city=null, $photo=null, $facebookId = null) {
+    public function create($user, $email, $password = null, $roles=[], $firstname = null, $lastname= null, $address = null, $zipcode=null, $city=null, $photo=null, $facebookId = null) {
 
-        $user = new User();
 
         $user->setEmail($email);
         //create stripe user:

@@ -41,7 +41,7 @@ class SocialSigninController extends AbstractController
             $email = $payload['email'];
             $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
             if(!$user) {
-                $user = $this->userService->create($email, null, isset($data['roles']) ? $data['roles'] : [], $data['given_name'], $data['family_name']);
+                $user = $this->userService->create(new User(),$email, null, isset($data['roles']) ? $data['roles'] : [], $data['given_name'], $data['family_name']);
             }
             return new JsonResponse(['token' => $this->JWTManager->create($user)]);
         } else {
@@ -96,6 +96,7 @@ class SocialSigninController extends AbstractController
             }
             if(!$user) {
                 $user = $this->userService->create(
+                    new User(),
                     $email,
                     null,
                     isset($data['roles']) ? $data['roles'] : [],

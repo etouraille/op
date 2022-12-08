@@ -36,7 +36,8 @@ class UserStateProcessor implements ProcessorInterface
             if($operation instanceof Post) {
 
                 //create stripe user:
-                $this->service->create(
+                $data = $this->service->create(
+                    $data,
                     $data->getEmail(),
                     $data->getPassword(),
                     $data->getRoles(),
