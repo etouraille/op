@@ -19,12 +19,18 @@ use Symfony\Component\Security\Core\Security;
 #[AsController]
 class PayController extends AbstractController
 {
+
+    private $env;
+
     public function __construct(
         private EntityManagerInterface $em,
         private Security $security,
         private ExpenseService $expenseService,
         private GenerateBill $billService,
-    ) {}
+        $env
+    ) {
+        $this->env = $env;
+    }
 
     public function __invoke(): PayReturn {
         $user = $this->security->getUser();
@@ -82,12 +88,17 @@ class PayController extends AbstractController
         },[]));
 
 
-        try {
-            $bill = $this->billService->process($user->getId());
-        } catch(\Exception $e) {
+        if('dev' == $this->env) {
+            try {
+                $bill = $this->billService->process($user->getId());
+            } catch (\Exception $e) {
 
+            }
+        } else {
+            $bill = $this->billService->process($user->getId());
         }
 
+        //TODO faire la bill après le processus de paiement. Status pre-bill
         list($success, $isIntent, $id, $error) = $this->expenseService->process($expenses, false, true);
 
         return new PayReturn($success, $isIntent, $id, $error);

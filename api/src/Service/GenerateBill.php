@@ -12,12 +12,15 @@ class GenerateBill
 {
 
     protected $api_url;
+    protected $cdn_url;
 
     public function __construct(
         private EntityManagerInterface $em,
         $api_url,
+        $cdn_url,
     ) {
         $this->api_url = $api_url;
+        $this->cdn_url = $cdn_url;
     }
 
     public function process($userId) {
@@ -40,7 +43,7 @@ class GenerateBill
         $income = new IncomeData();
         $income->setAmount($total);
         $income->setDate(new \DateTime());
-        $income->setFile($this->getParameter('app.cdn_url') . $file );
+        $income->setFile($this->cdn_url . $file );
 
         $user = $this->em->getRepository(User::class)->findOneBy(['id' => $userId]);
 

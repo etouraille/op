@@ -43,6 +43,7 @@ services:
 
     App\Service\GenerateBill:
         $api_url: '%env(API_URL)%'
+        $cdn_url: '%env(CDN_URL)%'
 
     App\Service\StripePaymentMethod:
         $stripe: '%env(STRIPE)%'
@@ -68,6 +69,9 @@ services:
         $googleClientId: '%env(GOOGLE_CLIENT_ID)%'
         $facebookAppId: '%env(FACEBOOK_APP_ID)%'
         $facebookAppSecret: '%env(FACEBOOK_APP_SECRET)%'
+
+    App\Controller\PayController:
+        $env: '%env(APP_ENV)%'
 
     App\Service\UserService:
         $stripe: '%env(STRIPE)%'
