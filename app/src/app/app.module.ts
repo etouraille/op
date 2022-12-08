@@ -108,15 +108,15 @@ import {PdfViewerModule} from "ng2-pdf-viewer";
       {
         provide: 'routes',
         useValue: [
-          'api/users',
-          'api/things',
-          'api/url',
-          'api/stars',
-          'api/lasts',
-          'api/proposed',
-          'api/thing_types',
-          'api/thing/all',
-          'api/thing/rand'
+          { path: 'api/users' , methods : ['POST']},
+          { path: 'api/things' },
+          { path: 'api/url' },
+          { path: 'api/stars'},
+          { path: 'api/lasts'},
+          { path: 'api/proposed'},
+          { path : 'api/thing_types'},
+          { path: 'api/thing/all' },
+          { path: 'api/thing/rand' }
         ]
       }
   ],

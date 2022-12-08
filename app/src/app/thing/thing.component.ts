@@ -80,6 +80,8 @@ export class ThingComponent extends SubscribeComponent implements OnInit {
   }
 
   book()  {
+    console.log(this.isLogged);
+    console.log(this.user);
     this.ref = this.modal.open(CalendarComponent);
     this.ref.componentInstance.reservations = this.thing.reservations;
     this.ref.componentInstance.readOnly = !( this.isLogged && !this.user?.roles?.includes('ROLE_MEMBER') || (this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated ));

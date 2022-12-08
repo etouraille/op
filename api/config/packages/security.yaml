@@ -33,7 +33,7 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/things, roles: PUBLIC_ACCESS }
-        - { path: ^/api/users, roles: PUBLIC_ACCESS  }
+        - { path: ^/api/users, roles: PUBLIC_ACCESS , methods: ['POST']}
         - { path: ^/api/url, roles: PUBLIC_ACCESS  }
         - { path: ^/api/stars, roles: PUBLIC_ACCESS }
         - { path: ^/api/lasts, roles: PUBLIC_ACCESS }
