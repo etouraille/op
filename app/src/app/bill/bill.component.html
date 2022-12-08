@@ -1,0 +1,10 @@
+<div class="bills parent flex">
+  <div *ngIf="bills.length > 0">
+    <button *ngIf=" id > 0" class="btn-primary btn" (click)="previous()">Prev</button>
+    <button *ngIf=" id < bills.length - 1"class="btn-primary btn" (click)="next()">Next</button>
+    <pdf-viewer [src]="file()" [render-text]="true"
+                [original-size]="false"
+                style="width: 400px; height: 500px"
+    ></pdf-viewer>
+  </div>
+</div>

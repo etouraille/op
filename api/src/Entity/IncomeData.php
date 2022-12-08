@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\BillsController;
 use App\Controller\ExpenseProcess;
 use App\Controller\ExportIncomeController;
 use App\Repository\IncomeDataRepository;
@@ -22,9 +23,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
         denormalizationContext: ['groups' => ['post', 'put']],
         security: "is_granted('ROLE_ADMIN')",
         name: 'exportIncomeController',
-
-
     ),
+    new GetCollection(
+        uriTemplate: '/bills',
+        controller: BillsController::class,
+        denormalizationContext:  ['groups' => ['post', 'put']],
+        security: "is_granted('ROLE_USER')",
+        name: 'Mes facture'
+    )
 ], denormalizationContext: ['groups' => ['post']])]
 class IncomeData
 {

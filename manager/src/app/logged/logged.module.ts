@@ -35,6 +35,8 @@ import { TypeComponent } from './type/type.component';
 import { UserAddComponent } from './user-add/user-add.component';
 import {CardStripeComponent} from "../../lib/component/card-stripe/card-stripe.component";
 import { CompensationComponent } from './compensation/compensation.component';
+import { BillComponent } from './bill/bill.component';
+import {PdfViewerModule} from "ng2-pdf-viewer";
 
 @NgModule({
     declarations: [
@@ -64,6 +66,7 @@ import { CompensationComponent } from './compensation/compensation.component';
         CardStripeComponent,
         CompensationComponent,
         WhoComponent,
+        BillComponent,
     ],
     imports: [
         CommonModule,
@@ -77,6 +80,7 @@ import { CompensationComponent } from './compensation/compensation.component';
         NgbModalModule,
         NgbTooltipModule,
         NgbToastModule,
+        PdfViewerModule,
 
     ], exports: [
         FormsModule,

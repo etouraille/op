@@ -45,6 +45,7 @@ import {environment} from "../environments/environment";
 import {GoogleSigninComponent} from "../lib/component/google-signin/google-signin.component";
 import { SettingComponent } from './setting/setting.component';
 import {RoleComponent} from "../lib/component/role/role.component";
+import { BillComponent } from './bill/bill.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import {RoleComponent} from "../lib/component/role/role.component";
       GoogleSigninComponent,
       SettingComponent,
       RoleComponent,
+      BillComponent,
 
     ],
   imports: [

@@ -16,6 +16,7 @@ import {TypeComponent} from "./type/type.component";
 import {UserAddComponent} from "./user-add/user-add.component";
 import {CardStripeComponent} from "../../lib/component/card-stripe/card-stripe.component";
 import {CompensationComponent} from "./compensation/compensation.component";
+import {BillComponent} from "./bill/bill.component";
 const routes: Routes = [
 
 
@@ -23,6 +24,10 @@ const routes: Routes = [
     path: '',
     component: LoggedComponent,
     children: [
+      {
+        path: 'bill',
+        component: BillComponent,
+      },
       {
         path: 'compensation',
         component: CompensationComponent,

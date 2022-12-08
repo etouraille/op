@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\IncomeData;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,17 @@ class IncomeDataRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findForUser(User $user) {
+        return $this->createQueryBuilder('b')
+            ->join('b.user', 'u', 'WITH', 'u.id = :userId')
+            ->setParameter('userId', $user->getId())
+            ->orderBy('b.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
 
 
