@@ -13,6 +13,7 @@ use App\Entity\Expense;
 use App\Entity\Reservation;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Security;
 
@@ -20,13 +21,16 @@ class ReservationStateProcessor implements ProcessorInterface
 {
 
     private $secret;
-
+    private $app_url;
     public function __construct(
         private Security $security,
         private EntityManagerInterface $em,
+        private RequestStack $stack,
         $stripe,
+        $app_url,
     ) {
         $this->secret = $stripe;
+        $this->app_url = $app_url;
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
@@ -34,10 +38,10 @@ class ReservationStateProcessor implements ProcessorInterface
         // if user is role_member it must be isMemberValidated
         $user = $this->security->getUser();
         /** @var $user User */
-        //TODO also used in admin. Find a solution to separate both.
-        //if(false !== array_search('ROLE_MEMBER', $user->getRoles()) && !$user->isIsMemberValidated()) {
-        //    throw new UnauthorizedHttpException('Member is not Authorized');
-        //}
+        //this test is available only in app case.
+        if($_SERVER['HTTP_REFERER'] === $this->app_url && false !== array_search('ROLE_MEMBER', $user->getRoles()) && !$user->isIsMemberValidated()) {
+            throw new UnauthorizedHttpException('Member is not Authorized');
+        }
 
         if($data instanceof Reservation && $operation instanceof Post) {
             // set owner as current user only when it's not defined.

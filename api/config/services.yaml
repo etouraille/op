@@ -50,6 +50,7 @@ services:
 
     App\State\ReservationStateProcessor:
         $stripe: '%env(STRIPE)%'
+        $app_url: '%env(APP_URL)%'
 
     App\State\CompensationStateProcessor:
         $stripe: '%env(STRIPE)%'
