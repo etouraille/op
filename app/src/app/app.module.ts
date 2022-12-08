@@ -47,6 +47,8 @@ import { SettingComponent } from './setting/setting.component';
 import {RoleComponent} from "../lib/component/role/role.component";
 import { BillComponent } from './bill/bill.component';
 import {PdfViewerModule} from "ng2-pdf-viewer";
+import { NewPasswordComponent } from './new-password/new-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -80,6 +82,8 @@ import {PdfViewerModule} from "ng2-pdf-viewer";
       SettingComponent,
       RoleComponent,
       BillComponent,
+      NewPasswordComponent,
+      ResetPasswordComponent,
 
     ],
   imports: [

@@ -71,11 +71,17 @@ services:
         $facebookAppId: '%env(FACEBOOK_APP_ID)%'
         $facebookAppSecret: '%env(FACEBOOK_APP_SECRET)%'
 
+    App\Controller\ResetPasswordController:
+        $app_url: '%env(APP_URL)%'
+
     App\Controller\PayController:
         $env: '%env(APP_ENV)%'
 
     App\Service\UserService:
         $stripe: '%env(STRIPE)%'
+
+    App\Service\MailerService:
+        $secret: '%env(SENDINBLUE)%'
 
 
 

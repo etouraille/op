@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe{% endblock %}
+
+{% block body %}
+    <p>Bonjour {{ name }}</p>
+    <p>Pour réinitialiser votre mot de passe merci de clicker sur le lien <a href="{{ app_url }}new-password?token={{ token }}">{{ app_url }}reset-password?token={{ token }}</a></p>
+    <p>Bonne journée!</p>
+{% endblock %}

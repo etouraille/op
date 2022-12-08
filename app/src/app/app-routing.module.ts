@@ -18,12 +18,23 @@ import {ThingComponent} from "./thing/thing.component";
 import {CardStripeComponent} from "../lib/component/card-stripe/card-stripe.component";
 import {SettingComponent} from "./setting/setting.component";
 import {BillComponent} from "./bill/bill.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import {NewPasswordComponent} from "./new-password/new-password.component";
 
 const routes: Routes = [{
   path: '',
   component: HomeComponent,
   children: [
+    {
+      path: 'new-password',
+      component: NewPasswordComponent,
 
+    },
+    {
+      path: 'reset-password',
+      component: ResetPasswordComponent,
+
+    },
     {
       path: 'bill',
       component: BillComponent,
