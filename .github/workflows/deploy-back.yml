@@ -51,4 +51,3 @@ jobs:
           script: |
             docker exec -i php /bin/bash -c "bin/console doctrine:schema:update --force"
             sudo chown -R ubuntu:ubuntu /home/ubuntu/api
-            docker exec -i php /bin/bash -c "chown -R ubuntu:ubuntu /tmp"
