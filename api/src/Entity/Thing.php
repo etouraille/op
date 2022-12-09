@@ -168,7 +168,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
     )
 ])]
 #[GetCollection(
-    normalizationContext: ['groups' => ['search']],
+    normalizationContext: ['groups' => ['search', 'list', 'reservation']],
     provider: ThingStateProvider::class
 )]
 #[Get(

@@ -62,7 +62,7 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
     }));
     this.add(this.pingService.ping());
     this.redirectOnCardIfLoggedAndNoCard();
-    this.add(this.http.get('api/proposed').subscribe((data: any) => {
+    this.add(this.http.get('api/things?type=proposed').subscribe((data: any) => {
       this.proposed = data['hydra:member'];
     }))
     this.add(this.http.get('api/thing_types').pipe(switchMap((data: any) => {
@@ -79,15 +79,15 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
   }
 
   getCategories(filter: any) {
-    this.add(this.http.get(filter ? 'api/stars?filter=' + filter : 'api/stars').pipe(
+    this.add(this.http.get(filter ? 'api/things?type=stars&filter=' + filter : 'api/things?type=stars').pipe(
       switchMap((data:any) => {
       this.stars = data['hydra:member'].map((elem: any) =>  elem[0]);
-      return this.http.get(filter ? 'api/lasts?filter=' + filter : 'api/lasts')
+      return this.http.get(filter ? 'api/things?type=lasts&filter=' + filter : 'api/things?type=lasts')
     }), switchMap((data:any) => {
         this.lasts = data['hydra:member'];
         // on exclue les entité deja présentés dans stars. pour ca qu'on en a pris le double.
         this.lasts = this.lasts.filter((last:any)=> !this.stars.map(elem => elem.id).includes(last.id)).slice(0,4);
-      return this.http.get(filter ? 'api/thing/rand?filter=' + filter : 'api/thing/rand')
+      return this.http.get(filter ? 'api/things?type=rand&filter=' + filter : 'api/things?type=rand')
       })).subscribe((data: any) => {
         this.rands = data['hydra:member'].filter((data: any) => !this.stars.map(elem =>elem.id).includes(data.id) && !this.lasts.map(elem =>elem.id).includes(data.id)).splice(0,4)
     }));
