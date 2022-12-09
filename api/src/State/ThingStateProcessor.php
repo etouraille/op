@@ -91,5 +91,7 @@ class ThingStateProcessor implements ProcessorInterface
             $this->em->merge($data);
             $this->em->flush();
         }
+
+        return new PayReturn(true, false, null, null);
     }
 }
