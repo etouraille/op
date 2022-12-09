@@ -9,7 +9,7 @@ export const environment = {
   stripe: 'pk_test_51M5VUJE2cCuT5clEeeLgqsVbClfFzBuLWQbGNWDRekYxKxFRG2mDmpitmvnBayHi9GWNNSBxghxwPC9HaeK6fkgE00VEh9lRDu',
   local: 'http://localhost:4200/',
   app: 'app',
-  google: '1075289619931-l969h41a3p6b8bu349ifg4oph7skfc2f.apps.googleusercontent.com'
+  google: '687129491368-m6mmaopj2b221vsql4r03mduhja677o1.apps.googleusercontent.com'
 };
 
 /*
