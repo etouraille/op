@@ -175,7 +175,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
     normalizationContext: ['groups' => ['get', 'reservation']]
 )]
 #[Post(
-    denormalizationContext: ['groups' => ['post', 'put']],
+    denormalizationContext: ['groups' => ['post']],
     security: "is_granted('ROLE_USER')",
     processor: ThingStateProcessor::class,
 
@@ -249,7 +249,7 @@ class Thing
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $status = null;
 
-    #[Groups(['add', 'put', 'list'])]
+    #[Groups(['add', 'put', 'list', 'post'])]
     #[ORM\ManyToOne(inversedBy: 'things')]
     private ?Shop $shop = null;
 

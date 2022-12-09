@@ -28,6 +28,7 @@ class ThingStateProcessor implements ProcessorInterface
 
 
         if ($operation instanceof Post) {
+            //$this->em->merge($data->getShop());
             $this->em->persist($data);
             $this->em->flush();
         } elseif($operation instanceof Patch || $operation instanceof Put) {

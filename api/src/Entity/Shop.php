@@ -10,15 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ShopRepository::class)]
+#[ApiResource]
 class Shop
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['put', 'list'])]
+    #[Groups(['put', 'list', 'post'])]
     private ?int $id = null;
 
-    #[Groups(['put', 'list'])]
+    #[Groups(['put', 'list', 'post'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -29,6 +30,7 @@ class Shop
     {
         $this->things = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
