@@ -185,6 +185,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
     security: "is_granted('ROLE_ADMIN')",
     processor: ThingStateProcessor::class)]
 #[Patch(
+    normalizationContext: ['groups' => ['pay']],
     denormalizationContext: ['groups' => ['post', 'put']],
     security: "is_granted('ROLE_ADMIN')",
     processor: ThingStateProcessor::class

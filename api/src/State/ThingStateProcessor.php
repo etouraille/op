@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
+use App\Dto\PayReturn;
 use App\Entity\Thing;
 use App\Entity\User;
 use App\Service\CacheService;
@@ -20,14 +21,18 @@ class ThingStateProcessor implements ProcessorInterface
         private UrlGenerator $service,
     ) {}
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): ?PayReturn
     {
         /** @var $data Thing */
         $name = $data->getShop()->getName();
         $url = $this->service->makeUrl($name, $data->getName());
         $data->setUrl($url);
 
-        //CacheService::purge();
+        try {
+            CacheService::purge();
+        } catch (\Exception $e) {
+            return new PayReturn(false, false, null, $e->getMessage());
+        }
 
         if ($operation instanceof Post) {
             //$this->em->merge($data->getShop());
