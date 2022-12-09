@@ -7,7 +7,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Store} from "@ngrx/store";
 import { user as setUser } from '../../lib/actions/user-action'
 import {logout} from "../../lib/actions/login-action";
-import {of, switchMap, tap} from "rxjs";
+import {BehaviorSubject, of, Subject, switchMap, takeUntil, takeWhile, tap} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ReservationService} from "../../lib/service/reservation.service";
@@ -108,28 +108,43 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
   }
 
   redirectOnCardIfLoggedAndNoCard() {
+    let _subject : Subject<boolean> = new Subject<boolean>();
+    let _payment: boolean = false;
+    let _do = true;
     this.add(this.store.select((data:any) => data.login)
       .pipe(
+        takeUntil(_subject),
         switchMap((login:any) => {
+          console.log('====', login);
+          _payment = login.payment;
+
           if(!login.logged) {
             return of([0,1,2]);
           }
           else {
+            //_subject.next(true);
             this.isMember = login?.user?.roles.includes('ROLE_MEMBER');
+            _do = false;
             return this.http.get<any[]>('api/available/card')
           }
         }),
-        tap((array: any[]) => {
+        switchMap((array: any[]) => {
+
           if(array.length === 0) {
             this.add(this
               .toastR
-              .error(this.isMember ? 'Rajouter une carte pour pouvoir payer la dégradation des objets': 'Rajouter une carte pour pouvoir payer en boutique')
+              .error(this.isMember ? 'Rajouter une carte pour pouvoir être débité lors de la dégradation d\'un objet': (_payment ? 'Rajouter une carte pour pouvoir payer les réservations' : 'Rajouter une carte pour pouvoir payer en boutique'))
+
               .onTap
               .subscribe(() => this.router.navigate(['card']))
             );
           }
+          return of(array);
         })
-      ).subscribe()
+      ).subscribe((data: any) => {
+        if(data[0].id) _subject.next(false);
+        //_subject.complete();
+      })
     );
   }
 

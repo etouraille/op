@@ -51,6 +51,18 @@ class ExpenseRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findForBill($userId): array
+    {
+        return $this->createQueryBuilder('e')
+            ->join('e.user', 'u')
+            ->andWhere('u.id = :userId')
+            ->andWhere("e.status = 'for-bill'")
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
 
 //    /**

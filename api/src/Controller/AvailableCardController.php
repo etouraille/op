@@ -23,6 +23,12 @@ class AvailableCardController extends AbstractController
             ]
         );
         $data = $paymentMethod->toArray();
+
+        $data['data'] = array_map(function($elem) use(&$index) {
+            unset($elem['customer']);
+            return $elem;
+        }, $data['data']);
+
         return new JsonResponse($data['data']);
     }
 

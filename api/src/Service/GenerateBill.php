@@ -25,7 +25,7 @@ class GenerateBill
 
     public function process($userId) {
 
-        $expenses = $this->em->getRepository(Expense::class)->findForIncome($userId);
+        $expenses = $this->em->getRepository(Expense::class)->findForBill($userId);
 
         $snappy = new Pdf('/usr/bin/wkhtmltopdf');
 
@@ -51,6 +51,7 @@ class GenerateBill
 
         foreach($expenses as $expense) {
             /** @var $expense Expense */
+            $expense->setStatus('paid');
             $expense->setIncomeData($income);
             $this->em->merge($expense);
         }

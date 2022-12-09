@@ -19,13 +19,17 @@ class AccountIsActiveController extends AbstractController
         $user = $security->getUser();
         /** @var  $user User */
         $stripeAccountId = $user->getStripeAccountId();
-        $stripe = new \Stripe\StripeClient($this->getParameter('app.secret_stripe'));
-        $account = $stripe->accounts->retrieve(
-            $stripeAccountId
-        );
-        $data = $account->toArray();
-        $isActive = $data['capabilities']['transfers'] === 'active';
+        if($stripeAccountId) {
+            $stripe = new \Stripe\StripeClient($this->getParameter('app.secret_stripe'));
+            $account = $stripe->accounts->retrieve(
+                $stripeAccountId
+            );
+            $data = $account->toArray();
+            $isActive = $data['capabilities']['transfers'] === 'active';
 
-        return new JsonResponse(['isActive' => $isActive]);
+            return new JsonResponse(['isActive' => $isActive]);
+        } else {
+            return new JsonResponse(['isActive' => false]);
+        }
     }
 }

@@ -14,7 +14,11 @@ class ExpenseService
     protected $stripe;
     protected $secret;
 
-    public function __construct($stripe, private EntityManagerInterface $em) {
+    public function __construct(
+        $stripe,
+        private EntityManagerInterface $em,
+        private StripePaymentMethod $paymentMethod,
+    ) {
         $this->stripe = \Stripe\Stripe::setApiKey($stripe);
         $this->secret = $stripe;
     }
@@ -37,29 +41,23 @@ class ExpenseService
             // on lance le débit
             if( $total > 0 ) {
                 $stripe = new \Stripe\StripeClient($this->secret);
-                $paymentMethod = $stripe->paymentMethods->all(
-                    [
-                        'customer' => $user->getStripeCustomerId(),
-                        'type' => 'card'
-                    ]
-                );
-                $data = $paymentMethod->toArray();
-                $index = 0;
-                if (count($data['data']) == 0) {
+                $paymentMethodIds = $this->paymentMethod->get($user);
+                if (count($paymentMethodIds) == 0) {
                     return [false, $total > 0 , null, 'Pas de moyent de paiement enregistré'];
                 }
+                $index = 0;
                 do {
-                    $paymentMethodId = $data['data'][$index]['id'];
+                    $paymentMethodId = $paymentMethodIds[$index];
                     list( $success , $id , $error ) = $this->payExpense($expenses, $expense, $total, $paymentMethodId);
                     $index++;
-                } while (!$success && $index < count($data['data']));
+                } while (!$success && $index < count($paymentMethodIds));
                 // TODO : do something with the IncomeData.
                 // TODO allow payment only once the incomeData is generated. api.
                 // set Expense status.
                 array_map(function ($elem) use ($success, $id, $setState) {
                     /** @var $elem Expense */
                     if ($success) {
-                        $elem->setStatus('paid');
+                        $elem->setStatus('for-bill');
                         $elem->setPaymentIntentId($id);
                         $reservation = $elem->getReservation();
                         if($setState) {
@@ -97,7 +95,7 @@ class ExpenseService
                 array_map(function ($elem) use ($success, $id) {
                     /** @var $elem Expense */
                     if ($success) {
-                        $elem->setStatus('paid');
+                        $elem->setStatus('for-bill');
                         $elem->setStripeRefundId($id);
                     } else {
                         $elem->setStatus('error');

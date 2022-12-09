@@ -14,8 +14,6 @@
     <td>{{ total | cent }}&euro;</td>
   </tr>
 </table>
-<button *ngIf="expenses.length > 0 && !expenses[0]?.incomeData?.file" class="btn btn-primary" (click)="generate()">Générer la facture</button>
-<button *ngIf="expenses[0]?.incomeData?.file && expenses[0]?.status=='pending' "class="btn btn-danger" (click)="payExpense()">Régler</button>
 <button *ngIf="expenses[0]?.status=='pending' "class="btn btn-danger" (click)="payExpense()">Régler</button>
 <button *ngIf="expenses[0]?.status=='pending' "class="btn btn-danger" (click)="markAsPaid()">Marqué comme payé</button>
 {{ bill }}

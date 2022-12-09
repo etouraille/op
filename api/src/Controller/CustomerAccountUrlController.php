@@ -17,15 +17,19 @@ class CustomerAccountUrlController extends AbstractController
         $stripe = new \Stripe\StripeClient($this->getParameter('app.secret_stripe'));
         $user = $security->getUser();
         /** @var $user User */
-        $link = $stripe->accountLinks->create(
-            [
-                'account' => $user->getStripeAccountId(),
-                'refresh_url' => $this->getParameter('app.app_url') . 'login',
-                'return_url' => $this->getParameter('app.app_url') . 'login',
-                'type' => 'account_onboarding',
-            ]
-        );
+        if($user->getStripeAccountId()) {
+            $link = $stripe->accountLinks->create(
+                [
+                    'account' => $user->getStripeAccountId(),
+                    'refresh_url' => $this->getParameter('app.app_url') . 'income',
+                    'return_url' => $this->getParameter('app.app_url') . 'income',
+                    'type' => 'account_onboarding',
+                ]
+            );
 
-        return new JsonResponse(['url' => $link->url]);
+            return new JsonResponse(['url' => $link->url]);
+        } else {
+            return new JsonResponse(['success' => false, "error" => 'Stripe account id not defined'], 500);
+        }
     }
 }

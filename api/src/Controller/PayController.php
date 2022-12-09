@@ -88,6 +88,11 @@ class PayController extends AbstractController
         },[]));
 
 
+
+
+        //TODO faire la bill après le processus de paiement. Status pre-bill
+        list($success, $isIntent, $id, $error) = $this->expenseService->process($expenses, false, true);
+
         if('dev' == $this->env) {
             try {
                 $bill = $this->billService->process($user->getId());
@@ -97,9 +102,6 @@ class PayController extends AbstractController
         } else {
             $bill = $this->billService->process($user->getId());
         }
-
-        //TODO faire la bill après le processus de paiement. Status pre-bill
-        list($success, $isIntent, $id, $error) = $this->expenseService->process($expenses, false, true);
 
         return new PayReturn($success, $isIntent, $id, $error);
     }

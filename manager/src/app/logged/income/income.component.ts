@@ -41,10 +41,14 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
       this.bill = this.expenses[0]?.incomeData?.file;
       if(this.bill) {
         setTimeout(() => {
-          this.url =  this.sanitizer.bypassSecurityTrustResourceUrl( 'https://drive.google.com/viewerng/viewer?embedded=true&url=' +this.bill +'#toolbar=0&scrollbar=0') ;
+          this.url =  this.getUrl(this.bill)
         });
       }
     }))
+  }
+
+  getUrl(bill: any) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl( 'https://drive.google.com/viewerng/viewer?embedded=true&url=' + bill +'#toolbar=0&scrollbar=0') ;
   }
 
   payExpense() {
@@ -55,9 +59,12 @@ export class IncomeComponent extends SubscribeComponent implements OnInit {
         .subscribe((data: any) => {
           if(data['hydra:member'][0].success) {
             this.toastR.success('Paiement réussi !');
+            setTimeout(() => {
+              this.url = this.getUrl(data['hydra:member'][0].bill);
+            })
           } else if(data['hydra:member'][0].error) {
             this.toastR.error(data['hydra:member'][0].error);
-            this.router.navigate(['card/' + data['hydra:member'][0].error.id + '?redirect=logged/thing-list']);
+            this.router.navigate(['card/' + data['hydra:member'][0].error.id ], { queryParams : { redirect: 'logged/thing-list'}});
           }
           this.changeUserId(this.user.id);
         }));

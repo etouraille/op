@@ -15,6 +15,8 @@ class StripePaymentMethod
     public function get(User $user)
     {
 
+        $stripeCustomerId = $user->getStripeCustomerId();
+        if(!$stripeCustomerId) return [];
         $stripe = new \Stripe\StripeClient($this->secret);
         $paymentMethod = $stripe->paymentMethods->all(
             [

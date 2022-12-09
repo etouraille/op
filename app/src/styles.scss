@@ -32,10 +32,7 @@ app-home {
   display: block;
 }
 .header {
-  height:200px;
-  width:100%;
-  background: $color-blue;
-  position:relative;
+
 }
 .header-title {
   padding: 1em;
@@ -57,44 +54,59 @@ app-home {
   }
 }
 .container {
-  max-width: 1296px;
+
 }
 .content {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  //overflow-y:scroll;
-  //height: 100%;
 
 }
-div#container {
-  /* The power of flexboxes! */
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+app-home {
+  //display: flex;
+  .page {
+    /* The power of flexboxes! */
+    display: flex;
+    flex-flow: row wrap;
+    display: -webkit-flex;
+    //flex-direction: column;
+    height: 100%;
+    //align-items: stretch;
 
-div#container.web {
-  height: 100vh;
-}
-div#container > .content {
-  /* Key part: Eat the remaining space! */
+    .page > *  {
+      flex: 1 100%;
+    }
+    .header {
+      height: 200px;
+      width: 100%;
+      background: $color-blue;
+      position: relative;
+    }
 
-}
+    .content {
+      //overflow-y:scroll;
+      min-height: calc(100% - 200px - 200px);
+      //align-items: stretch;
+      //display: flex;
+      width: 100%;
 
-div#container > .footer {
-  //flex-basis: 50px;
-}
+      .container {
+        max-width: 1296px;
+        //align-items: stretch;
+        //display: flex;
 
+      }
+    }
+
+    .footer {
+      //height:50px;
+      width: 100%;
+      background: #CCCCCC;
+      height: 200px;
+
+
+    }
+  }
+}
 .footer {
-  //height:50px;
-  width:100%;
-  bottom:0px;
-  left:0px;
-  background: #CCCCCC;
-  position:static;
-  height: 10%;
+
 }
 .color-blue {
   color: #7999d7;
@@ -126,7 +138,6 @@ div#container > .footer {
 
 .wrap {
   flex-wrap: wrap;
-  align-items: baseline;
   align-content: flex-start;
 }
 .col {
@@ -384,11 +395,11 @@ form {
     border: 1px solid $color-red;
     border-radius: 5px;
     padding: 2em;
-    width: 290px;
-    height: 290px;
+    width: 220px;
+    height: 220px;
     .icon-card {
-      height: 115px;
-      width: 220px;
+      height: 105px;
+      width: 155px;
     }
     .price {
       color: black;
