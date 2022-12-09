@@ -26,14 +26,13 @@ class ExpenseProcess extends AbstractController
     {
 
         $userId = $request->get('userId');
-
         if ($userId) {
+            $incomeData = null;
             list($success, $isIntent, $id, $error) =  $this->service->process(
                 $this->em->getRepository(Expense::class)->findForIncome($userId),
                 false
             );
             if($success) {
-                $incomeData = null;
                 try {
                     $incomeData = $this->billService->process($userId);
                 } catch(\Exception $e ) {
