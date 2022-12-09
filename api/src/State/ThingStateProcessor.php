@@ -27,7 +27,7 @@ class ThingStateProcessor implements ProcessorInterface
         $url = $this->service->makeUrl($name, $data->getName());
         $data->setUrl($url);
 
-        CacheService::purge();
+        //CacheService::purge();
 
         if ($operation instanceof Post) {
             //$this->em->merge($data->getShop());
