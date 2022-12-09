@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Thing;
 use App\Entity\User;
+use App\Service\CacheService;
 use App\Service\UrlGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -26,6 +27,7 @@ class ThingStateProcessor implements ProcessorInterface
         $url = $this->service->makeUrl($name, $data->getName());
         $data->setUrl($url);
 
+        CacheService::purge();
 
         if ($operation instanceof Post) {
             //$this->em->merge($data->getShop());
