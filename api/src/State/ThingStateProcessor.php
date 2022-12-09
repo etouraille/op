@@ -21,18 +21,14 @@ class ThingStateProcessor implements ProcessorInterface
         private UrlGenerator $service,
     ) {}
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): ?PayReturn
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
         /** @var $data Thing */
         $name = $data->getShop()->getName();
         $url = $this->service->makeUrl($name, $data->getName());
         $data->setUrl($url);
 
-        try {
-            CacheService::purge();
-        } catch (\Exception $e) {
-            return new PayReturn(false, false, null, $e->getMessage());
-        }
+        CacheService::purge();
 
         if ($operation instanceof Post) {
             //$this->em->merge($data->getShop());
@@ -91,7 +87,5 @@ class ThingStateProcessor implements ProcessorInterface
             $this->em->merge($data);
             $this->em->flush();
         }
-
-        return new PayReturn(true, false, null, null);
     }
 }
