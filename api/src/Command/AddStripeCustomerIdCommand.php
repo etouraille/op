@@ -15,7 +15,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
     name: 'app:add-stripe-customer-id',
     description: 'Add stripe customer id.',
     hidden: false,
-    aliases: ['app:add-stripe-customer-id']
+    aliases: ['app:stripe']
 )]
 class AddStripeCustomerIdCommand extends Command
 {
@@ -35,11 +35,13 @@ class AddStripeCustomerIdCommand extends Command
         $email = $input->getArgument('email');
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
         /** @var  $user User **/
-        $stripeCustomer = \Stripe\Customer::create(['email' => $user->getEmail()]);
 
-        if(!$user->getStripeCustomerId()) $user->setStripeCustomerId($stripeCustomer->id);
+        if(!$user->getStripeCustomerId()) {
+            $stripeCustomer = \Stripe\Customer::create(['email' => $user->getEmail()]);
+            $user->setStripeCustomerId($stripeCustomer->id);
+        }
 
-        if (!$user->getStripeAccountId() && false !== array_search('ROLE_MEMBER', $user->getRoles())) {
+        if (!$user->getStripeAccountId()) {
             $stripe = new \Stripe\StripeClient($this->secret);
             $account = $stripe->accounts->create(['type' => 'express', 'email' => $user->getEmail()]);
             $user->setStripeAccountId($account->id);
