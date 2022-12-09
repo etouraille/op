@@ -100,7 +100,7 @@ export class ThingOutComponent extends SubscribeComponent implements OnInit {
 
   finish() {
     Promise.all(this.things.concat(this.waiting).map((thing: any) => {
-        let reservation = {
+        let reservation : any  = {
           owner: thing.owner,
           thing: 'api/things/' + thing.id ,
           startDate: thing.startDate,
@@ -108,6 +108,7 @@ export class ThingOutComponent extends SubscribeComponent implements OnInit {
           state: 1,
         }
         if(thing.reservationId) {
+          reservation['id'] = thing.reservationId;
           return this.http.patch('api/reservations/' + thing.reservationId, reservation).toPromise()
         } else {
           return this.http.post('api/reservations', reservation).toPromise();

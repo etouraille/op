@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\ReservationRepository;
 use App\State\ReservationStateProcessor;
+use App\State\ReservationStateProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -35,6 +37,12 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 #[Delete(
     security: "is_granted('ROLE_USER')",
     processor: ReservationStateProcessor::class,
+)]
+#[GetCollection(
+    normalizationContext: ['groups' => ['reservation']],
+    security: "is_granted('ROLE_USER')",
+    provider: ReservationStateProvider::class,
+
 )]
 class Reservation
 {

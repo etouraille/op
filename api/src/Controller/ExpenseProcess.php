@@ -33,14 +33,15 @@ class ExpenseProcess extends AbstractController
                 false
             );
             if($success) {
-
+                $incomeData = null;
                 try {
-                    $incomeDate = $this->billService->process($userId);
+                    $incomeData = $this->billService->process($userId);
                 } catch(\Exception $e ) {
                     $error = $e->getMessage();
+                    $success = false;
                 }
             }
-            return [['success' => $success, 'isIntent' => $isIntent, 'id' => $id, 'error' => $error, 'bill' => $incomeDate ? $incomeDate->getFile() : null]];
+            return [['success' => $success, 'isIntent' => $isIntent, 'id' => $id, 'error' => $error, 'bill' => $incomeData ? $incomeData->getFile() : null]];
         } else {
             return [];
         }

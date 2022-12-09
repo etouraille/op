@@ -96,15 +96,18 @@ export class ThingsComponent extends SubscribeComponent implements OnInit {
 
   openModal(thing: any, event: Event) {
     event.stopPropagation();
-    this.modalRef = this.service.open(CalendarComponent);
-    this.modalRef.componentInstance.reservations = thing.reservations;
-    this.modalRef.componentInstance.readOnly = !(this.logged && !this.user?.roles?.includes('ROLE_MEMBER') || this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated)
-    this.modalRef.componentInstance.payment = this.payment;
-    this.modalRef.result.then((dates: any) => {
-      this.add(this.reservationService.book(dates, thing, this.payment))
-    }, (reason: any) => {
+    this.add(this.http.get('api/reservations?thingId=' + thing.id).subscribe((data: any) => {
 
-    });
+      this.modalRef = this.service.open(CalendarComponent);
+      this.modalRef.componentInstance.reservations = data['hydra:member'];
+      this.modalRef.componentInstance.readOnly = !(this.logged && !this.user?.roles?.includes('ROLE_MEMBER') || this.user?.roles?.includes('ROLE_MEMBER') && this.user.isMemberValidated)
+      this.modalRef.componentInstance.payment = this.payment;
+      this.modalRef.result.then((dates: any) => {
+        this.add(this.reservationService.book(dates, thing, this.payment))
+      }, (reason: any) => {
+
+      });
+    }));
   }
 
   redirectOnCardIfLoggedAndNoCard() {
