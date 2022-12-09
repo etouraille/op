@@ -37,6 +37,7 @@ class SocialSigninController extends AbstractController
         $data = json_decode($payload, true);
         $client = new \Google_Client(['client_id' => $this->secret]);  // Specify the CLIENT_ID of the app that accesses the backend
         $payload = $client->verifyIdToken($data['token']);
+
         if ($payload) {
             $email = $payload['email'];
             $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
