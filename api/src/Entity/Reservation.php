@@ -40,7 +40,6 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 )]
 #[GetCollection(
     normalizationContext: ['groups' => ['reservation']],
-    security: "is_granted('ROLE_USER')",
     provider: ReservationStateProvider::class,
 
 )]

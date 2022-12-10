@@ -121,7 +121,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
           { path : 'api/thing_types'},
           { path: 'api/thing/all' },
           { path: 'api/thing/rand' },
-          { path: 'api/reservations' },
+          { path: 'api/reservations', methods: ['GET'] },
         ]
       }
   ],
