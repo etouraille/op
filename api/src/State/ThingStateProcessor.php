@@ -11,6 +11,7 @@ use App\Dto\PayReturn;
 use App\Entity\Thing;
 use App\Entity\User;
 use App\Service\CacheService;
+use App\Service\ElasticService;
 use App\Service\UrlGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -87,5 +88,6 @@ class ThingStateProcessor implements ProcessorInterface
             $this->em->merge($data);
             $this->em->flush();
         }
+        ElasticService::upsert($data);
     }
 }

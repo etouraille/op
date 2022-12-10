@@ -111,6 +111,10 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/http-client-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/janu-software/facebook-php-sdk" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sendinblue/api-v3-sdk" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/ezimuel/guzzlestreams" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/ezimuel/ringphp" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/react/promise" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/elasticsearch/elasticsearch" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -151,6 +151,10 @@
       <path value="$PROJECT_DIR$/api/vendor/symfony/http-client-contracts" />
       <path value="$PROJECT_DIR$/api/vendor/janu-software/facebook-php-sdk" />
       <path value="$PROJECT_DIR$/api/vendor/sendinblue/api-v3-sdk" />
+      <path value="$PROJECT_DIR$/api/vendor/ezimuel/guzzlestreams" />
+      <path value="$PROJECT_DIR$/api/vendor/ezimuel/ringphp" />
+      <path value="$PROJECT_DIR$/api/vendor/react/promise" />
+      <path value="$PROJECT_DIR$/api/vendor/elasticsearch/elasticsearch" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">

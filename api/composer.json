@@ -13,6 +13,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "elasticsearch/elasticsearch": "^7.0",
         "google/apiclient": "^2.12",
         "janu-software/facebook-php-sdk": "^0.1.11",
         "knplabs/knp-snappy": "^1.4",

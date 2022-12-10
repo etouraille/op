@@ -1,1 +1,4 @@
 docker/mariadb/
+docker/.env
+docker/certs
+docker/esdata01
