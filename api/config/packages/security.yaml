@@ -38,6 +38,7 @@ security:
         - { path: ^/api/stars, roles: PUBLIC_ACCESS }
         - { path: ^/api/lasts, roles: PUBLIC_ACCESS }
         - { path: ^/api/proposed, roles: PUBLIC_ACCESS }
+        - { path: ^/api/reservations, roles: PUBLIC_ACCESS }
         - { path: ^/api/thing_types, roles: PUBLIC_ACCESS }
         - { path: ^/api/thing/all, roles: PUBLIC_ACCESS }
         - { path: ^/api/thing/rand, roles: PUBLIC_ACCESS }

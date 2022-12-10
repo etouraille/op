@@ -120,7 +120,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
           { path: 'api/proposed'},
           { path : 'api/thing_types'},
           { path: 'api/thing/all' },
-          { path: 'api/thing/rand' }
+          { path: 'api/thing/rand' },
+          { path: 'api/reservations' },
         ]
       }
   ],
