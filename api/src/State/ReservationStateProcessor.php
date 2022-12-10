@@ -12,6 +12,7 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Expense;
 use App\Entity\Reservation;
 use App\Entity\User;
+use App\Service\CacheService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -42,7 +43,7 @@ class ReservationStateProcessor implements ProcessorInterface
         if($_SERVER['HTTP_REFERER'] === $this->app_url && false !== array_search('ROLE_MEMBER', $user->getRoles()) && !$user->isIsMemberValidated()) {
             throw new UnauthorizedHttpException('Member is not Authorized');
         }
-
+        CacheService::ban('api/reservations');
         if($data instanceof Reservation && $operation instanceof Post) {
             // set owner as current user only when it's not defined.
             // on the app side of the api
