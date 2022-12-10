@@ -82,18 +82,23 @@ app.post('/upload', checkTokenMiddleware,async (req, res) => {
                 var fileExt = file.name.split('.').pop().toLowerCase();
 
                 var uuid = uuidV4();
+                var filename = null;
 
                 if(['png', 'jpeg', 'jpg', 'bmp', 'gif'].includes(fileExt)) {
                     sharp('./public/' + file.name)
+                        .flatten({ background: { r: 255, g: 255, b: 255, alpha: 255 } })
+                        .jpeg({quality: 100})
                         .toFile('./public/' + uuid + '.jpeg')
                         .then((data) => {
                             console.log(data);
                             fs.unlinkSync('./public/' + file.name);
                         }, err => console.log(err))
                     ;
+                    filename = uuid + '.jpeg'
 
                 } else {
                     fs.renameSync('./public/' + file.name, './public/' + uuid + '.' + fileExt);
+                    filename = uuid + '.' + fileExt;
                 }
 
                 //send response
@@ -101,7 +106,7 @@ app.post('/upload', checkTokenMiddleware,async (req, res) => {
                     status: true,
                     message: 'File is uploaded',
                     data: {
-                        name: uuid + '.' + (fileExt == 'jpg' ? 'jpeg' : fileExt),
+                        name: filename,
                         mimetype: file.mimetype,
                         size: file.size
                     }

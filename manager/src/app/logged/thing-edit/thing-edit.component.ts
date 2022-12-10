@@ -47,8 +47,9 @@ export class ThingEditComponent extends SubscribeComponent implements OnInit {
     }), tap((data: any) => {
         data.owner = data?.owner?.id;
         this.thing = data;
-        this.editThingForm.patchValue(this.thing);
-        })
+        this.editThingForm.patchValue( { ...this.thing, type: this.thing.type['@id']});
+
+    })
     ).subscribe())
     this.add(
       this
