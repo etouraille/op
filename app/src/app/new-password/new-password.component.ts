@@ -36,9 +36,10 @@ export class NewPasswordComponent extends SubscribeComponent implements OnInit {
       if(data.success) {
         this.toastR.success('Votre mot de passe viens d\'être changé !');
         this.router.navigate(['login']);
-      } else {
-        this.toastR.error('error ' + data.error);
       }
+    }, (error : any) => {
+      console.log(error);
+      this.toastR.error('error ' + error.error.error)
     }))
   }
 }

@@ -28,10 +28,8 @@ export class ResetPasswordComponent extends SubscribeComponent implements OnInit
   submit() {
     this.add(this.http.get('reset/password/' + this.form.value.email).subscribe((data: any) => {
       if(data.success) {
-        this.toastR.success('Un email viens de vous être envoyé');
-      } else {
-        this.toastR.error('Error' + data.error);
+        this.toastR.success('Un email vient de vous être envoyé');
       }
-    }))
+    }, (data: any) => this.toastR.error('Error' + data.error.error)))
   }
 }

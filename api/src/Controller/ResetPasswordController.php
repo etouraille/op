@@ -44,10 +44,10 @@ class ResetPasswordController extends AbstractController
 
             list( $success, $error ) = $this->service->send($email, $name, $subject, $content);
 
-            return new JsonResponse(['success' => $success, 'error' => $error]);
+            return new JsonResponse(['success' => $success, 'error' => $error], $success ? 200: 500);
 
         } else {
-            return new JsonResponse(['success' => false, 'email n existe pas']);
+            return new JsonResponse(['success' => false, 'error' => 'l\'email n\'existe pas'], 400);
         }
     }
 
@@ -70,7 +70,7 @@ class ResetPasswordController extends AbstractController
             return new JsonResponse(['success' => true]);
 
         } else {
-            return new JsonResponse(['success' => false, 'le token n existe pas']);
+            return new JsonResponse(['success' => false, 'error' => 'le token n existe pas'], 500);
         }
     }
 }
