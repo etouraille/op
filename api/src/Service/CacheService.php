@@ -13,7 +13,7 @@ class CacheService
         curl_close($tuCurl);
     }
 
-    public function ban($url) {
+    public static function ban($url) {
         $tuCurl = curl_init();
         curl_setopt($tuCurl, CURLOPT_URL, "http://cache/" . $url);
         curl_setopt($tuCurl, CURLOPT_CUSTOMREQUEST, "BAN");
