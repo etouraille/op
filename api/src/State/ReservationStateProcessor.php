@@ -43,7 +43,7 @@ class ReservationStateProcessor implements ProcessorInterface
         if($_SERVER['HTTP_REFERER'] === $this->app_url && false !== array_search('ROLE_MEMBER', $user->getRoles()) && !$user->isIsMemberValidated()) {
             throw new UnauthorizedHttpException('Member is not Authorized');
         }
-        //CacheService::ban('api/reservations?thingId=' . $data->getThing()->getId());
+        CacheService::ban('api/reservations?thingId=' . $data->getThing()->getId());
         if($data instanceof Reservation && $operation instanceof Post) {
             // set owner as current user only when it's not defined.
             // on the app side of the api
