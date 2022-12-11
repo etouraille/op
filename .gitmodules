@@ -4,3 +4,6 @@
 [submodule "lib"]
 	path = app/src/lib
 	url = git@github.com:etouraille/utils.git
+[submodule "cdn"]
+	path = cdn
+	url = git@github.com:etouraille/cdn.git
