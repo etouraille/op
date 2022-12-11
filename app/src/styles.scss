@@ -68,6 +68,19 @@ app-home {
   }
 }
 
+@media(screen and max-width: 360px) {
+
+  .header-title {
+    div.container.title {
+      height: 260px;
+      font-size:43px;
+    }
+    div.container.subtitle {
+      height: 100px;
+      font-size: 16px;
+    }
+  }
+}
 app-home {
   //display: flex;
   .page {
@@ -122,6 +135,18 @@ app-home {
       /* The power of flexboxes! */
       .header {
         height: 300px;
+      }
+    }
+  }
+}
+
+@media(screen and max-width: 360px) {
+  app-home {
+    //display: flex;
+    .page {
+      /* The power of flexboxes! */
+      .header {
+        height: 400px;
       }
     }
   }
@@ -394,6 +419,25 @@ form {
 
   }
 }
+@media(screen and max-width: 360px) {
+  .thing.parent {
+
+
+    .vignette {
+      width: 295px;
+      height: 300px;
+    }
+    .consume {
+
+      .price {
+        //float: right;
+        height: 60px;
+
+      }
+    }
+
+  }
+}
 .basket {
   .circle {
     padding: 0 0 0 5px;
@@ -522,4 +566,14 @@ form {
     }
   }
 
+}
+@media(screen and max-width: 360px) {
+  .things {
+    .star, .last {
+      .icon-card {
+        height: 200px;
+        width: 230px;
+      }
+    }
+  }
 }
