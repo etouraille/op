@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule , NO_ERRORS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -49,6 +49,7 @@ import { BillComponent } from './bill/bill.component';
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SitemapComponent } from './sitemap/sitemap.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
       BillComponent,
       NewPasswordComponent,
       ResetPasswordComponent,
+      SitemapComponent,
 
     ],
   imports: [
@@ -129,6 +131,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     CalendarComponent,
     PicturesComponent,
     SearchComponent
+  ],
+  schemas: [
+
+    NO_ERRORS_SCHEMA
   ],
     bootstrap: [AppComponent]
 })

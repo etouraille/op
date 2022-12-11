@@ -258,7 +258,7 @@ class Thing
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
-    #[Groups(['put'])]
+    #[Groups(['put', 'url'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $activationDate = null;
 

@@ -20,8 +20,13 @@ import {SettingComponent} from "./setting/setting.component";
 import {BillComponent} from "./bill/bill.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import {NewPasswordComponent} from "./new-password/new-password.component";
+import {SitemapComponent} from "./sitemap/sitemap.component";
 
 const routes: Routes = [{
+    path: 'sitemap',
+    component: SitemapComponent,
+  },
+  {
   path: '',
   component: HomeComponent,
   children: [
@@ -91,7 +96,8 @@ const routes: Routes = [{
     },
 
   ]
-}];
+}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
