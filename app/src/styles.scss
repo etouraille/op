@@ -233,7 +233,22 @@ form {
       position: relative;
     }
   }
+}
+@media(screen and max-width: 360px) {
+  .center {
+    .item.large {
+      width: 20em;
+      left: -57px;
 
+    }
+    .item > button {
+      bottom: -200px;
+      position: relative;
+    }
+  }
+  .creditcard svg#cardfront, .creditcard svg#cardback {
+    width: 280px;
+  }
 }
 /* . */
 .item {
@@ -575,5 +590,15 @@ form {
         width: 230px;
       }
     }
+  }
+}
+iframe {
+  height: 1200px;
+  width: 1000px;
+}
+@media(screen and max-width: 400px) {
+  iframe {
+    height: 1200px;
+    width: 300px;
   }
 }
