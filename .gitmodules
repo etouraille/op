@@ -7,3 +7,6 @@
 [submodule "cdn"]
 	path = cdn
 	url = git@github.com:etouraille/cdn.git
+[submodule "docker"]
+	path = docker
+	url = git@github.com:etouraille/docker.git
