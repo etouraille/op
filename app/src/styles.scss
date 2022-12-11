@@ -180,6 +180,11 @@ app-home {
     margin-top: 11em;
   }
 }
+@media(screen and max-width: 360px) {
+  .parent {
+    margin-top: 13em;
+  }
+}
 .flex {
   display: flex;
 }
