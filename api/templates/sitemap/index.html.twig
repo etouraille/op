@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://queel.io</loc>
+        <lastmod>{{ date }}</lastmod>
+    </url>
+    {%  for site in sites  %}
+    <url>
+        <loc>{{ 'https://app.queel.io/' ~ site.url}}</loc>
+        <lastmod>{{ site.activationDate | date('d/m/Y') }}</lastmod>
+    </url>
+    {% endfor %}
+</urlset>
